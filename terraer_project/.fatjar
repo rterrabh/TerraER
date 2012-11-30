@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Aug 24 11:37:46 BRT 2009
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=/Users/ricardoterra/Desktop/TerraER/TerraER.jar
+manifest.mergeall=true
+manifest.mainclass=
+manifest.file=META-INF/MANIFEST.MF
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=<inc|TerraER/src>

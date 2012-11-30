@@ -1,0 +1,42 @@
+/*
+ * @(#)ClearAction.java  1.0  2005-10-16
+ *
+ * Copyright (c) 1996-2006 by the original authors of JHotDraw
+ * and all its contributors ("JHotDraw.org")
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * JHotDraw.org ("Confidential Information"). You shall not disclose
+ * such Confidential Information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with
+ * JHotDraw.org.
+ */
+
+package org.jhotdraw.app.action;
+
+import org.jhotdraw.app.Application;
+import org.jhotdraw.app.Project;
+import org.jhotdraw.util.ResourceBundleUtil;
+
+/**
+ * Clears a project.
+ *
+ * @author Werner Randelshofer
+ * @version 1.0  2005-10-16 Created.
+ */
+public class ClearAction extends AbstractSaveBeforeAction {
+    public final static String ID = "clear";
+    
+    /** Creates a new instance. */
+    public ClearAction(Application app) {
+        super(app);
+        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+        labels.configureAction(this, "new");
+    }
+    
+    @Override public void doIt(Project project) {
+        project.clear();
+        project.setFile(null);
+        org.jhotdraw.draw.TerraFigureTree.getInstance().removeAll();
+    }
+}
