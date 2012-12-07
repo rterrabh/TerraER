@@ -125,7 +125,7 @@ body
 {
   float: left;
   height: 31px;
-  width: 300px;
+  width: 170px;
   padding-left: 10px;
   margin: 0;
   list-style: none;   
@@ -271,4 +271,18 @@ blockquote
 .bold
 {
   font-weight: bold;
+}
+
+span.reddit_button{
+   margin-left: 25px;
+   vertical-align: top;
+   font-size: 10px;
+}
+
+.reddit_button a{
+   vertical-align: top;
+}
+
+.reddit_button a img{
+   margin-top: 3px;
 }
