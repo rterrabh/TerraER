@@ -17,6 +17,9 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 
@@ -43,7 +46,10 @@ public class EntidadeFigure extends GroupFigure {
     
     public EntidadeFigure init(){
     	rec = new RectangleFigure();
-    	tf = new TextFigure("ENTIDADE"+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    	
+    	tf = new TextFigure(labels.getString("node.entity").toUpperCase()+Integer.toString(counter++));
     	this.add(rec);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,rec,tf);
