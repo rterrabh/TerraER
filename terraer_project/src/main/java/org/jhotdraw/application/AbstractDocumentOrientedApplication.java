@@ -85,10 +85,10 @@ public abstract class AbstractDocumentOrientedApplication extends application.Ap
      * Launches the application. This method must be called from the Main thread,
      * before AWT is started.
      */
-    public static <T extends AbstractDocumentOrientedApplication> void launch(Class<T> applicationClass, String[] args) {
-        initAWT(args);
-        application.Application.launch(applicationClass, args);
-    }
+//    public static <T extends AbstractDocumentOrientedApplication> void launch(Class<T> applicationClass, String[] args) {
+//        initAWT(args);
+//        application.Application.launch(applicationClass, args);
+//    }
     
     /**
      * Initializes AWT before it is started. This method is called by
@@ -341,7 +341,7 @@ public abstract class AbstractDocumentOrientedApplication extends application.Ap
     /**
      * Creates the view menu. Return null, if you don't want this menu.
      *
-     * @param v The document view.
+     *��@param v The document view.
      * @param toolbarActions Toolbar actions. This value is null, if the toolbar
      * actions do not get into this menu.
      */
@@ -352,7 +352,7 @@ public abstract class AbstractDocumentOrientedApplication extends application.Ap
     /**
      * Creates the window menu. Return null, if you don't want this menu.
      *
-     * @param v The document view.
+     *��@param v The document view.
      * @param toolbarActions Toolbar actions. This value is null, if the toolbar
      * actions do not get into this menu.
      */
