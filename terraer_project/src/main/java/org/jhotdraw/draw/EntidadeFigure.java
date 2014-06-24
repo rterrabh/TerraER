@@ -47,9 +47,9 @@ public class EntidadeFigure extends GroupFigure {
     public EntidadeFigure init(){
     	rec = new RectangleFigure();
     	
-    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     	
-    	tf = new TextFigure(labels.getString("node.entity").toUpperCase()+Integer.toString(counter++));
+    	tf = new TextFigure(labels.getString("createEntidade").toUpperCase()+Integer.toString(counter++));
     	this.add(rec);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,rec,tf);

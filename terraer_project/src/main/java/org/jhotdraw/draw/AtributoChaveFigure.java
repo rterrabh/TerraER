@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
@@ -42,7 +43,10 @@ public class AtributoChaveFigure extends GroupFigure {
     
     public AtributoChaveFigure init(){
     	ef=new EllipseFigure();
-    	tf=new TextFigure("chave"+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	tf=new TextFigure(labels.getString("createAtributoChave")+Integer.toString(counter++));
     	this.add(ef);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,ef,tf);

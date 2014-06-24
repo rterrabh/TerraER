@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 /**
  * A LineConnection with labels.
  * <p>
@@ -38,7 +40,10 @@ public class LabeledLineConnectionMuitosFigure extends
 
 	public LabeledLineConnectionMuitosFigure() {
 		super();
-		this.title="Participação Opcional MUITOS 0";
+		
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title=labels.getString("createElbowMuitosConnection");
     	this.setLayouter(new LocatorLayouter());
         TextFigure tf = new TextFigure("N");
         tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);

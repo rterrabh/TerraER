@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 /**
  * RectangleFigure.
  *
@@ -32,7 +34,10 @@ public class DisjuncaoFigure extends GroupFigure {
 
 	public DisjuncaoFigure() {
 		super();
-		title="Disjunção"+Integer.toString(counter++);
+		
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		title=labels.getString("createDisjuncao")+Integer.toString(counter++);
 	}
 	
 	public DisjuncaoFigure init(){

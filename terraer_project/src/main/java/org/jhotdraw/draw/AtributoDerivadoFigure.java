@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
@@ -41,7 +42,10 @@ public class AtributoDerivadoFigure extends GroupFigure {
     
     public AtributoDerivadoFigure init(){
     	ef=new EllipseFigure();
-    	tf=new TextFigure("derivado"+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	tf=new TextFigure(labels.getString("createAtributoDerivado")+Integer.toString(counter++));
     	this.add(ef);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,ef,tf);

@@ -141,7 +141,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         tb.addSeparator();
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFigure().init()), "createRelacionamento", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeRelacionamentoFigure().init()), "createEntidadeRelacionamento", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new TextItalicoFigure("papel")), "createPapel", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new TextItalicoFigure(labels.getString("createPapel"))), "createPapel", labels);
         //ButtonFactory.addToolTo(tb, editor, new CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
         
         tb.addSeparator();

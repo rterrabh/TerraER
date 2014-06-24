@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 /**
  * A LineConnection with labels.
  * <p>
@@ -39,7 +41,10 @@ public class LabeledLineConnectionUmFigure extends
 
 	public LabeledLineConnectionUmFigure() {
 		super();
-		this.title="ParticipaçÃo Opcional UM 0";
+		
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title=labels.getString("createElbowUmConnection");
     	this.setLayouter(new LocatorLayouter());
         TextFigure tf = new TextFigure("1");
         tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);

@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
@@ -42,7 +43,10 @@ public class EntidadeFracaFigure extends GroupFigure {
     
     public EntidadeFracaFigure init(){
     	rec=new RectangleFigure();
-    	tf=new TextFigure("ENT.FRACA."+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	tf=new TextFigure(labels.getString("createEntidadeFraca").toUpperCase()+Integer.toString(counter++));
     	this.add(rec);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,rec,tf);

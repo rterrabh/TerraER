@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
@@ -41,7 +42,10 @@ public class RelacionamentoFigure extends GroupFigure {
     
     public RelacionamentoFigure init(){
     	df=new DiamondFigure();
-    	tf=new TextFigure("relac."+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	tf=new TextFigure(labels.getString("createRelacionamento")+Integer.toString(counter++));
     	this.add(df);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,df,tf);

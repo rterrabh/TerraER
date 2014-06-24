@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
@@ -44,7 +45,10 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
     public EntidadeRelacionamentoFigure init(){
     	rec=new RectangleFigure();
     	df=new DiamondFigure();
-    	tf=new TextFigure("ENT.REL."+Integer.toString(counter++));
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	tf=new TextFigure(labels.getString("createEntidadeRelacionamento")+Integer.toString(counter++));
     	
     	this.add(rec);
     	this.add(df);

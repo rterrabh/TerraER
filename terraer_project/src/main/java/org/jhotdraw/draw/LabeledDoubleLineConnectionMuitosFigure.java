@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 
 /**
  * A LineConnection with labels.
@@ -39,7 +41,10 @@ public class LabeledDoubleLineConnectionMuitosFigure extends
 
 	public LabeledDoubleLineConnectionMuitosFigure() {
 		super();
-		this.title="Participação Obrigatória MUITOS 0";
+		
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title=labels.getString("createElbowDoubleMuitosConnection");
 		this.setAttribute(AttributeKeys.STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
     	this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
     	this.setLayouter(new LocatorLayouter());

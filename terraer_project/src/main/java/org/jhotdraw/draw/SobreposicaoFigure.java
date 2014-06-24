@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 /**
  * RectangleFigure.
  *
@@ -32,7 +34,10 @@ public class SobreposicaoFigure extends GroupFigure {
 
     public SobreposicaoFigure(){
     	super();
-		title="Sobreposição"+Integer.toString(counter++);
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		title=labels.getString("createSobreposicao")+Integer.toString(counter++);
     }
     
     public SobreposicaoFigure init(){
