@@ -16,6 +16,7 @@ package org.jhotdraw.draw;
 
 import java.io.IOException;
 
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
 
@@ -43,9 +44,12 @@ public class LineConnectionGeneralizacaoFigure extends
 	
 	public LineConnectionGeneralizacaoFigure() {
 		super();
-		this.title="Generalização Opcional 0";
+		
+		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title=labels.getString("createElbowConnection");
     	this.setLayouter(new LocatorLayouter());
-    	TextFigure tf = new TextFigure("caracterÌstica");
+    	TextFigure tf = new TextFigure(labels.getString("createElbowConnection.initial"));
         tf.setAttribute(AttributeKeys.FONT_ITALIC,Boolean.TRUE);
         tf.setFontSize(12);
         tf.setEditable(true);

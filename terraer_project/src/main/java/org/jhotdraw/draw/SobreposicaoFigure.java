@@ -31,18 +31,17 @@ public class SobreposicaoFigure extends GroupFigure {
 
 	private static int counter = 0;
     private String title; 
+	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
 
     public SobreposicaoFigure(){
     	super();
-    	
-    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-
 		title=labels.getString("createSobreposicao")+Integer.toString(counter++);
     }
     
     public SobreposicaoFigure init(){
     	this.add(new CircleFigure());
-    	this.add(new TextNegritoFigure("s"));
+    	this.add(new TextNegritoFigure(labels.getString("createSobreposicao.letra")));
     	return this;
 	}
 

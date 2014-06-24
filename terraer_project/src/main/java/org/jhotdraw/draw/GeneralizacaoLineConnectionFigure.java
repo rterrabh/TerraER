@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 
+import org.jhotdraw.util.ResourceBundleUtil;
+
 /**
  * A LineConnection with labels.
  * <p>
@@ -42,7 +44,10 @@ public class GeneralizacaoLineConnectionFigure extends LabeledLineConnectionFigu
 	
 	public GeneralizacaoLineConnectionFigure() {
 		super();
-		this.title="Generalização 0";
+		
+		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title=labels.getString("createGeneralizacaoConnection");
 //    	this.setLayouter(new LocatorLayouter());
 //        TextFigure tf = new TextFigure("U");
 //        tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);

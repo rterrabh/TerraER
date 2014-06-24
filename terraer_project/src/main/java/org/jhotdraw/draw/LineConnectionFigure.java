@@ -27,6 +27,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.jhotdraw.geom.BezierPath;
+import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
 /**
@@ -85,7 +86,10 @@ public class LineConnectionFigure extends LineFigure
     
     /** Creates a new instance. */
     public LineConnectionFigure() {
-    	title="Ligação de Atributos "+Integer.toString(counter);
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+    	title=labels.getString("createElbowConnectionAtributo")+Integer.toString(counter);
     }
     // DRAWING
     // SHAPE AND BOUNDS

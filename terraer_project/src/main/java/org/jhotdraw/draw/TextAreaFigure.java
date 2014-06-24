@@ -85,7 +85,7 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
      */
     private Boolean isTextOverflow;
 
-    private static int counter = 0;
+    private static int counter = -1;
     private String title;
     
     /** Creates a new instance. */
@@ -96,8 +96,11 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
                 );
     }
     public TextAreaFigure(String text) {
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
         setText(text);
-        title="Área de Texto"+Integer.toString(counter++);
+        title=labels.getString("createTextArea")+Integer.toString(counter++);
     }
     
     // DRAWING
@@ -372,9 +375,12 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
     // COMPOSITE FIGURES
     // CLONING
     public TextAreaFigure clone() {
+    	
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
         TextAreaFigure that = (TextAreaFigure) super.clone();
         that.bounds = (Rectangle2D.Double) this.bounds.clone();
-        that.title="Área de Texto"+Integer.toString(counter++);
+        that.title=labels.getString("createTextArea")+Integer.toString(counter++);
         return that;
     }
     
