@@ -281,6 +281,41 @@ public class TerraFigureTree extends JTree {
 					else if(f instanceof AtributoMultivaloradoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoMultivalorado.png"));
 					}
+					else if(f instanceof LineConnectionGeneralizacaoFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowConnectionSmall.png"));
+					}
+					else if(f instanceof DoubleLineConnectionGeneralizacaoFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleConnectionSmall.png"));
+					}
+					else if(f instanceof GeneralizacaoLineConnectionFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createGeneralizacaoConnectionSmall.png"));
+					}
+					else if(f instanceof LabeledDoubleLineConnectionMuitosFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleMuitosConnectionSmall.png"));
+					}
+					else if(f instanceof LabeledDoubleLineConnectionUmFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleUmConnectionSmall.png"));
+					}
+					else if(f instanceof LabeledLineConnectionUmFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowUmConnectionSmall.png"));
+					}
+					else if(f instanceof LabeledLineConnectionMuitosFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowMuitosConnectionSmall.png"));
+					}
+					else if(f instanceof SobreposicaoFigure){
+						ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+						Ret=labels.getImageIcon("createSobreposicaoSmall", SobreposicaoFigure.class);
+					}
+					else if(f instanceof DisjuncaoFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createDisjuncaoSmall.png"));
+					}
+					else if(f instanceof TextItalicoFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createPapelSmall.png"));
+					}
+					else if(f instanceof LineConnectionFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowConnectionAtributoSmall.png"));
+					}
+					
 					
 				}
 			}

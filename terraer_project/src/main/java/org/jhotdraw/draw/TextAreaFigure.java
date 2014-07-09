@@ -31,6 +31,7 @@ import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
@@ -66,14 +67,14 @@ import org.jhotdraw.xml.DOMOutput;
  * FIXME - TextAreaFigure should not draw a rectangle on its own but rather
  * rely on a decorator. We probably need a DecoratorConnector for this and we
  * need a way to specify the inner bounds of the decorator. We also need a way
- * to center the text of the TextAreaFigure verticaly and horizontaly.
+ * to center the text of the TextAreaFigure vertically and horizontally.
  *
  * @author    Eduardo Francos - InContext (original version),
  *            Werner Randelshofer (this derived version)
  * @version 2.0.3 2007-04-05 Made all instance variables protected instead of private.
  * <br>2.0.2 2006-12-11 Implemented more efficient clipping.
  * <br>2.0.1 2006-02-27 Draw UNDERLINE_LOW_ONE_PIXEL instead of UNDERLINE_ON.
- * <br>2.0 2006-01-14 Changed to support double precison coordinates.
+ * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 5. March 2004  Created.
  */
 public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements TextHolderFigure {
@@ -345,7 +346,7 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
     }
     
     public void setFontSize(float size) {
-        FONT_SIZE.set(this, new Double(size));
+        FONT_SIZE.set(this, (double)size);
     }
     
     public float getFontSize() {
@@ -422,6 +423,11 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
         isTextOverflow = null;
     }
     
+    @Override
+	public String getToolTipText(Double p) {
+		return this.toString();
+	}
+
     public boolean isTextOverflow() {
         if (isTextOverflow == null) {
             isTextOverflow = false;

@@ -28,6 +28,7 @@ import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.Collection;
@@ -141,7 +142,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
                     origin.x, origin.y, layout.getAdvance(), layout.getAscent()
                     );
             Rectangle2D lBounds = layout.getBounds();
-            if (! lBounds.isEmpty() && ! Double.isNaN(lBounds.getX())) {
+            if (! lBounds.isEmpty() && ! java.lang.Double.isNaN(lBounds.getX())) {
                 r.add(new Rectangle2D.Double(
                         lBounds.getX()+origin.x,
                         (lBounds.getY()+origin.y+layout.getAscent()),
@@ -149,7 +150,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
                         lBounds.getHeight()
                         ));
             }
-            // grow by two pixels to take antialiasing into account
+            // grow by two pixels to take anti-aliasing into account
             Geom.grow(r, 2d, 2d);
             return r;
         }
@@ -214,7 +215,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
     }
     
     public void setFontSize(float size) {
-        FONT_SIZE.set(this, new Double(size));
+        FONT_SIZE.set(this, (double)size);
     }
     
     public float getFontSize() {
@@ -261,7 +262,11 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
         textLayout = null;
     }
     
-    
+    @Override
+	public String getToolTipText(Double p) {
+		return this.toString();
+	}
+
     public void read(DOMInput in) throws IOException {
         setBounds(
                 new Point2D.Double(in.getAttribute("x",0d), in.getAttribute("y",0d)),

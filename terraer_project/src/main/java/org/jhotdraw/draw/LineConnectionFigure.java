@@ -88,8 +88,12 @@ public class LineConnectionFigure extends LineFigure
     public LineConnectionFigure() {
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-
-    	title=labels.getString("createElbowConnectionAtributo")+Integer.toString(counter);
+    	if (this.getStartFigure()!= null || this.getEndFigure() != null){    	
+           	title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
+           			+ labels.getString("connectionTitle2") + this.getEndFigure().getToolTipText(null);
+       	}else{
+        	title=labels.getString("createElbowConnectionAtributo")+Integer.toString(counter);
+        	}
     }
     // DRAWING
     // SHAPE AND BOUNDS
@@ -149,6 +153,10 @@ public class LineConnectionFigure extends LineFigure
                 setEndPoint(end);
             }
         }
+    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+        title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
+       			+ labels.getString("connectionTitle2") + this.getEndFigure().getToolTipText(null);
+        org.jhotdraw.draw.TerraFigureTree.getInstance().refresh(this);
         changed();
     }
     public void validate() {

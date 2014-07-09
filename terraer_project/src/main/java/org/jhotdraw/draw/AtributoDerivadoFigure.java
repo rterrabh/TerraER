@@ -14,6 +14,8 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.geom.Point2D.Double;
+
 import java.io.IOException;
 
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -63,6 +65,11 @@ public class AtributoDerivadoFigure extends GroupFigure {
     	return this;
 	}
     
+    @Override
+	public String getToolTipText(Double p) {
+		return this.toString();
+	}
+
     public AbstractCompositeFigure clone() {
     	return (new AtributoDerivadoFigure()).init();
     }

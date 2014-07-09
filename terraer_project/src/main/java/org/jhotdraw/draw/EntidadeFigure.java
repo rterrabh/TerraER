@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.geom.Point2D.Double;
+
 import java.io.IOException;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -71,6 +73,11 @@ public class EntidadeFigure extends GroupFigure {
 		return tf;
 	}
 	
+	@Override
+	public String getToolTipText(Double p) {
+		return this.toString();
+	}
+
     public AbstractCompositeFigure clone() {
     	return (new EntidadeFigure()).init();
     }

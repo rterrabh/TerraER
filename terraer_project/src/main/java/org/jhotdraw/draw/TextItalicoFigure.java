@@ -15,6 +15,8 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.geom.Point2D.Double;
+
 /**
  * A text figure.
  * <p>
@@ -41,6 +43,11 @@ public class TextItalicoFigure extends TextFigure{
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
+	public String getToolTipText(Double p) {
+		return this.toString();
+	}
+
 	public String toString(){
 		return this.getText();
 	}
