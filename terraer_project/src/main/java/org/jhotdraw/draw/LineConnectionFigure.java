@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import static org.jhotdraw.draw.AttributeKeys.STROKE_COLOR;
+import static org.jhotdraw.draw.AttributeKeys.TEXT_COLOR;
+
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -30,6 +33,7 @@ import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
+
 /**
  * A LineConnection is a standard implementation of the
  * ConnectionFigure interface. The interface is implemented with BezierFigure.
@@ -50,6 +54,8 @@ public class LineConnectionFigure extends LineFigure
     
     private static int counter = 0;
     protected String title ;
+    ModelValidation validation = new ModelValidation();
+
     
     /**
      * Handles figure changes in the start and the
@@ -86,7 +92,6 @@ public class LineConnectionFigure extends LineFigure
     
     /** Creates a new instance. */
     public LineConnectionFigure() {
-    	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
     	if (this.getStartFigure()!= null || this.getEndFigure() != null){    	
            	title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
@@ -153,7 +158,9 @@ public class LineConnectionFigure extends LineFigure
                 setEndPoint(end);
             }
         }
-    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+        TEXT_COLOR.set(this, validation.validateLineConnection(this));
+        STROKE_COLOR.set(this, validation.validateLineConnection(this));    	
+        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
         title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
        			+ labels.getString("connectionTitle2") + this.getEndFigure().getToolTipText(null);
         org.jhotdraw.draw.TerraFigureTree.getInstance().refresh(this);

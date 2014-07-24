@@ -14,6 +14,9 @@
 
 package org.jhotdraw.draw;
 
+import static org.jhotdraw.draw.AttributeKeys.STROKE_COLOR;
+import static org.jhotdraw.draw.AttributeKeys.TEXT_COLOR;
+
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -189,6 +192,8 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure
     }
     // CONNECTING
     public void updateConnection() {
+    	TEXT_COLOR.set(this, validation.validateLineConnection(this));
+        STROKE_COLOR.set(this, validation.validateLineConnection(this));
         super.updateConnection();
         layout();
     }
