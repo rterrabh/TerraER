@@ -1,0 +1,9 @@
+echo "Type the user, followed by [ENTER]:"
+read -s user
+echo "Type the password, followed by [ENTER]:"
+read -s passwd
+
+sshpass -p "$passwd" rsync -ravzup --delete --exclude '.DS_Store' --exclude 'sync.script' -e ssh  ~/Dropbox/projetos/terraer/terraer_website/ "$user"@terraer.com.br:/home/drterra/terraer.com.br/
+
+unset passwd
+unset user

@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -38,6 +39,7 @@ import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.SaveAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.UndoAction;
+import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.beans.AbstractBean;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
@@ -215,6 +217,10 @@ public class DefaultApplicationModel
         mi = m.add(getAction(DuplicateAction.ID));
         mi.setIcon(null);
         mi = m.add(getAction(DeleteAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
+        mi = m.add(getAction(ValidateModelAction.ID));
+        //mi.setIcon(new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/checkModel.png")));
         mi.setIcon(null);
         m.addSeparator();
         mi = m.add(getAction(SelectAllAction.ID));

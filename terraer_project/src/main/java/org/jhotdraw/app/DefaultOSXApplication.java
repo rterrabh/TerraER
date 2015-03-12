@@ -66,6 +66,7 @@ import org.jhotdraw.app.action.SaveAction;
 import org.jhotdraw.app.action.SaveAsAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.UndoAction;
+import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.gui.Worker;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.util.prefs.PreferencesUtil;
@@ -207,6 +208,7 @@ public class DefaultOSXApplication extends AbstractApplication {
         mo.putAction(SaveAsAction.ID, new SaveAsAction(this));
         mo.putAction(PrintAction.ID, new PrintAction(this));
         mo.putAction(CloseAction.ID, new CloseAction(this));
+        mo.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
         
         mo.putAction(UndoAction.ID, new UndoAction(this));
         mo.putAction(RedoAction.ID, new RedoAction(this));

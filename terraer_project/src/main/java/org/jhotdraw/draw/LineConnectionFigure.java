@@ -17,6 +17,7 @@ package org.jhotdraw.draw;
 import static org.jhotdraw.draw.AttributeKeys.STROKE_COLOR;
 import static org.jhotdraw.draw.AttributeKeys.TEXT_COLOR;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -51,6 +52,8 @@ public class LineConnectionFigure extends LineFigure
     private Connector    startConnector;
     private Connector    endConnector;
     private Liner liner;
+    
+    public static boolean validateEnabled = true;
     
     private static int counter = 0;
     protected String title ;
@@ -158,14 +161,22 @@ public class LineConnectionFigure extends LineFigure
                 setEndPoint(end);
             }
         }
-        TEXT_COLOR.set(this, validation.validateLineConnection(this));
-        STROKE_COLOR.set(this, validation.validateLineConnection(this));    	
+        
+        if (validateEnabled){
+        	TEXT_COLOR.set(this, validation.validateLineConnection(this));
+        	STROKE_COLOR.set(this, validation.validateLineConnection(this));
+        }else{
+        	TEXT_COLOR.set(this, Color.black);
+        	STROKE_COLOR.set(this, Color.black);
+        }
+        
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
         title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
        			+ labels.getString("connectionTitle2") + this.getEndFigure().getToolTipText(null);
         org.jhotdraw.draw.TerraFigureTree.getInstance().refresh(this);
         changed();
     }
+    
     public void validate() {
         super.validate();
         lineout();

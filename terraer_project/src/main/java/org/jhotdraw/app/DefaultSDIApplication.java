@@ -62,6 +62,7 @@ import org.jhotdraw.app.action.SaveAsAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.ToggleVisibleAction;
 import org.jhotdraw.app.action.UndoAction;
+import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.util.ReversedList;
 import org.jhotdraw.util.prefs.PreferencesUtil;
@@ -150,6 +151,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(SaveAsAction.ID, new SaveAsAction(this));
         m.putAction(CloseAction.ID, new CloseAction(this));
         m.putAction(PrintAction.ID, new PrintAction(this));
+        m.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
         
         m.putAction(UndoAction.ID, new UndoAction(this));
         m.putAction(RedoAction.ID, new RedoAction(this));
@@ -159,6 +161,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(DeleteAction.ID, new DeleteAction());
         m.putAction(DuplicateAction.ID, new DuplicateAction());
         m.putAction(SelectAllAction.ID, new SelectAllAction());
+        
     }
     protected void initProjectActions(Project p) {
         ApplicationModel m = getModel();

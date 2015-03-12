@@ -2,3 +2,11 @@ Manifest-Version: 2.0
 Class-Path: appframework-0.42.jar MRJAdapter.jar quaqua.jar swing-layout.jar swing-worker.jar
 Main-Class: org.jhotdraw.samples.draw.Main
 SplashScreen-Image: logo.png
+Sealed: true
+Application-Name: "TerraER - an Academic Tool for ER Modeling"
+Specification-Title: "TerraER" 
+Specification-Version: "2.10"
+Specification-Vendor: "Ricardo Terra and Henrique Rocha"
+Implementation-Title: "terraer" 
+Implementation-Version: "2.10"
+Implementation-Vendor: "Ricardo Terra and Henrique Rocha"

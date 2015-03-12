@@ -67,6 +67,7 @@ import org.jhotdraw.app.action.SaveAsAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.ToggleToolBarAction;
 import org.jhotdraw.app.action.UndoAction;
+import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.gui.Arrangeable;
 import org.jhotdraw.gui.MDIDesktopPane;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -106,6 +107,7 @@ public class DefaultMDIApplication extends AbstractApplication {
         mo.putAction(SaveAsAction.ID, new SaveAsAction(this));
         mo.putAction(CloseAction.ID, new CloseAction(this));
         mo.putAction(PrintAction.ID, new PrintAction(this));
+        mo.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
         
         mo.putAction(UndoAction.ID, new UndoAction(this));
         mo.putAction(RedoAction.ID, new RedoAction(this));
