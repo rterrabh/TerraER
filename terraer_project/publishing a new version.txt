@@ -1,0 +1,18 @@
+1. git add . (perhaps)
+   git commit -a
+   git push 
+
+2. Open "TerraER" Eclipse project
+
+3. Change the version of TerraER (org.jhotdraw.samples.draw.Main)
+   - e.g., 2.02 to 2.10
+
+4. Export as "Runnable Jar File"
+   - Export destination: "terraer_website/dist"
+   - Select "Package required libraries into generated JAR"
+   - Finish 
+
+5. FTP to http://www.terraer.com.br (run sync.script)
+
+6. Send new file to Softpedia 
+   

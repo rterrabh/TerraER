@@ -33,7 +33,6 @@ public class Main {
         if (os.startsWith("mac")) {
             app = new DefaultOSXApplication();
         } else if (os.startsWith("win")) {
-            //app = new DefaultMDIApplication();
             app = new DefaultSDIApplication();
         } else {
             app = new DefaultSDIApplication();
@@ -45,7 +44,7 @@ public class Main {
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
         DrawApplicationModel model = new DrawApplicationModel();
         model.setName("TerraER");
-        model.setVersion("2.0.1");
+        model.setVersion("2.10");
         model.setCopyright(labels.getString("copyright"));
         model.setProjectClassName("org.jhotdraw.samples.draw.TerraProject");
         app.setModel(model);

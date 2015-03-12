@@ -293,7 +293,7 @@ public class DefaultOSXApplication extends AbstractApplication {
                 }
             });
             
-            f.setJMenuBar(createMenuBar(p));            
+            f.setJMenuBar(createMenuBar(p));   
             
             f.getContentPane().add(p.getComponent());
             f.setVisible(true);
@@ -324,6 +324,7 @@ public class DefaultOSXApplication extends AbstractApplication {
             mb.add(mm);
         }
         mb.add(createWindowMenu(p));
+        mb.add(createHelpMenu(p));
         return mb;
     }
     
@@ -389,6 +390,20 @@ public class DefaultOSXApplication extends AbstractApplication {
                 }
             }
         });
+        
+        return m;
+    }
+    
+    protected JMenu createHelpMenu(Project p) {
+        ApplicationModel model = getModel();
+        ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+        
+        JMenu m;
+        JMenuItem mi;
+        
+        m = new JMenu();
+        labels.configureMenu(m, labels.getString("help"));
+        m.add(model.getAction(AboutAction.ID));
         
         return m;
     }
