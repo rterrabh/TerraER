@@ -1,7 +1,7 @@
 Manifest-Version: 2.0
 Class-Path: appframework-0.42.jar MRJAdapter.jar quaqua.jar swing-layout.jar swing-worker.jar
 Main-Class: org.jhotdraw.samples.draw.Main
-SplashScreen-Image: logo.png
+SplashScreen-Image: splash.png
 Sealed: true
 Application-Name: "TerraER - an Academic Tool for ER Modeling"
 Specification-Title: "TerraER" 
