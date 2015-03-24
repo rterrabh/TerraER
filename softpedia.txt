@@ -1,0 +1,63 @@
+Developer name: Ricardo Terra, Henrique Rocha
+
+
+Developer site: http://www.terraer.com.br
+
+
+Developer email: rterrabh@gmail.com
+
+
+Program name: TerraER
+
+
+Program name: 2.10
+
+
+Category: Database Utils	
+
+
+File size: 3.1 MB
+
+
+License: Freeware
+
+
+32x32 Icon URL: www.terraer.com.br/favicon.ico
+
+
+Screenshot URL:
+http://www.terraer.com.br/images/windows.png
+http://www.terraer.com.br/images/macos.png
+http://www.terraer.com.br/images/linux.png
+
+
+Download links:
+http://www.terraer.com.br/dist/TerraER2.10.jar
+https://github.com/rterrabh/TerraER/blob/master/terraer_project/dist/TerraER2.10.jar?raw=true
+
+
+Short description: TerraER - an Academic Tool for ER Modeling
+
+
+Long description:
+TerraER is a free open-source learning tool designed to aid students in the creation of entity-relationship models. Our main goal is to provide students with a tool that reflects exactly the data modeling concepts learned in the classroom.
+
+
+
+
+Special requirements: Java JRE
+
+
+
+
+
+
+
+
+
+
+
+
+
+Special: Java JRE
+

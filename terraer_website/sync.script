@@ -3,7 +3,13 @@ read -s user
 echo "Type the password, followed by [ENTER]:"
 read -s passwd
 
-sshpass -p "$passwd" rsync -ravzup --delete --exclude '.DS_Store' --exclude 'sync.script' -e ssh  ~/Dropbox/projetos/terraer/terraer_website/ "$user"@terraer.com.br:/home/drterra/terraer.com.br/
+sshpass -p "$passwd" scp ~/Dropbox/projetos/terraer/terraer_website/favicon.ico "$user"@terraer.com.br:/home/drterra/terraer.com.br/
+
+sshpass -p "$passwd" rsync -ravzup --delete --exclude '.DS_Store' --exclude 'sync.script' -e ssh  ~/Dropbox/projetos/terraer/terraer_website/dist/ "$user"@terraer.com.br:/home/drterra/terraer.com.br/dist/
+
+sshpass -p "$passwd" rsync -ravzup --delete --exclude '.DS_Store' --exclude 'sync.script' -e ssh  ~/Dropbox/projetos/terraer/terraer_website/download/ "$user"@terraer.com.br:/home/drterra/terraer.com.br/download/
+
+sshpass -p "$passwd" rsync -ravzup --delete --exclude '.DS_Store' --exclude 'sync.script' -e ssh  ~/Dropbox/projetos/terraer/terraer_website/images/ "$user"@terraer.com.br:/home/drterra/terraer.com.br/images/
 
 unset passwd
 unset user
