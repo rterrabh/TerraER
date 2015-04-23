@@ -255,7 +255,7 @@ public class TerraFigureTree extends JTree {
 				if(vctTopNodes.contains(Node)){ //Node is not a Figure Element
 					//Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/openfolder.png"));
 				}
-				else{ //Node is a Figure Element, need to know which one
+				else if (Node.getUserObject() instanceof Figure){ //Node is a Figure Element, need to know which one
 					Figure f = (Figure)Node.getUserObject();
 					if(f instanceof EntidadeFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createEntidade.png"));
