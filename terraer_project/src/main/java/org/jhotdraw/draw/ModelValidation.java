@@ -79,11 +79,11 @@ public class ModelValidation{
 					!(conn.getEndFigure() instanceof EntidadeFigure &&
 							conn.getStartFigure() instanceof AtributoChaveFigure) &&
 		//Connection
-		//Weak Entity <---> Key Attribute
-					!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+		//Weak Entity <---> Key Attribute (REMOVED DUE TO THE PARTIAL KEY)
+					/*!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
 							conn.getEndFigure() instanceof AtributoChaveFigure) &&
 					!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
-							conn.getStartFigure() instanceof AtributoChaveFigure) &&
+							conn.getStartFigure() instanceof AtributoChaveFigure) &&*/
 		//Connection
 		//Weak Entity <---> Partial Key Attribute
 					!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
