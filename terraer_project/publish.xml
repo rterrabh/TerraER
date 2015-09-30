@@ -3,7 +3,7 @@
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="/Users/rterrabh/Dropbox/projetos/terraer/terraer_project/dist/TerraER2.2.jar">
+        <jar destfile="/Users/rterrabh/Dropbox/projetos/terraer/terraer_project/dist/TerraER2.20.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="org.jhotdraw.samples.draw.Main"/>
@@ -12,7 +12,7 @@
             	<attribute name="SplashScreen-Image" value="splash.png"/>
             	<attribute name="Application-Name" value="TerraER - an Academic Tool for ER Modeling"/>
             	<attribute name="Specification-Title" value="TerraER"/>
-            	<attribute name="Specification-Version" value="2.2"/>
+            	<attribute name="Specification-Version" value="2.20"/>
             	<attribute name="Specification-Vendor" value="Ricardo Terra and Henrique Rocha"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
