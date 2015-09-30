@@ -20,6 +20,7 @@ import static org.jhotdraw.draw.AttributeKeys.FONT_SIZE;
 import static org.jhotdraw.draw.AttributeKeys.FONT_UNDERLINE;
 import static org.jhotdraw.draw.AttributeKeys.TEXT;
 import static org.jhotdraw.draw.AttributeKeys.TEXT_COLOR;
+import static org.jhotdraw.draw.AttributeKeys.STROKE_DASHES;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -115,6 +116,9 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
             textAttributes.put(TextAttribute.FONT, getFont());
             if (FONT_UNDERLINE.get(this)) {
                 textAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
+            }
+            if (STROKE_DASHES.get(this)!=null) {
+                textAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_DASHED);
             }
             textLayout = new TextLayout(text, textAttributes, frc);
         }

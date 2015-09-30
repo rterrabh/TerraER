@@ -145,10 +145,12 @@ public class TerraFigureTree extends JTree {
 		if (f instanceof EntidadeFigure || f instanceof EntidadeFracaFigure) {
 			ChosenNode = nodEntidades;
 		} else if (f instanceof RelacionamentoFigure
+				|| f instanceof RelacionamentoFracoFigure
 				|| f instanceof EntidadeRelacionamentoFigure) {
 			ChosenNode = nodRelacionamentos;
 		} else if (f instanceof AtributoFigure
 				|| f instanceof AtributoChaveFigure
+				|| f instanceof AtributoChaveParcialFigure
 				|| f instanceof AtributoDerivadoFigure
 				|| f instanceof AtributoMultivaloradoFigure) {
 			ChosenNode = nodAtributos;
@@ -266,6 +268,9 @@ public class TerraFigureTree extends JTree {
 					else if(f instanceof RelacionamentoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createRelacionamento.png"));
 					}
+					else if(f instanceof RelacionamentoFracoFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createRelacionamentoFraco.png"));
+					}
 					else if(f instanceof EntidadeRelacionamentoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createEntidadeRelacionamento.png"));
 					}
@@ -274,6 +279,9 @@ public class TerraFigureTree extends JTree {
 					}
 					else if(f instanceof AtributoChaveFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoChave.png"));
+					}
+					else if(f instanceof AtributoChaveParcialFigure){
+						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoChaveParcial.png"));
 					}
 					else if(f instanceof AtributoDerivadoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoDerivado.png"));

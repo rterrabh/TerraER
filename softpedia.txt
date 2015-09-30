@@ -4,13 +4,13 @@ Developer name: Ricardo Terra, Henrique Rocha
 Developer site: http://www.terraer.com.br
 
 
-Developer email: rterrabh@gmail.com
+Developer email: rterrabh (at) gmail.com
 
 
 Program name: TerraER
 
 
-Program name: 2.10
+Program name: 2.2
 
 
 Category: Database Utils	
@@ -32,8 +32,8 @@ http://www.terraer.com.br/images/linux.png
 
 
 Download links:
-http://www.terraer.com.br/dist/TerraER2.10.jar
-https://github.com/rterrabh/TerraER/blob/master/terraer_project/dist/TerraER2.10.jar?raw=true
+http://www.terraer.com.br/dist/TerraER2.2.jar
+https://github.com/rterrabh/TerraER/blob/master/terraer_project/dist/TerraER2.2.jar?raw=true
 
 
 Short description: TerraER - an Academic Tool for ER Modeling
@@ -45,19 +45,8 @@ TerraER is a free open-source learning tool designed to aid students in the crea
 
 
 
-Special requirements: Java JRE
+Special requirements: Java Runtime Environment (JRE)	
 
 
 
-
-
-
-
-
-
-
-
-
-
-Special: Java JRE
 
