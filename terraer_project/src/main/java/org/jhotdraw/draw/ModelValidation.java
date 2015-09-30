@@ -16,6 +16,10 @@ public class ModelValidation{
 			if (! (conn.getStartFigure() instanceof EntidadeFigure &&
 					conn.getEndFigure() instanceof RelacionamentoFigure) &&
 		//Labeled Connection
+		//Entity ---> Weak Relationship
+				! (conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&		
+		//Labeled Connection
 		//Entity ---> Entity Relationship
 				! (conn.getStartFigure() instanceof EntidadeFigure &&
 					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
@@ -27,6 +31,14 @@ public class ModelValidation{
 		//Weak Entity ---> Entity Relationship
 				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
 					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
+		//Labeled Connection
+		//Weak Entity ---> Weak Relationship
+				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&		
+		//Labeled Connection
+		//Entity Relationship ---> Weak Relationship
+				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&	
 		//Labeled Connection
 		//Entity Relationship ---> Relationship
 				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
@@ -72,6 +84,12 @@ public class ModelValidation{
 							conn.getEndFigure() instanceof AtributoChaveFigure) &&
 					!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
 							conn.getStartFigure() instanceof AtributoChaveFigure) &&
+		//Connection
+		//Weak Entity <---> Partial Key Attribute
+					!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+							conn.getEndFigure() instanceof AtributoChaveParcialFigure) &&
+					!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
+							conn.getStartFigure() instanceof AtributoChaveParcialFigure) &&							
 		//Connection 
 		//Entity Relationship <---> Key Attribute
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
@@ -168,7 +186,12 @@ public class ModelValidation{
 		//Generalization Connection
 		//Overlap ---> Entity
 				!(conn.getStartFigure() instanceof SobreposicaoFigure &&
-					conn.getEndFigure() instanceof EntidadeFigure)){
+					conn.getEndFigure() instanceof EntidadeFigure) &&
+		//Generalization Connection
+		//Entity ---> Entity (right according to book 2nd version of book "Database Design Using Entity-Relationship Diagrams")
+				!(conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof EntidadeFigure)					
+		){
 				return Color.red;
 			}
 		}
