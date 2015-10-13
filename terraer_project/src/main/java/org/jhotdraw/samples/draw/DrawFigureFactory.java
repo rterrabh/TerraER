@@ -16,6 +16,7 @@ package org.jhotdraw.samples.draw;
 
 import org.jhotdraw.draw.ArrowTip;
 import org.jhotdraw.draw.AtributoChaveFigure;
+import org.jhotdraw.draw.AtributoChaveParcialFigure;
 import org.jhotdraw.draw.AtributoDerivadoFigure;
 import org.jhotdraw.draw.AtributoFigure;
 import org.jhotdraw.draw.AtributoMultivaloradoFigure;
@@ -51,6 +52,7 @@ import org.jhotdraw.draw.LineFigure;
 import org.jhotdraw.draw.QuadTreeDrawing;
 import org.jhotdraw.draw.RectangleFigure;
 import org.jhotdraw.draw.RelacionamentoFigure;
+import org.jhotdraw.draw.RelacionamentoFracoFigure;
 import org.jhotdraw.draw.RoundRectangleFigure;
 import org.jhotdraw.draw.SobreposicaoFigure;
 import org.jhotdraw.draw.TextAreaFigure;
@@ -86,11 +88,15 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { RelacionamentoFigure.class, "rel" },
         { EntidadeFigure.class, "ent" },
         { EntidadeRelacionamentoFigure.class, "entrel" },
+        { RelacionamentoFracoFigure.class, "relfraco" },
+
         { AtributoFigure.class, "atr" },
         { AtributoChaveFigure.class, "atrchave" },
         { EntidadeFracaFigure.class,"entfraca"},
         { AtributoDerivadoFigure.class,"atrderivado"},
         { AtributoMultivaloradoFigure.class,"atrmulti"},
+        { AtributoChaveParcialFigure.class, "atrchaveparcial"},
+        
         { SobreposicaoFigure.class, "sobreposicao"},
         { DisjuncaoFigure.class, "disjuncao"},
         { CircleFigure.class, "circ"},
