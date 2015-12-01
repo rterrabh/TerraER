@@ -37,8 +37,8 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * To create a figure using the CreationTool, the user does the following mouse
  * gestures on a DrawingView:
  * <ol>
- * <li>Press the mouse button over the DrawingView. This defines the start
- * point of the Figure bounds.</li>
+ * <li>Press the mouse button over the DrawingView. This defines the start point
+ * of the Figure bounds.</li>
  * <li>Drag the mouse while keeping the mouse button pressed, and then release
  * the mouse button. This defines the end point of the Figure bounds.</li>
  * </ol>
@@ -95,26 +95,21 @@ public class CreationTool extends AbstractTool {
 		this(prototypeClassName, null, null);
 	}
 
-	public CreationTool(String prototypeClassName,
-			Map<AttributeKey, Object> attributes) {
+	public CreationTool(String prototypeClassName, Map<AttributeKey, Object> attributes) {
 		this(prototypeClassName, attributes, null);
 	}
 
-	public CreationTool(String prototypeClassName,
-			Map<AttributeKey, Object> attributes, String name) {
+	public CreationTool(String prototypeClassName, Map<AttributeKey, Object> attributes, String name) {
 		try {
-			this.prototype = (Figure) Class.forName(prototypeClassName)
-					.newInstance();
+			this.prototype = (Figure) Class.forName(prototypeClassName).newInstance();
 		} catch (Exception e) {
-			InternalError error = new InternalError(
-					"Unable to create Figure from " + prototypeClassName);
+			InternalError error = new InternalError("Unable to create Figure from " + prototypeClassName);
 			error.initCause(e);
 			throw error;
 		}
 		this.prototypeAttributes = attributes;
 		if (name == null) {
-			ResourceBundleUtil labels = ResourceBundleUtil
-					.getLAFBundle("org.jhotdraw.draw.Labels");
+			ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 			name = labels.getString("createFigure");
 		}
 		this.presentationName = name;
@@ -166,13 +161,11 @@ public class CreationTool extends AbstractTool {
 	 * @deprecated This constructor might go away, because the presentationName
 	 *             parameter is not used.
 	 */
-	public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes,
-			String name) {
+	public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes, String name) {
 		this.prototype = prototype;
 		this.prototypeAttributes = attributes;
 		if (name == null) {
-			ResourceBundleUtil labels = ResourceBundleUtil
-					.getLAFBundle("org.jhotdraw.draw.Labels");
+			ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 			name = labels.getString("createFigure");
 		}
 		this.presentationName = name;
@@ -236,650 +229,336 @@ public class CreationTool extends AbstractTool {
 						&& Math.abs(anchor.y - evt.getY()) < minimalSizeTreshold.height) {
 					createdFigure.willChange();
 
-					if (createdFigure.getClass().equals(
-							EntidadeRelacionamentoFigure.class)) {
+					if (createdFigure.getClass().equals(EntidadeRelacionamentoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 2, anchor.y + 2)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														76), anchor.y
-												+ (int) Math.max(bounds.height,
-														36))));
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setBounds(constrainPoint(new Point(anchor.x + 2, anchor.y + 2)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 76),
+												anchor.y + (int) Math.max(bounds.height, 36))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 10, anchor.y + 13)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 13)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							EntidadeFigure.class)) {
+					} else if (createdFigure.getClass().equals(EntidadeFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 10, anchor.y + 13)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 13)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							EntidadeFracaFigure.class)) {
+					} else if (createdFigure.getClass().equals(EntidadeFracaFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.STROKE_TYPE,
-										StrokeType.DOUBLE);
-								f
-										.setAttribute(
-												AttributeKeys.STROKE_INNER_WIDTH_FACTOR,
-												3.0);
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+								f.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 4, anchor.y + 13)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 4, anchor.y + 13)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							AtributoFigure.class)) {
+					} else if (createdFigure.getClass().equals(AtributoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 10, anchor.y + 3)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 3)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							AtributoDerivadoFigure.class)) {
+					} else if (createdFigure.getClass().equals(AtributoDerivadoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setAttribute(AttributeKeys.STROKE_DASHES,
-										new double[] { 5.0 });
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setAttribute(AttributeKeys.STROKE_DASHES, new double[] { 5.0 });
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 10, anchor.y + 3)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 3)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							AtributoMultivaloradoFigure.class)) {
+					} else if (createdFigure.getClass().equals(AtributoMultivaloradoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setAttribute(AttributeKeys.STROKE_TYPE,
-										StrokeType.DOUBLE);
-								f
-										.setAttribute(
-												AttributeKeys.STROKE_INNER_WIDTH_FACTOR,
-												3.0);
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+								f.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
 
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
 								//
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 10, anchor.y + 3)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 3)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							AtributoChaveFigure.class)) {
+					} else if (createdFigure.getClass().equals(AtributoChaveFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 18, anchor.y + 3)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 18, anchor.y + 3)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 								TextFigure tf = (TextFigure) f;
-								tf.setAttribute(tf
-										.getAttributeKey("fontUnderlined"),
-										Boolean.TRUE);
-								tf.setAttribute(tf.getAttributeKey("fontBold"),
-										Boolean.TRUE);
+								tf.setAttribute(tf.getAttributeKey("fontUnderlined"), Boolean.TRUE);
+								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							AtributoChaveParcialFigure.class)) {
+					} else if (createdFigure.getClass().equals(AtributoChaveParcialFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														125), anchor.y
-												+ (int) Math.max(bounds.height,
-														27))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 125),
+												anchor.y + (int) Math.max(bounds.height, 27))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 18, anchor.y + 3)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 18, anchor.y + 3)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 								TextFigure tf = (TextFigure) f;
-								tf.setAttribute(tf.getAttributeKey("strokeDashes"),
-										new double[] { 3.0 });
-								tf.setAttribute(tf.getAttributeKey("fontBold"),
-										Boolean.TRUE);
+								tf.setAttribute(tf.getAttributeKey("strokeDashes"), new double[] { 3.0 });
+								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							RelacionamentoFigure.class)) {
+					} else if (createdFigure.getClass().equals(RelacionamentoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			80),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			40))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+											anchor.y + (int) Math.max(bounds.height, 40))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 15, anchor.y + 13)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y + 13)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							RelacionamentoFracoFigure.class)) {
+					} else if (createdFigure.getClass().equals(RelacionamentoFracoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 80), anchor.y
-								+ (int) Math.max(bounds.height, 40))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
 						for (Figure f : gf.getChildren()) {
-							f
-									.setBounds(
-											constrainPoint(new Point(anchor.x,
-													anchor.y)),
-											constrainPoint(new Point(
-													anchor.x
-															+ (int) Math
-																	.max(
-																			bounds.width,
-																			97),
-													anchor.y
-															+ (int) Math
-																	.max(
-																			bounds.height,
-																			50))));
+							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 97),
+											anchor.y + (int) Math.max(bounds.height, 50))));
 							if (f.getClass().equals(RectangleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(235, 255, 232));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
 							} else if (f.getClass().equals(DiamondFigure.class)) {
-								f.setAttribute(AttributeKeys.STROKE_TYPE,StrokeType.DOUBLE);
-								f.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR,3.0);								
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(221, 221, 255));
+								f.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+								f.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 							} else if (f.getClass().equals(EllipseFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(255, 235, 235));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							} else if (f.getClass().equals(TextFigure.class)) {
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 15, anchor.y + 13)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														80), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y + 13)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							DisjuncaoFigure.class)) {
+					} else if (createdFigure.getClass().equals(DisjuncaoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 20), anchor.y
-								+ (int) Math.max(bounds.height, 20))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+										anchor.y + (int) Math.max(bounds.height, 20))));
 						for (Figure f : gf.getChildren()) {
 							if (f.getClass().equals(CircleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(245, 242, 224));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														20), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
-							} else if (f.getClass().equals(
-									TextNegritoFigure.class)) {
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
+							} else if (f.getClass().equals(TextNegritoFigure.class)) {
 								TextNegritoFigure tf = (TextNegritoFigure) f;
-								tf.setAttribute(tf.getAttributeKey("fontBold"),
-										Boolean.TRUE);
+								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 								tf.setFontSize(16);
 								tf.setEditable(false);
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 4, anchor.y + 1)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														20), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 4, anchor.y + 1)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							SobreposicaoFigure.class)) {
+					} else if (createdFigure.getClass().equals(SobreposicaoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
-						gf.setBounds(constrainPoint(new Point(anchor.x,
-								anchor.y)), constrainPoint(new Point(anchor.x
-								+ (int) Math.max(bounds.width, 20), anchor.y
-								+ (int) Math.max(bounds.height, 20))));
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+										anchor.y + (int) Math.max(bounds.height, 20))));
 						for (Figure f : gf.getChildren()) {
 							if (f.getClass().equals(CircleFigure.class)) {
-								f.setAttribute(AttributeKeys.FILL_COLOR,
-										new Color(245, 242, 224));
-								f.setBounds(constrainPoint(new Point(anchor.x,
-										anchor.y)), constrainPoint(new Point(
-										anchor.x
-												+ (int) Math.max(bounds.width,
-														20), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
-							} else if (f.getClass().equals(
-									TextNegritoFigure.class)) {
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
+							} else if (f.getClass().equals(TextNegritoFigure.class)) {
 								TextNegritoFigure tf = (TextNegritoFigure) f;
-								tf.setAttribute(tf.getAttributeKey("fontBold"),
-										Boolean.TRUE);
+								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 								tf.setFontSize(16);
 								tf.setEditable(false);
-								f.setBounds(constrainPoint(new Point(
-										anchor.x + 6, anchor.y)),
-										constrainPoint(new Point(anchor.x
-												+ (int) Math.max(bounds.width,
-														20), anchor.y
-												+ (int) Math.max(bounds.height,
-														20))));
+								f.setBounds(constrainPoint(new Point(anchor.x + 6, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(
-							RectangleFigure.class)
-							|| createdFigure.getClass().equals(
-									DiamondFigure.class)) {
+					} else if (createdFigure.getClass().equals(RectangleFigure.class)
+							|| createdFigure.getClass().equals(DiamondFigure.class)) {
 						// createdFigure.setAttribute(AttributeKeys.STROKE_WIDTH,2d);
-						createdFigure.setBounds(constrainPoint(new Point(
-								anchor.x, anchor.y)), constrainPoint(new Point(
-								anchor.x + (int) Math.max(bounds.width, 80),
-								anchor.y + (int) Math.max(bounds.height, 40))));
-						if (createdFigure.getClass().equals(
-								RectangleFigure.class)) {
-							createdFigure.setAttribute(
-									AttributeKeys.FILL_COLOR, new Color(235,
-											255, 232));
-						} else if (createdFigure.getClass().equals(
-								DiamondFigure.class)) {
-							createdFigure.setAttribute(
-									AttributeKeys.FILL_COLOR, new Color(221,
-											221, 255));
+						createdFigure.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 40))));
+						if (createdFigure.getClass().equals(RectangleFigure.class)) {
+							createdFigure.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
+						} else if (createdFigure.getClass().equals(DiamondFigure.class)) {
+							createdFigure.setAttribute(AttributeKeys.FILL_COLOR, new Color(221, 221, 255));
 						}
-					} else if (createdFigure.getClass().equals(
-							EllipseFigure.class)) {
-						createdFigure.setAttribute(AttributeKeys.FILL_COLOR,
-								new Color(255, 235, 235));
-						createdFigure.setBounds(constrainPoint(new Point(
-								anchor.x, anchor.y)), constrainPoint(new Point(
-								anchor.x + (int) Math.max(bounds.width, 80),
-								anchor.y + (int) Math.max(bounds.height, 20))));
-					} else if (createdFigure.getClass().equals(
-							TextNegritoFigure.class)) {
+					} else if (createdFigure.getClass().equals(EllipseFigure.class)) {
+						createdFigure.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+						createdFigure.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+										anchor.y + (int) Math.max(bounds.height, 20))));
+					} else if (createdFigure.getClass().equals(TextNegritoFigure.class)) {
 						TextFigure tf = (TextFigure) createdFigure;
-						tf.setAttribute(tf.getAttributeKey("fontBold"),
-								Boolean.TRUE);
+						tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 						tf.setFontSize(16);
 						tf.setEditable(false);
-					} else if (createdFigure.getClass().equals(
-							TextItalicoFigure.class)) {
+					} else if (createdFigure.getClass().equals(TextItalicoFigure.class)) {
 						TextFigure tf = (TextFigure) createdFigure;
-						tf.setAttribute(tf.getAttributeKey("fontItalic"),
-								Boolean.TRUE);
+						tf.setAttribute(tf.getAttributeKey("fontItalic"), Boolean.TRUE);
 						// tf.setFontSize(16);
 					} else {
-						createdFigure.setBounds(constrainPoint(new Point(
-								anchor.x, anchor.y)), constrainPoint(new Point(
-								anchor.x
-										+ (int) Math.max(bounds.width,
-												minimalSize.width), anchor.y
-										+ (int) Math.max(bounds.height,
-												minimalSize.height))));
+						createdFigure.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, minimalSize.width),
+										anchor.y + (int) Math.max(bounds.height, minimalSize.height))));
 					}
 					createdFigure.changed();
 				}
@@ -889,22 +568,21 @@ public class CreationTool extends AbstractTool {
 				}
 				final Figure addedFigure = createdFigure;
 				final Drawing addedDrawing = getDrawing();
-				getDrawing().fireUndoableEditHappened(
-						new AbstractUndoableEdit() {
-							public String getPresentationName() {
-								return presentationName;
-							}
+				getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
+					public String getPresentationName() {
+						return presentationName;
+					}
 
-							public void undo() throws CannotUndoException {
-								super.undo();
-								addedDrawing.remove(addedFigure);
-							}
+					public void undo() throws CannotUndoException {
+						super.undo();
+						addedDrawing.remove(addedFigure);
+					}
 
-							public void redo() throws CannotRedoException {
-								super.redo();
-								addedDrawing.add(addedFigure);
-							}
-						});
+					public void redo() throws CannotRedoException {
+						super.redo();
+						addedDrawing.add(addedFigure);
+					}
+				});
 				creationFinished(createdFigure);
 			}
 
@@ -917,8 +595,7 @@ public class CreationTool extends AbstractTool {
 		Figure f = (Figure) prototype.clone();
 		getEditor().applyDefaultAttributesTo(f);
 		if (prototypeAttributes != null) {
-			for (Map.Entry<AttributeKey, Object> entry : prototypeAttributes
-					.entrySet()) {
+			for (Map.Entry<AttributeKey, Object> entry : prototypeAttributes.entrySet()) {
 				f.setAttribute(entry.getKey(), entry.getValue());
 			}
 		}
@@ -932,7 +609,7 @@ public class CreationTool extends AbstractTool {
 	protected Figure getAddedFigure() {
 		return createdFigure;
 	}
-	
+
 	/**
 	 * This method allows subclasses to do perform additonal user interactions
 	 * after the new figure has been created. The implementation of this class

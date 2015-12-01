@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
@@ -49,8 +50,12 @@ public class AtributoChaveFigure extends GroupFigure {
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     	tf=new TextFigure(labels.getString("createAtributoChave")+Integer.toString(counter++));
+    	tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
+		tf.setAttribute(AttributeKeys.FONT_UNDERLINE, Boolean.TRUE);
+		
     	this.add(ef);
     	this.add(tf);
+    	
     	this.EventFunctions=new TerraResizeEventFunctions(this,ef,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
@@ -72,7 +77,15 @@ public class AtributoChaveFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	return (new AtributoChaveFigure()).init();
+    	AtributoChaveFigure f = (AtributoChaveFigure) super.clone();
+    	f.init();
+    	
+    	f.willChange();
+		f.ef.setBounds(this.ef.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+		
+    	return f;
     }
 	
 	public String toString(){

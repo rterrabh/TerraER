@@ -46,6 +46,8 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
     
     public EntidadeRelacionamentoFigure init(){
     	rec=new RectangleFigure();
+    	
+    	
     	df=new DiamondFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
@@ -76,7 +78,16 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	return (new EntidadeRelacionamentoFigure()).init();
+    	EntidadeRelacionamentoFigure f = (EntidadeRelacionamentoFigure) super.clone();
+    	f.init();
+    	
+    	f.willChange();
+		f.tf.setBounds(this.tf.getBounds());
+		f.rec.setBounds(this.rec.getBounds());
+		f.df.setBounds(this.df.getBounds());
+		f.changed();
+		
+    	return f;
     }
 	
 	public String toString(){

@@ -15,6 +15,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -33,17 +34,27 @@ public class SobreposicaoFigure extends GroupFigure {
 
 	private static int counter = 0;
     private String title; 
+    private CircleFigure cf;
+    private TextNegritoFigure tf;
 	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
 
     public SobreposicaoFigure(){
     	super();
-		title=labels.getString("createSobreposicao")+Integer.toString(counter++);
     }
     
     public SobreposicaoFigure init(){
-    	this.add(new CircleFigure());
-    	this.add(new TextNegritoFigure(labels.getString("createSobreposicao.letra")));
+    	cf = new CircleFigure();
+    	cf.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
+    	
+    	tf = new TextNegritoFigure(labels.getString("createSobreposicao.letra"));
+    	tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+		tf.setFontSize(16);
+		tf.setEditable(false);
+		
+    	title=labels.getString("createSobreposicao")+Integer.toString(counter++);
+		this.add(cf);
+    	this.add(tf);
     	return this;
 	}
 
@@ -52,9 +63,17 @@ public class SobreposicaoFigure extends GroupFigure {
 		return this.toString();
 	}
     
-    public AbstractCompositeFigure clone() {
-    	return (new SobreposicaoFigure()).init();
-    }
+	public AbstractCompositeFigure clone() {
+		SobreposicaoFigure f = (SobreposicaoFigure) super.clone();
+		f.init();
+
+		f.willChange();
+		f.cf.setBounds(this.cf.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+
+		return f;
+	}
 	
 	public String toString(){
 		return title;

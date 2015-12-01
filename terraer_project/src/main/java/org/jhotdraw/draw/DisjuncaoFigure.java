@@ -15,6 +15,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -33,19 +34,30 @@ public class DisjuncaoFigure extends GroupFigure {
 
     private static int counter = 0;
     private String title; 
+    private CircleFigure cf;
+    private TextNegritoFigure tf;
+    ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
 	public DisjuncaoFigure() {
 		super();
-		
-    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-
-		title=labels.getString("createDisjuncao")+Integer.toString(counter++);
 	}
 	
 	public DisjuncaoFigure init(){
-		this.add(new CircleFigure());
-    	this.add(new TextNegritoFigure("d"));
+		cf = new CircleFigure();
+		cf.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
+		
+		tf = new TextNegritoFigure("d");
+		tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+		tf.setFontSize(16);
+		tf.setEditable(false);
+		
+		title=labels.getString("createDisjuncao")+Integer.toString(counter++);
+		this.add(cf);
+    	this.add(tf);
+    	
     	return this;
+    	
+    	
 	}
 	
 	@Override
@@ -53,9 +65,17 @@ public class DisjuncaoFigure extends GroupFigure {
 		return this.toString();
 	}
 	
-    public AbstractCompositeFigure clone() {
-    	return (new DisjuncaoFigure()).init();
-    }
+	public AbstractCompositeFigure clone() {
+		DisjuncaoFigure f = (DisjuncaoFigure) super.clone();
+		f.init();
+
+		f.willChange();
+		f.cf.setBounds(this.cf.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+
+		return f;
+	}
 	
 	public String toString(){
 		return title;

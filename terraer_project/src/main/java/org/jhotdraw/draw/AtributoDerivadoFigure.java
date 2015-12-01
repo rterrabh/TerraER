@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class AtributoDerivadoFigure extends GroupFigure {
     
     public AtributoDerivadoFigure init(){
     	ef=new EllipseFigure();
+    	ef.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+		ef.setAttribute(AttributeKeys.STROKE_DASHES, new double[] { 5.0 });
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
@@ -71,8 +74,16 @@ public class AtributoDerivadoFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	return (new AtributoDerivadoFigure()).init();
-    }
+		AtributoDerivadoFigure f = (AtributoDerivadoFigure) super.clone();
+		f.init();
+
+		f.willChange();
+		f.ef.setBounds(this.ef.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+
+		return f;
+	}
 	
 	public String toString(){
 		return tf.getText();

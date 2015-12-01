@@ -16,9 +16,9 @@
 package org.jhotdraw.draw;
 
 import java.awt.geom.Point2D.Double;
-
 import java.io.IOException;
 
+import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -44,6 +44,8 @@ public class RelacionamentoFracoFigure extends GroupFigure {
     
     public RelacionamentoFracoFigure init(){
     	df=new DiamondFigure();
+    	df.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+		df.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
@@ -71,7 +73,15 @@ public class RelacionamentoFracoFigure extends GroupFigure {
 	}
     
     public AbstractCompositeFigure clone() {
-    	return (new RelacionamentoFracoFigure()).init();
+    	RelacionamentoFracoFigure f = (RelacionamentoFracoFigure) super.clone();
+    	f.init();
+    	
+    	f.willChange();
+		f.tf.setBounds(this.tf.getBounds());
+		f.df.setBounds(this.df.getBounds());
+		f.changed();
+		
+    	return f;
     }
 	
 	public String toString(){

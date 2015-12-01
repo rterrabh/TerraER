@@ -49,6 +49,9 @@ public class AtributoChaveParcialFigure extends GroupFigure {
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     	tf=new TextFigure(labels.getString("createAtributoChaveParcial")+Integer.toString(counter++));
+    	tf.setAttribute(tf.getAttributeKey("strokeDashes"), new double[] { 3.0 });
+		tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+		
     	this.add(ef);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,ef,tf);
@@ -72,7 +75,15 @@ public class AtributoChaveParcialFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	return (new AtributoChaveParcialFigure()).init();
+    	AtributoChaveParcialFigure f = (AtributoChaveParcialFigure) super.clone();
+    	f.init();
+    	
+    	f.willChange();
+		f.ef.setBounds(this.ef.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+		
+    	return f;
     }
 	
 	public String toString(){

@@ -14,10 +14,12 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
 
+import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -44,6 +46,9 @@ public class AtributoMultivaloradoFigure extends GroupFigure {
     
 	public AtributoMultivaloradoFigure init(){
 		ef=new EllipseFigure();
+		ef.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+		ef.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+		ef.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
 		
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
@@ -70,9 +75,17 @@ public class AtributoMultivaloradoFigure extends GroupFigure {
 		return this.toString();
 	}
 
-    public AbstractCompositeFigure clone() {
-    	return (new AtributoMultivaloradoFigure()).init();
-    }
+	public AbstractCompositeFigure clone() {
+		AtributoMultivaloradoFigure f = (AtributoMultivaloradoFigure) super.clone();
+		f.init();
+
+		f.willChange();
+		f.ef.setBounds(this.ef.getBounds());
+		f.tf.setBounds(this.tf.getBounds());
+		f.changed();
+
+		return f;
+	}
 	
 	public String toString(){
 		return tf.getText();
