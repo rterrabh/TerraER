@@ -75,8 +75,7 @@ public class AtributoChaveParcialFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	AtributoChaveParcialFigure f = (AtributoChaveParcialFigure) super.clone();
-    	f.init();
+    	AtributoChaveParcialFigure f = new AtributoChaveParcialFigure().init();
     	
     	f.willChange();
 		f.ef.setBounds(this.ef.getBounds());

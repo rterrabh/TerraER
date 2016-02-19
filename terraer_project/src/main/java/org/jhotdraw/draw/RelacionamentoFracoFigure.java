@@ -73,8 +73,7 @@ public class RelacionamentoFracoFigure extends GroupFigure {
 	}
     
     public AbstractCompositeFigure clone() {
-    	RelacionamentoFracoFigure f = (RelacionamentoFracoFigure) super.clone();
-    	f.init();
+    	RelacionamentoFracoFigure f = new RelacionamentoFracoFigure().init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());

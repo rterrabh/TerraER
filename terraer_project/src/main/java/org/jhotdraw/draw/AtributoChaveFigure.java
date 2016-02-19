@@ -77,8 +77,7 @@ public class AtributoChaveFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-    	AtributoChaveFigure f = (AtributoChaveFigure) super.clone();
-    	f.init();
+    	AtributoChaveFigure f = new AtributoChaveFigure().init();
     	
     	f.willChange();
 		f.ef.setBounds(this.ef.getBounds());

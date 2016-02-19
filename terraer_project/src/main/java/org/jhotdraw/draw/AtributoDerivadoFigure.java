@@ -74,8 +74,7 @@ public class AtributoDerivadoFigure extends GroupFigure {
 	}
 
     public AbstractCompositeFigure clone() {
-		AtributoDerivadoFigure f = (AtributoDerivadoFigure) super.clone();
-		f.init();
+		AtributoDerivadoFigure f = new AtributoDerivadoFigure().init();
 
 		f.willChange();
 		f.ef.setBounds(this.ef.getBounds());

@@ -76,8 +76,7 @@ public class AtributoMultivaloradoFigure extends GroupFigure {
 	}
 
 	public AbstractCompositeFigure clone() {
-		AtributoMultivaloradoFigure f = (AtributoMultivaloradoFigure) super.clone();
-		f.init();
+		AtributoMultivaloradoFigure f = new AtributoMultivaloradoFigure().init();
 
 		f.willChange();
 		f.ef.setBounds(this.ef.getBounds());
