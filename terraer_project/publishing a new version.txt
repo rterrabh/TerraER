@@ -8,10 +8,12 @@
 
 4. FTP to http://www.terraer.com.br (run sync.script)
 
-5. git add . (perhaps)
+5. git add .
    git commit -a
    git push 
 
 
-6. Send new file to Softpedia 
+6. Create a new release at GitHub
+
+7. Send new file to Softpedia 
 
