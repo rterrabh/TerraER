@@ -31,6 +31,7 @@ import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DeleteAction;
 import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.FindAction;
+import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.LoadAction;
 import org.jhotdraw.app.action.NewAction;
 import org.jhotdraw.app.action.OpenAction;
@@ -220,6 +221,7 @@ public class DefaultApplicationModel
         mi.setIcon(null);
         m.addSeparator();
         mi = m.add(getAction(ValidateModelAction.ID));
+        mi = m.add(getAction(GenerateDDLAction.ID));
         //mi.setIcon(new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/checkModel.png")));
         mi.setIcon(null);
         m.addSeparator();

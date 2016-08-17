@@ -56,6 +56,7 @@ import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.ExitAction;
 import org.jhotdraw.app.action.ExportAction;
 import org.jhotdraw.app.action.FocusAction;
+import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.NewAction;
 import org.jhotdraw.app.action.OpenAction;
 import org.jhotdraw.app.action.OpenRecentAction;
@@ -108,6 +109,7 @@ public class DefaultMDIApplication extends AbstractApplication {
         mo.putAction(CloseAction.ID, new CloseAction(this));
         mo.putAction(PrintAction.ID, new PrintAction(this));
         mo.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
+        mo.putAction(GenerateDDLAction.ID, new GenerateDDLAction(this));
         
         mo.putAction(UndoAction.ID, new UndoAction(this));
         mo.putAction(RedoAction.ID, new RedoAction(this));
