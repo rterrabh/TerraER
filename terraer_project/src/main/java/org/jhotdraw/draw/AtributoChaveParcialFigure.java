@@ -15,9 +15,10 @@
 package org.jhotdraw.draw;
 
 import java.awt.geom.Point2D.Double;
-
 import java.io.IOException;
 
+import org.jhotdraw.enums.AttributeTypeEnum;
+import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -32,12 +33,13 @@ import org.jhotdraw.xml.DOMInput;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class AtributoChaveParcialFigure extends GroupFigure {
+public class AtributoChaveParcialFigure extends GroupFigure implements AttributeTypeElement {
 
 	private TextFigure tf;
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
+    private AttributeTypeEnum attributeType;
 	
 	public AtributoChaveParcialFigure(){
     	super();
@@ -103,4 +105,12 @@ public class AtributoChaveParcialFigure extends GroupFigure {
         }
     }   	
 
+	public AttributeTypeEnum getAttributeType() {
+		return attributeType;
+	}
+
+	public void setAttributeType(AttributeTypeEnum attributeType) {
+		this.attributeType = attributeType;
+	}
+    
 }

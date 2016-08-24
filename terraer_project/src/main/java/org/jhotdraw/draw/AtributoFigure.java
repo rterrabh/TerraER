@@ -15,9 +15,10 @@
 package org.jhotdraw.draw;
 
 import java.awt.geom.Point2D.Double;
-
 import java.io.IOException;
 
+import org.jhotdraw.enums.AttributeTypeEnum;
+import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -32,13 +33,14 @@ import org.jhotdraw.xml.DOMInput;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class AtributoFigure extends GroupFigure {
+public class AtributoFigure extends GroupFigure implements AttributeTypeElement {
     
 	private TextFigure tf;
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-	
+	private AttributeTypeEnum attributeType;
+    
 	public AtributoFigure(){
     	super();
     }
@@ -70,7 +72,7 @@ public class AtributoFigure extends GroupFigure {
 	public String getToolTipText(Double p) {
 		return this.toString();
 	}
-
+    
     public AbstractCompositeFigure clone() {
     	AtributoFigure f = new AtributoFigure().init();
     	
@@ -83,7 +85,7 @@ public class AtributoFigure extends GroupFigure {
     }
 	
 	public String toString(){
-		return tf.getText();
+		return tf.getText() + ( this.attributeType != null ? " (" + this.attributeType.toString()  + ")" : "");
 	}
 	
     public void read(DOMInput in) throws IOException {
@@ -98,5 +100,13 @@ public class AtributoFigure extends GroupFigure {
                 ef=(EllipseFigure)f;
             }
         }
-    }	
+    }
+
+	public AttributeTypeEnum getAttributeType() {
+		return attributeType;
+	}
+
+	public void setAttributeType(AttributeTypeEnum attributeType) {
+		this.attributeType = attributeType;
+	}	
 }

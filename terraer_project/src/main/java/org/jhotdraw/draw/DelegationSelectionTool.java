@@ -23,7 +23,9 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Locale;
 
+import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -34,6 +36,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.draw.action.SelectAttributeTypeAction;
+import org.jhotdraw.interfaces.AttributeTypeElement;
+import org.jhotdraw.util.ResourceBundleUtil;
 /**
  * A SelectionTool, which recognizes double clicks and popup menu triggers.
  * If a double click or popup trigger is encountered a hook method is called,
@@ -50,7 +55,10 @@ import org.jhotdraw.app.action.Actions;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DelegationSelectionTool extends SelectionTool {
-    /**
+	protected ResourceBundleUtil labels =
+            ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
+	
+	/**
      * Set this to true to turn on debugging output on System.out.
      */
     private final static boolean DEBUG = false;
@@ -216,6 +224,22 @@ public class DelegationSelectionTool extends SelectionTool {
         
         HashMap<Object,ButtonGroup> buttonGroups = new HashMap<Object,ButtonGroup>();
         for (Action a : popupActions) {
+        	if (a != null && a instanceof SelectAttributeTypeAction){
+                DrawingView v = this.getView(); 
+        		if (v.getSelectedFigures() != null &&
+        		    		v.getSelectedFigures().size() == 1 &&
+        		    		v.getSelectedFigures().toArray()[0] instanceof AttributeTypeElement){
+        					AttributeTypeElement att = (AttributeTypeElement) v.getSelectedFigures().iterator().next();
+        		    		a.setEnabled(true);
+        		    		if (att.getAttributeType() != null){
+        		    			a.putValue(AbstractAction.NAME, labels.getString("editSelectAttributeType") + " (" + labels.getString(att.getAttributeType().getDescription()) + ")");
+        		    		}
+        		    	}else{
+//        		    		a.setEnabled(false);
+//        		    		a.putValue(AbstractAction.NAME, labels.getString("editSelectAttributeType"));
+        		    		continue;
+        		    	}
+        	}
             if (a != null && a.getValue(Actions.SUBMENU_KEY) != null) {
                 if (submenuName == null || ! submenuName.equals(a.getValue(Actions.SUBMENU_KEY))) {
                     submenuName = (String) a.getValue(Actions.SUBMENU_KEY);

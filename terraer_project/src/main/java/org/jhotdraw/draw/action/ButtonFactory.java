@@ -74,6 +74,7 @@ import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.PasteAction;
 import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.draw.ArrowTip;
+import org.jhotdraw.draw.AtributoFigure;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.Constrainer;
@@ -194,8 +195,8 @@ public class ButtonFactory {
         a.add(new PasteAction());
         a.add(new SelectAllAction());
         a.add(new SelectSameAction(editor));
-        //a.add(new CopyAllToClipboard());
-        
+        a.add(null); // separator
+        a.add(new SelectAttributeTypeAction(editor));
         return a;
     }
     public static Collection<Action> createSelectionActions(DrawingEditor editor) {
@@ -214,7 +215,8 @@ public class ButtonFactory {
     }
     
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+    	return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        
     }
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
             Collection<Action> drawingActions, Collection<Action> selectionActions) {
