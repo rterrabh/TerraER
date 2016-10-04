@@ -15,6 +15,7 @@
 package org.jhotdraw.draw.action;
 
 import javax.swing.AbstractAction;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -56,13 +57,21 @@ public class SelectAttributeTypeAction extends AbstractSelectedAction {
     						AttributeTypeEnum.NUMBER,
     						AttributeTypeEnum.TEXT
     		};
-    		JComboBox<AttributeTypeEnum> jcb = new JComboBox<AttributeTypeEnum>(list);
-    		jcb.setEditable(false);
+    		
+    		JCheckBox chkNull = new JCheckBox(labels.getString("type.notnull"));
+    		chkNull.setSelected(!att.isNullable());
+    		
+    		JComboBox<AttributeTypeEnum> jcbType = new JComboBox<AttributeTypeEnum>(list);
+    		jcbType.setEditable(false);
+    		
     		if (att.getAttributeType() != null){
-    			jcb.setSelectedItem(att.getAttributeType());
+    			jcbType.setSelectedItem(att.getAttributeType());
     		}
-    		JOptionPane.showMessageDialog( null, jcb, "Select the attribute type", JOptionPane.QUESTION_MESSAGE);
-    		att.setAttributeType((AttributeTypeEnum)jcb.getSelectedItem());
+    		if (JOptionPane.showConfirmDialog( null, new Object[]{jcbType,chkNull}, "Select the attribute type", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+    			att.setAttributeType((AttributeTypeEnum)jcbType.getSelectedItem());
+    			att.setNullable(!chkNull.isSelected());
+    		}
+    		
     	}
     }
 }

@@ -231,9 +231,13 @@ public class DelegationSelectionTool extends SelectionTool {
         		    		v.getSelectedFigures().toArray()[0] instanceof AttributeTypeElement){
         					AttributeTypeElement att = (AttributeTypeElement) v.getSelectedFigures().iterator().next();
         		    		a.setEnabled(true);
+        		    		String shortDesc = "";
         		    		if (att.getAttributeType() != null){
-        		    			a.putValue(AbstractAction.NAME, labels.getString("editSelectAttributeType") + " (" + labels.getString(att.getAttributeType().getDescription()) + ")");
+        		    			shortDesc += labels.getString("editSelectAttributeType") + " (" + labels.getString(att.getAttributeType().getDescription()) + " / ";
         		    		}
+        		    		shortDesc += (att.isNullable() ? labels.getString("type.nullable.short") : labels.getString("type.notnull.short"));
+        		    				
+        		    		a.putValue(AbstractAction.NAME,shortDesc + ")");
         		    	}else{
 //        		    		a.setEnabled(false);
 //        		    		a.putValue(AbstractAction.NAME, labels.getString("editSelectAttributeType"));

@@ -39,7 +39,8 @@ public class AtributoChaveParcialFigure extends GroupFigure implements Attribute
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-    private AttributeTypeEnum attributeType;
+    private AttributeTypeEnum attributeType = AttributeTypeEnum.INTEGER;
+    private boolean nullable;
 	
 	public AtributoChaveParcialFigure(){
     	super();
@@ -111,6 +112,16 @@ public class AtributoChaveParcialFigure extends GroupFigure implements Attribute
 
 	public void setAttributeType(AttributeTypeEnum attributeType) {
 		this.attributeType = attributeType;
+	}
+	
+	@Override
+	public boolean isNullable() {
+		return this.nullable;
+	}
+	
+	@Override
+	public void setNullable(boolean nullable) {
+		this.nullable = nullable;
 	}
     
 }

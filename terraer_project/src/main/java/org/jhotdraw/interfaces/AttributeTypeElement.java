@@ -4,7 +4,9 @@ import org.jhotdraw.enums.AttributeTypeEnum;
 
 public interface AttributeTypeElement {
 	
-	public AttributeTypeEnum getAttributeType();
-	public void setAttributeType(AttributeTypeEnum attributeType);
+	AttributeTypeEnum getAttributeType();
+	void setAttributeType(AttributeTypeEnum attributeType);
 	
+	boolean isNullable();
+	void setNullable(boolean nullable);
 }
