@@ -87,7 +87,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
     }
     
     public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
-     BufferedWriter bw = null;
+   	 BufferedWriter bw = null;
         try {
             String mycontent = new String();
             File file = new File("C:\\Users\\ah-00\\Desktop\\Test.sql");
@@ -101,34 +101,34 @@ public class GenerateDDLAction extends AbstractProjectAction {
             
             
             for (Figure i: strongEntity) {
-                mycontent = "CREATE TABLE " + i.toString() + "(\n";
+                mycontent = "CREATE TABLE " + i.toString().toUpperCase() + "(\n";
                 bw.write(mycontent);
                 for (Figure j: connection) {
                     if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
                         for (Figure k: attribute) {
                             if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigure)k))) {
-                                mycontent = k.toString() + " " + ((AtributoFigure)k).getAttributeType() + " " + ((AtributoFigure)k).isNullable() + ",\n";
+                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure l: keyAttribute) {
                             if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)l))) {
-                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + ((AtributoFigure)l).isNullable() + ",\n";
+                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure m: derivedAttribute) {
                             if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
-                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + ((AtributoFigure)m).isNullable()  + ",\n";
+                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure n: multivaluedAttribute) {
                             if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)n))) {
-                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + ((AtributoFigure)n).isNullable() + ",\n";
+                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
@@ -136,28 +136,28 @@ public class GenerateDDLAction extends AbstractProjectAction {
                     } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
                         for (Figure k: attribute) {
                             if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
-                                mycontent = k.toString() + " " + ((AtributoFigure)k).getAttributeType() + " " + ((AtributoFigure)k).isNullable() + ",\n";
+                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure l: keyAttribute) {
                             if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)l))) {
-                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + ((AtributoFigure)l).isNullable() + ",\n";
+                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure m: derivedAttribute) {
                             if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
-                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + ((AtributoFigure)m).isNullable() + ",\n";
+                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
                         }
                         for (Figure n: multivaluedAttribute) {
                             if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)n))) {
-                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + ((AtributoFigure)n).isNullable() + ",\n";
+                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
                                 bw.write(mycontent);
                                 JOptionPane.showMessageDialog(null, "Ok");
                             }
@@ -180,37 +180,37 @@ public class GenerateDDLAction extends AbstractProjectAction {
 
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("C:\\Users\\ah-00\\Desktop\\Test.sql"));
-            bw = new BufferedWriter(new FileWriter("C:\\Users\\ah-00\\Desktop\\Test_Temp.sql"));
+        	br = new BufferedReader(new FileReader("C:\\Users\\ah-00\\Desktop\\Test.sql"));
+        	bw = new BufferedWriter(new FileWriter("C:\\Users\\ah-00\\Desktop\\Test_Temp.sql"));
 
-            String oldLine = "";
-            String currentLine = "";
-            
-            while ((currentLine = br.readLine()) != null) {
-                oldLine += currentLine;
-            }
-            
-            JOptionPane.showMessageDialog(null, oldLine);
-            String replacedLine = oldLine.replace(",);", "\n);\n");
-            replacedLine = replacedLine.replace(",", ",\n");
-            replacedLine = replacedLine.replace("(", "(\n");
-            JOptionPane.showMessageDialog(null, replacedLine);
-            bw.write(replacedLine);
+        	String oldLine = "";
+        	String currentLine = "";
+        	
+        	while ((currentLine = br.readLine()) != null) {
+        		oldLine += currentLine;
+        	}
+        	
+        	JOptionPane.showMessageDialog(null, oldLine);
+        	String replacedLine = oldLine.replace(",);", "\n);\n");
+        	replacedLine = replacedLine.replace(",", ",\n");
+        	replacedLine = replacedLine.replace("(", "(\n");
+        	JOptionPane.showMessageDialog(null, replacedLine);
+        	bw.write(replacedLine);
         } catch (Exception e) {
-            return;
+        	return;
         } finally {
-            try {
-                if(br != null)
-                    br.close();
-            } catch (IOException e) {
-                //
-            }
-            try {
-                if(bw != null)
-                    bw.close();
-            } catch (IOException e) {
-                //
-            }
+        	try {
+        		if(br != null)
+        			br.close();
+        	} catch (IOException e) {
+        		//
+        	}
+        	try {
+        		if(bw != null)
+        			bw.close();
+        	} catch (IOException e) {
+        		//
+        	}
         }
         // Once everything is complete, delete old file..
         File oldFile = new File("C:\\Users\\ah-00\\Desktop\\Test.sql");
