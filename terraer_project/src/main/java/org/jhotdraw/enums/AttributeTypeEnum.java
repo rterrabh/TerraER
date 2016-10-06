@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 public enum AttributeTypeEnum {	
-	CHAR("type.char", "CHAR"), TEXT("type.text", "VARCHAR2(128)"), INTEGER("type.integer","NUMBER"), NUMBER("type.number","NUMBER(9,2)"), DATE("type.date","DATE");
+	CHAR("type.char", "CHAR(128)"), TEXT("type.text", "VARCHAR2(128)"), INTEGER("type.integer","NUMBER"), NUMBER("type.number","NUMBER(9,2)"), DATE("type.date","DATE");
 	
 	private ResourceBundleUtil labels =
             ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
@@ -24,7 +24,7 @@ public enum AttributeTypeEnum {
 
 	@Override
 	public String toString() {
-		return labels.getString(this.description);
+		return labels.getString(this.sqlType);
 	}
 	
 	public String getSqlType() {
