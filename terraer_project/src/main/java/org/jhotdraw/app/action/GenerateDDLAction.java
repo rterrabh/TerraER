@@ -62,6 +62,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
         ArrayList<Figure> partialKeyAttribute = new ArrayList <Figure>();
         ArrayList<Figure> derivedAttribute = new ArrayList<Figure>();
         ArrayList<Figure> multivaluedAttribute = new ArrayList<Figure>();
+        ArrayList<Figure> sLConnection1 = new ArrayList<Figure>();
+        ArrayList<Figure> sLConnectionN = new ArrayList<Figure>();
+        ArrayList<Figure> dLConnection1 = new ArrayList<Figure>();
+        ArrayList<Figure> dLConnectionN = new ArrayList<Figure>();
+        ArrayList<Figure> weakRelationship = new ArrayList<Figure>();
         
         DrawProject project = (DrawProject) getCurrentProject();
         for (Figure f : project.getEditor().getActiveView().getDrawing().getFigures()){
@@ -89,9 +94,24 @@ public class GenerateDDLAction extends AbstractProjectAction {
             else if (f instanceof AtributoMultivaloradoFigure) {
                 multivaluedAttribute.add(f);
             }
+            else if(f instanceof LabeledLineConnectionUmFigure){
+            	sLConnection1.add(f);
+            }
+            else if(f instanceof LabeledLineConnectionMuitosFigure){
+            	sLConnectionN.add(f);
+            }
+            else if(f instanceof LabeledDoubleLineConnectionUmFigure){
+            	dLConnection1.add(f);
+            }
+            else if(f instanceof LabeledDoubleLineConnectionMuitosFigure){
+            	dLConnectionN.add(f);
+            }
+            else if(f instanceof RelacionamentoFracoFigure){
+            	weakRelationship.add(f);
+            }
             
         }
-        
+                 
         generateTables(strongEntity, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
         generateWeakEntity(weakEntity, connection, attribute, partialKeyAttribute, derivedAttribute, multivaluedAttribute);
@@ -371,4 +391,26 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        File newFile = new File("/home/shinahk/Desktop/Test_Temp.sql");
 	        newFile.renameTo(oldFile);
 	   }
+   
+   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship,ArrayList<Figure> sLConnection1, ArrayList<Figure> sLConnectionN, ArrayList<Figure> dLConnection1, ArrayList<Figure> dLConnectionN){
+	   BufferedWriter bw = null;
+       try {
+           String mycontent = new String();
+           File file = new File("/home/shinahk/Desktop/Test.sql");
+           FileWriter fw = new FileWriter(file,true);
+           bw = new BufferedWriter(fw);
+           
+           //TO DO
+           
+           JOptionPane.showMessageDialog(null, "Primary Key Created");
+       } catch (IOException ioe) {
+         ioe.printStackTrace();
+       } finally { 
+         try {
+             if(bw!=null) bw.close();
+         } catch(Exception ex) {
+             JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
+         }
+       }
+   }
 }
