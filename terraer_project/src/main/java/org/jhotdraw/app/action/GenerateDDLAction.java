@@ -62,10 +62,6 @@ public class GenerateDDLAction extends AbstractProjectAction {
         ArrayList<Figure> partialKeyAttribute = new ArrayList <Figure>();
         ArrayList<Figure> derivedAttribute = new ArrayList<Figure>();
         ArrayList<Figure> multivaluedAttribute = new ArrayList<Figure>();
-        ArrayList<Figure> sLConnection1 = new ArrayList<Figure>();
-        ArrayList<Figure> sLConnectionN = new ArrayList<Figure>();
-        ArrayList<Figure> dLConnection1 = new ArrayList<Figure>();
-        ArrayList<Figure> dLConnectionN = new ArrayList<Figure>();
         ArrayList<Figure> weakRelationship = new ArrayList<Figure>();
         ArrayList<Figure> entityRelationship = new ArrayList<Figure>();
         
@@ -95,18 +91,6 @@ public class GenerateDDLAction extends AbstractProjectAction {
             else if (f instanceof AtributoMultivaloradoFigure) {
                 multivaluedAttribute.add(f);
             }
-            else if(f instanceof LabeledLineConnectionUmFigure){
-            	sLConnection1.add(f);
-            }
-            else if(f instanceof LabeledLineConnectionMuitosFigure){
-            	sLConnectionN.add(f);
-            }
-            else if(f instanceof LabeledDoubleLineConnectionUmFigure){
-            	dLConnection1.add(f);
-            }
-            else if(f instanceof LabeledDoubleLineConnectionMuitosFigure){
-            	dLConnectionN.add(f);
-            }
             else if(f instanceof RelacionamentoFracoFigure){
             	weakRelationship.add(f);
             }
@@ -115,7 +99,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
             }
             
         }
-                 
+          
         generateTables(strongEntity, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
         generateWeakEntity(weakEntity, connection, attribute, partialKeyAttribute, derivedAttribute, multivaluedAttribute);
