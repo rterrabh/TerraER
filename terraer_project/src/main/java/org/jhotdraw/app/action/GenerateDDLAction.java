@@ -30,6 +30,8 @@ import org.jhotdraw.app.Application;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.samples.draw.DrawProject;
 import org.jhotdraw.util.ResourceBundleUtil;
+
+import jdk.nashorn.internal.scripts.JO;
 /**
  * Cuts the selected region and places its contents into the system clipboard.
  * Acts on the EditableComponent or JTextComponent which had the focus when
@@ -70,7 +72,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
             if (f instanceof EntidadeFigure) {
                 strongEntity.add(f);                   
             }
-            if (f instanceof EntidadeFracaFigure) {
+            else if (f instanceof EntidadeFracaFigure) {
                 weakEntity.add(f);                   
             }
             else if (f instanceof ConnectionFigure){
@@ -97,12 +99,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
             else if(f instanceof EntidadeRelacionamentoFigure){
             	entityRelationship.add(f);
             }
-            
         }
-          
+        
         generateTables(strongEntity, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
         generateWeakEntity(weakEntity, connection, attribute, partialKeyAttribute, derivedAttribute, multivaluedAttribute);
+        generatePartialKey(strongEntity, weakEntity, connection, keyAttribute, partialKeyAttribute, weakRelationship);
         generateEntityRelationship (entityRelationship, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
         
     }
@@ -382,17 +384,73 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        newFile.renameTo(oldFile);
 	   }
    
-   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship,ArrayList<Figure> sLConnection1, ArrayList<Figure> sLConnectionN, ArrayList<Figure> dLConnection1, ArrayList<Figure> dLConnectionN){
+   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship){
 	   BufferedWriter bw = null;
        try {
            String mycontent = new String();
+           String mycontent2 = new String();
+           String keyAtt = new String();
+           String keyAttType = new String();
+           String keyAttNullable = new String();
            File file = new File("/home/shinahk/Desktop/Test.sql");
            FileWriter fw = new FileWriter(file,true);
            bw = new BufferedWriter(fw);
            
-           //TO DO
-           
-           JOptionPane.showMessageDialog(null, "Primary Key Created");
+           for (Figure f : weakRelationship) {
+        	   for (Figure g : connection) {
+        		   if (((ConnectionFigure)g).getEndFigure().equals(((RelacionamentoFracoFigure)f))) {
+        			   for (Figure h : strongEntity) {
+        				   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFigure)h))) {
+        					   for (Figure i: connection) {
+        						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){
+        							   for (Figure j: keyAttribute) {
+        								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveFigure)j))) {
+        									   keyAtt = j.toString();
+        									   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
+        									   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+        								   }
+        							   }
+        						   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
+        							   for (Figure j: keyAttribute) {
+        								   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveFigure)j))) {
+        									   keyAtt = j.toString();
+        									   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
+        									   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+        								   }
+        							   }                       
+        						   }                      
+        					   }    
+        				   }
+        			   }
+        			   for (Figure h : weakEntity) {
+        				   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)h))) {
+        					   for (Figure i: connection) {
+        						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
+        							   for (Figure j: partialKeyAttribute) {
+        								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
+        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase() + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase() + " ADD CONSTRAINT PK_" + h.toString().toUpperCase() + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        		                               bw.write(mycontent);
+        									   bw.write(mycontent2);        	
+        								   }
+        							   }
+        						   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
+        							   for (Figure j: partialKeyAttribute) {
+        								   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
+        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase() + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase() + " ADD CONSTRAINT PK_" + h.toString().toUpperCase() + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        		                               bw.write(mycontent);
+        									   bw.write(mycontent2);
+        								   }
+        							   }                       
+        						   }                      
+        					   }    
+        				   }
+        			   }
+        		   }
+        	   }
+           }           
+           JOptionPane.showMessageDialog(null, "Partial Key Created");
        } catch (IOException ioe) {
          ioe.printStackTrace();
        } finally { 
