@@ -89,7 +89,7 @@ public class AtributoChaveParcialFigure extends GroupFigure implements Attribute
     }
 	
 	public String toString(){
-		return tf.getText();
+		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
     public void read(DOMInput in) throws IOException {

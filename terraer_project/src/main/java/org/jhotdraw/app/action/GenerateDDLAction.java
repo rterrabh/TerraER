@@ -66,50 +66,58 @@ public class GenerateDDLAction extends AbstractProjectAction {
         ArrayList<Figure> multivaluedAttribute = new ArrayList<Figure>();
         ArrayList<Figure> weakRelationship = new ArrayList<Figure>();
         ArrayList<Figure> entityRelationship = new ArrayList<Figure>();
+        ArrayList<Figure> genspecDisjoint = new ArrayList<Figure>();
+        ArrayList<Figure> genspecOverlap = new ArrayList<Figure>();
+        ArrayList<Figure> singleLineConnectionUm = new ArrayList<Figure>();
+        ArrayList<Figure> singleLineConnectionN = new ArrayList<Figure>();
+        ArrayList<Figure> doubleLineConnectionUm = new ArrayList<Figure>();
+        ArrayList<Figure> doubleLineConnectionN = new ArrayList<Figure>();
         
         DrawProject project = (DrawProject) getCurrentProject();
         for (Figure f : project.getEditor().getActiveView().getDrawing().getFigures()){
-            if (f instanceof EntidadeFigure) {
+            if (f.getClass().equals(EntidadeFigure.class)) {
                 strongEntity.add(f);                   
-            }
-            else if (f instanceof EntidadeFracaFigure) {
+            } else if (f.getClass().equals(EntidadeFracaFigure.class)) {
                 weakEntity.add(f);                   
-            }
-            else if (f instanceof ConnectionFigure){
+            } else if (f.getClass().equals(LineConnectionFigure.class)){
                 connection.add(f);
-            }
-            else if (f instanceof AtributoFigure) {
+            } else if (f.getClass().equals(LabeledLineConnectionUmFigure.class)){
+                singleLineConnectionUm.add(f);
+            } else if (f.getClass().equals(LabeledLineConnectionMuitosFigure.class)){
+                singleLineConnectionN.add(f);
+            } else if (f.getClass().equals(LabeledDoubleLineConnectionUmFigure.class)){
+                doubleLineConnectionUm.add(f);
+            } else if (f.getClass().equals(LabeledDoubleLineConnectionMuitosFigure.class)){
+                doubleLineConnectionN.add(f);
+            } else if (f.getClass().equals(AtributoFigure.class)) {
                 attribute.add(f);
-            }
-            else if (f instanceof AtributoChaveFigure) {
+            } else if (f.getClass().equals(AtributoChaveFigure.class)) {
                 keyAttribute.add(f);
-            }
-            else if (f instanceof AtributoChaveParcialFigure) {
+            } else if (f.getClass().equals(AtributoChaveParcialFigure.class)) {
                 partialKeyAttribute.add(f);
-            }
-            else if (f instanceof AtributoDerivadoFigure) {
+            } else if (f.getClass().equals(AtributoDerivadoFigure.class)) {
                 derivedAttribute.add(f);
-            }
-            else if (f instanceof AtributoMultivaloradoFigure) {
+            } else if (f.getClass().equals(AtributoMultivaloradoFigure.class)) {
                 multivaluedAttribute.add(f);
-            }
-            else if(f instanceof RelacionamentoFracoFigure){
+            } else if (f.getClass().equals(RelacionamentoFracoFigure.class)){
             	weakRelationship.add(f);
-            }
-            else if(f instanceof EntidadeRelacionamentoFigure){
+            } else if (f.getClass().equals(EntidadeRelacionamentoFigure.class)){
             	entityRelationship.add(f);
-            }
+            } else if (f.getClass().equals(DisjuncaoFigure.class)) {
+				genspecDisjoint.add(f);
+			} else if (f.getClass().equals(SobreposicaoFigure.class)) {
+				genspecOverlap.add(f);
+			}
         }
         
-        generateTables(strongEntity, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
+        generateTables(strongEntity, weakEntity, connection, attribute, keyAttribute, partialKeyAttribute, derivedAttribute, multivaluedAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
-        generateWeakEntity(weakEntity, connection, attribute, partialKeyAttribute, derivedAttribute, multivaluedAttribute);
-        generatePartialKey(strongEntity, weakEntity, connection, keyAttribute, partialKeyAttribute, weakRelationship);
+        generatePartialKey(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship);
         generateEntityRelationship (entityRelationship, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
         
     }
     
-    public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
+    public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
    	 BufferedWriter bw = null;
         try {
             String mycontent = new String();
@@ -124,63 +132,123 @@ public class GenerateDDLAction extends AbstractProjectAction {
             
             
             for (Figure i: strongEntity) {
-                mycontent = "CREATE TABLE " + i.toString().toUpperCase() + "(\n";
-                bw.write(mycontent);
-                for (Figure j: connection) {
-                    if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
-                        for (Figure k: attribute) {
-                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigure)k))) {
-                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);                                
-                            }
-                        }
-                        for (Figure l: keyAttribute) {
-                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)l))) {
-                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                        for (Figure m: derivedAttribute) {
-                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
-                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                        for (Figure n: multivaluedAttribute) {
-                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)n))) {
-                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                    } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
-                        for (Figure k: attribute) {
-                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
-                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                        for (Figure l: keyAttribute) {
-                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)l))) {
-                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                        for (Figure m: derivedAttribute) {
-                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
-                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                        for (Figure n: multivaluedAttribute) {
-                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)n))) {
-                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
-                                bw.write(mycontent);
-                            }
-                        }
-                    }                      
-                }
-                mycontent = ");";
-                bw.write(mycontent);                    
+            	mycontent = "CREATE TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + "(\n";
+            	bw.write(mycontent);
+            	for (Figure j: connection) {
+            		if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
+            			for (Figure k: attribute) {
+            				if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigure)k))) {
+            					mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);                                
+            				}
+            			}
+            			for (Figure l: keyAttribute) {
+            				if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)l))) {
+            					mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure m: derivedAttribute) {
+            				if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
+            					mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure n: multivaluedAttribute) {
+            				if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)n))) {
+            					mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            		} else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
+            			for (Figure k: attribute) {
+            				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
+            					mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure l: keyAttribute) {
+            				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)l))) {
+            					mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure m: derivedAttribute) {
+            				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
+            					mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure n: multivaluedAttribute) {
+            				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)n))) {
+            					mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            		}                      
+            	}
+            	mycontent = ");";
+            	bw.write(mycontent);
+            }
+
+            for (Figure a: weakEntity) {
+            	mycontent = "CREATE TABLE " + a.toString().toUpperCase().replaceAll("\\s+", "_") + "(\n";
+            	bw.write(mycontent);
+            	for (Figure b: connection) {
+            		if (((ConnectionFigure)b).getStartFigure().equals(((EntidadeFracaFigure)a))){
+            			for (Figure c: attribute) {
+            				if (((ConnectionFigure)b).getEndFigure().equals(((AtributoFigure)c))) {
+            					mycontent = c.toString() + " " + (((AtributoFigure)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);                                
+            				}
+            			}
+            			for (Figure d: partialKeyAttribute) {
+            				if (((ConnectionFigure)b).getEndFigure().equals(((AtributoChaveParcialFigure)d))) {
+            					mycontent = d.toString() + " " + ((AtributoChaveParcialFigure)d).getAttributeType() + " " + (((AtributoChaveParcialFigure)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure e: derivedAttribute) {
+            				if (((ConnectionFigure)b).getEndFigure().equals(((AtributoDerivadoFigure)e))) {
+            					mycontent = e.toString() + " " + ((AtributoDerivadoFigure)e).getAttributeType() + " " + (((AtributoDerivadoFigure)e).isNullable() != true ? "NOT NULL" : "")  + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure f: multivaluedAttribute) {
+            				if (((ConnectionFigure)b).getEndFigure().equals(((AtributoMultivaloradoFigure)f))) {
+            					mycontent = f.toString() + " " + ((AtributoMultivaloradoFigure)f).getAttributeType() + " " + (((AtributoMultivaloradoFigure)f).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            		} else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigure)a))){
+            			for (Figure c: attribute) {
+            				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoFigure)c))) {
+            					mycontent = c.toString() + " " + (((AtributoFigure)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure d: partialKeyAttribute) {
+            				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoChaveParcialFigure)d))) {
+            					mycontent = d.toString() + " " + ((AtributoChaveParcialFigure)d).getAttributeType() + " " + (((AtributoChaveParcialFigure)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure e: derivedAttribute) {
+            				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoDerivadoFigure)e))) {
+            					mycontent = e.toString() + " " + ((AtributoDerivadoFigure)e).getAttributeType() + " " + (((AtributoDerivadoFigure)e).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            			for (Figure f: multivaluedAttribute) {
+            				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoMultivaloradoFigure)f))) {
+            					mycontent = f.toString() + " " + ((AtributoMultivaloradoFigure)f).getAttributeType() + " " + (((AtributoMultivaloradoFigure)f).isNullable() != true ? "NOT NULL" : "") + ",\n";
+            					bw.write(mycontent);
+            				}
+            			}
+            		}                      
+            	}
+            	mycontent = ");";
+            	bw.write(mycontent); 
             }
         } catch (IOException ioe) {
           ioe.printStackTrace();
@@ -243,14 +311,14 @@ public class GenerateDDLAction extends AbstractProjectAction {
                    if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
                        for (Figure k: keyAttribute) {
                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)k))) {
-                               mycontent = "ALTER TABLE " + i.toString().toUpperCase() + " ADD CONSTRAINT PK_" + i.toString().toUpperCase() + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
+                               mycontent = "ALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
                                bw.write(mycontent);
                            }
                        }
                    } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
                 	   for (Figure k: keyAttribute) {
                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)k))) {
-                               mycontent = "ALTER TABLE " + i.toString().toUpperCase() + " ADD CONSTRAINT PK_" + i.toString().toUpperCase() + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
+                               mycontent = "ALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
                                bw.write(mycontent);
                            }
                        }                       
@@ -269,135 +337,29 @@ public class GenerateDDLAction extends AbstractProjectAction {
        }
    }
    
-   public void generateWeakEntity (ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
-	   	 BufferedWriter bw = null;
-	        try {
-	            String mycontent = new String();
-	            File file = new File("/home/shinahk/Desktop/Test.sql");
-	            FileWriter fw = new FileWriter(file,true);
-	            bw = new BufferedWriter(fw);
-	            
-	            for (Figure i: weakEntity) {
-	                mycontent = "CREATE TABLE " + i.toString().toUpperCase() + "(\n";
-	                bw.write(mycontent);
-	                for (Figure j: connection) {
-	                    if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFracaFigure)i))){
-	                        for (Figure k: attribute) {
-	                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigure)k))) {
-	                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);                                
-	                            }
-	                        }
-	                        for (Figure l: partialKeyAttribute) {
-	                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveParcialFigure)l))) {
-	                                mycontent = l.toString() + " " + ((AtributoChaveParcialFigure)l).getAttributeType() + " " + (((AtributoChaveParcialFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                        for (Figure m: derivedAttribute) {
-	                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
-	                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                        for (Figure n: multivaluedAttribute) {
-	                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)n))) {
-	                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                    } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFracaFigure)i))){
-	                        for (Figure k: attribute) {
-	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
-	                                mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                        for (Figure l: partialKeyAttribute) {
-	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveParcialFigure)l))) {
-	                                mycontent = l.toString() + " " + ((AtributoChaveParcialFigure)l).getAttributeType() + " " + (((AtributoChaveParcialFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                        for (Figure m: derivedAttribute) {
-	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
-	                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                        for (Figure n: multivaluedAttribute) {
-	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)n))) {
-	                                mycontent = n.toString() + " " + ((AtributoMultivaloradoFigure)n).getAttributeType() + " " + (((AtributoMultivaloradoFigure)n).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }
-	                    }                      
-	                }
-	                mycontent = ");";
-	                bw.write(mycontent);                    
-	            }
-	        } catch (IOException ioe) {
-	          ioe.printStackTrace();
-	        } finally { 
-	          try {
-	              if(bw!=null) bw.close();
-	          } catch(Exception ex) {
-	              JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
-	          }
-	        }
-
-	        BufferedReader br = null;
-	        try {
-	        	br = new BufferedReader(new FileReader("/home/shinahk/Desktop/Test.sql"));
-	        	bw = new BufferedWriter(new FileWriter("/home/shinahk/Desktop/Test_Temp.sql"));
-
-	        	String oldLine = "";
-	        	String currentLine = "";
-	        	
-	        	while ((currentLine = br.readLine()) != null) {
-	        		oldLine += currentLine + "\n";
-	        	}
-	        	
-	        	String replacedLine = oldLine.replace(",\n);", "\n);\n\n");
-	        	bw.write(replacedLine);
-	        	JOptionPane.showMessageDialog(null, "File written Successfully");
-	        } catch (Exception e) {
-	        	return;
-	        } finally {
-	        	try {
-	        		if(br != null)
-	        			br.close();
-	        	} catch (IOException e) {
-	        		//
-	        	}
-	        	try {
-	        		if(bw != null)
-	        			bw.close();
-	        	} catch (IOException e) {
-	        		//
-	        	}
-	        }
-	        File oldFile = new File("/home/shinahk/Desktop/Test.sql");
-	        oldFile.delete();
-
-	        File newFile = new File("/home/shinahk/Desktop/Test_Temp.sql");
-	        newFile.renameTo(oldFile);
-	   }
-   
-   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship){
+   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> singleLineConnectionUm, ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm, ArrayList<Figure> doubleLineConnectionN, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship){
 	   BufferedWriter bw = null;
        try {
+
+           ArrayList<Figure> lineconnectors = new ArrayList<Figure>();
+           lineconnectors.addAll(singleLineConnectionUm);
+           lineconnectors.addAll(singleLineConnectionN);
+           lineconnectors.addAll(doubleLineConnectionUm);
+           lineconnectors.addAll(doubleLineConnectionN);
+           
            String mycontent = new String();
            String mycontent2 = new String();
+           String mycontent3 = new String();
+           String ownerEntity = new String(); 
            String keyAtt = new String();
            String keyAttType = new String();
            String keyAttNullable = new String();
            File file = new File("/home/shinahk/Desktop/Test.sql");
            FileWriter fw = new FileWriter(file,true);
            bw = new BufferedWriter(fw);
-           
+
            for (Figure f : weakRelationship) {
-        	   for (Figure g : connection) {
+        	   for (Figure g : lineconnectors) {
         		   if (((ConnectionFigure)g).getEndFigure().equals(((RelacionamentoFracoFigure)f))) {
         			   for (Figure h : strongEntity) {
         				   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFigure)h))) {
@@ -405,6 +367,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){
         							   for (Figure j: keyAttribute) {
         								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveFigure)j))) {
+        									   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
         									   keyAtt = j.toString();
         									   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
         									   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
@@ -413,6 +376,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
         							   for (Figure j: keyAttribute) {
         								   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveFigure)j))) {
+        									   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
         									   keyAtt = j.toString();
         									   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
         									   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
@@ -428,19 +392,23 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
         							   for (Figure j: partialKeyAttribute) {
         								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
-        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase() + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
-        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase() + " ADD CONSTRAINT PK_" + h.toString().toUpperCase() + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + "owner_" + keyAtt + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
         		                               bw.write(mycontent);
-        									   bw.write(mycontent2);        	
+        									   bw.write(mycontent2);
+        									   bw.write(mycontent3);
         								   }
         							   }
         						   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
         							   for (Figure j: partialKeyAttribute) {
         								   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
-        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase() + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
-        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase() + " ADD CONSTRAINT PK_" + h.toString().toUpperCase() + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + "owner_" + keyAtt + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
         		                               bw.write(mycontent);
         									   bw.write(mycontent2);
+        									   bw.write(mycontent3);
         								   }
         							   }                       
         						   }                      

@@ -90,7 +90,7 @@ public class AtributoChaveFigure extends GroupFigure implements AttributeTypeEle
     }
 	
 	public String toString(){
-		return tf.getText();
+		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
     public void read(DOMInput in) throws IOException {

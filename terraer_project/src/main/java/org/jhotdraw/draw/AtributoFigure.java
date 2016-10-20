@@ -86,7 +86,7 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
     }
 	
 	public String toString(){
-		return tf.getText() + ( this.attributeType != null ? " " + this.getAttributeType() : "");
+		return tf.getText().replaceAll("\\s+", "_") + ( this.attributeType != null ? " " + this.getAttributeType() : "");
 	}
 	
     public void read(DOMInput in) throws IOException {
