@@ -72,6 +72,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
         ArrayList<Figure> singleLineConnectionN = new ArrayList<Figure>();
         ArrayList<Figure> doubleLineConnectionUm = new ArrayList<Figure>();
         ArrayList<Figure> doubleLineConnectionN = new ArrayList<Figure>();
+        ArrayList<Figure> singleLineGenSpecConn = new ArrayList<Figure>();
+        ArrayList<Figure> doubleLineGenSpecConn = new ArrayList<Figure>();
+        ArrayList<Figure> genSpecLineConn = new ArrayList<Figure>();
+        
         
         DrawProject project = (DrawProject) getCurrentProject();
         for (Figure f : project.getEditor().getActiveView().getDrawing().getFigures()){
@@ -107,6 +111,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				genspecDisjoint.add(f);
 			} else if (f.getClass().equals(SobreposicaoFigure.class)) {
 				genspecOverlap.add(f);
+			} else if (f.getClass().equals(LineConnectionGeneralizacaoFigure.class)) {
+				singleLineGenSpecConn.add(f);
+			} else if (f.getClass().equals(DoubleLineConnectionGeneralizacaoFigure.class)) {
+				doubleLineGenSpecConn.add(f);
+			} else if (f.getClass().equals(GeneralizacaoLineConnectionFigure.class)) {
+				genSpecLineConn.add(f);
 			}
         }
         
@@ -114,10 +124,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
         generatePrimaryKey(strongEntity, connection, keyAttribute);
         generatePartialKey(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship);
         generateEntityRelationship (entityRelationship, connection, attribute, keyAttribute, derivedAttribute, multivaluedAttribute);
+        generateGenSpec(strongEntity, connection, keyAttribute, genspecDisjoint, genspecOverlap, singleLineGenSpecConn, doubleLineGenSpecConn, genSpecLineConn);
         
     }
-    
-    public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
+
+	public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute, ArrayList<Figure> multivaluedAttribute){
    	 BufferedWriter bw = null;
         try {
             String mycontent = new String();
@@ -545,4 +556,103 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        File newFile = new File("/home/shinahk/Desktop/Test_Temp.sql");
 	        newFile.renameTo(oldFile);
 	   }
+   
+   public void generateGenSpec(ArrayList<Figure> strongEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> genspecDisjoint, ArrayList<Figure> genspecOverlap, ArrayList<Figure> singleLineGenSpecConn, ArrayList<Figure> doubleLineGenSpecConn, ArrayList<Figure> genSpecLineConn) {
+	   BufferedWriter bw = null;
+	   try {
+
+		   String mycontent = new String();
+		   String ownerEntity = new String(); 
+		   String keyAtt = new String();
+		   File file = new File("/home/shinahk/Desktop/Test.sql");
+		   FileWriter fw = new FileWriter(file,true);
+		   bw = new BufferedWriter(fw);
+
+		   for (Figure a : genspecOverlap) {
+			   for (Figure b : singleLineGenSpecConn) {
+				   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+					   for (Figure c : strongEntity) {
+						   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+							   for (Figure d: connection) {
+								   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+									   for (Figure e: keyAttribute) {
+										   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+											   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = e.toString();
+										   }
+									   }
+								   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+									   for (Figure e: keyAttribute) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+											   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = e.toString();
+										   }
+									   }                       
+								   }                      
+							   }  
+						   }
+					   }
+				   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+					   for (Figure c : strongEntity) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+							   for (Figure d: connection) {
+								   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+									   for (Figure e: keyAttribute) {
+										   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+											   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = e.toString();
+										   }
+									   }
+								   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+									   for (Figure e: keyAttribute) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+											   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = e.toString();
+										   }
+									   }                       
+								   }                      
+							   }  
+						   }
+					   }
+				   }				   
+			   }
+			   for (Figure f : genSpecLineConn) {
+				   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
+					   for (Figure g : strongEntity) {
+						   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
+							   for (Figure h: connection) {
+								   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
+									   for (Figure i: keyAttribute) {
+										   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+											   bw.write(mycontent);
+										   }
+									   }
+								   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
+									   for (Figure i: keyAttribute) {
+										   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+											   bw.write(mycontent);
+										   }
+									   }                       
+								   }                      
+							   }
+						   }
+					   }
+				   }
+			   }
+		   }
+		   
+		   JOptionPane.showMessageDialog(null, "GenSpec Created");
+	   } catch (IOException ioe) {
+		   ioe.printStackTrace();
+	   } finally { 
+		   try {
+			   if(bw!=null) bw.close();
+		   } catch(Exception ex) {
+			   JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
+		   }
+	   } 
+   }
+   
 }
