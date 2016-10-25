@@ -570,181 +570,496 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   File file = new File("/home/shinahk/Desktop/Test.sql");
 		   FileWriter fw = new FileWriter(file,true);
 		   bw = new BufferedWriter(fw);
+		   
+		   if (genspecOverlap.size() > 0){
+			   for (Figure a : genspecOverlap) {
+				   if (singleLineGenSpecConn.size() > 0){
+					   for (Figure b : singleLineGenSpecConn) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   }				   
+					   }
+					   for (Figure f : genSpecLineConn) {
+						   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
+							   for (Figure g : strongEntity) {
+								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
+									   for (Figure h: connection) {
+										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }
+										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }                       
+										   }                      
+									   }
+								   }
+							   }
+						   }
+					   }
+				   } else {
+					   for (Figure b : doubleLineGenSpecConn) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   }				   
+					   }
+					   for (Figure f : genSpecLineConn) {
+						   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
+							   for (Figure g : strongEntity) {
+								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
+									   for (Figure h: connection) {
+										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }
+										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }                       
+										   }                      
+									   }
+								   }
+							   }
+						   }
+					   }
+					   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + ownerEntity + " AFTER INSERT OR DELETE OR UPDATE ON " + ownerEntity + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "X" + i + " number; ";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "\nBEGIN\n\tIF INSTERTING THEN\n";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey.get(i) + " = :n." + keyAtt + ";\n";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "\t\tIF(";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "X" + i + "+ ";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+					   bw.write(mycontent);
 
-		   for (Figure a : genspecOverlap) {
-			   if (singleLineGenSpecConn.size() > 0){
-				   for (Figure b : singleLineGenSpecConn) {
-					   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
-						   for (Figure c : strongEntity) {
-							   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
-								   for (Figure d: connection) {
-									   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }
-									   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }                       
-									   }                      
-								   }  
-							   }
+
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + specName.get(i) + " AFTER INSERT OR DELETE OR UPDATE ON " + specName.get(i) + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
+						   bw.write(mycontent);
+						   for (int j = 0; j < specName.size()-1; j++) {
+							   mycontent2 = "X" + j + " number; ";
+							   bw.write(mycontent2);
 						   }
-					   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
-						   for (Figure c : strongEntity) {
-							   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
-								   for (Figure d: connection) {
-									   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }
-									   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }                       
-									   }                      
-								   }  
-							   }
+						   mycontent = "\nBEGIN\n\tIF DELETING THEN\n";
+						   bw.write(mycontent);
+						   int aux = 0;
+						   for (int l = 0; l < specName.size(); l++){
+							   if(i != l){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux++;
+							   }   
+						   }					   
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
 						   }
-					   }				   
+						   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   bw.write(mycontent);					   
+					   }
 				   }
-				   for (Figure f : genSpecLineConn) {
-					   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
-						   for (Figure g : strongEntity) {
-							   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
-								   for (Figure h: connection) {
-									   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-										   for (Figure i: keyAttribute) {
-											   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-												   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-												   bw.write(mycontent);
+			   }
+		   } else {
+			   for (Figure a : genspecDisjoint) {
+				   if (singleLineGenSpecConn.size() > 0){
+					   for (Figure b : singleLineGenSpecConn) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
 											   }
-										   }
-									   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-										   for (Figure i: keyAttribute) {
-											   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-												   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-												   bw.write(mycontent);
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
 											   }
-										   }                       
-									   }                      
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   }				   
+					   }
+					   for (Figure f : genSpecLineConn) {
+						   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
+							   for (Figure g : strongEntity) {
+								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
+									   for (Figure h: connection) {
+										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }
+										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }                       
+										   }                      
+									   }
 								   }
 							   }
 						   }
 					   }
-				   }
-			   } else {
-				   for (Figure b : doubleLineGenSpecConn) {
-					   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
-						   for (Figure c : strongEntity) {
-							   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
-								   for (Figure d: connection) {
-									   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }
-									   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }                       
-									   }                      
-								   }  
-							   }
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + specName.get(i) + " AFTER INSERT OR DELETE OR UPDATE ON " + specName.get(i) + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
+						   bw.write(mycontent);
+						   for (int j = 0; j < specName.size()-1; j++) {
+							   mycontent2 = "X" + j + " number; ";
+							   bw.write(mycontent2);
 						   }
-					   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
-						   for (Figure c : strongEntity) {
-							   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
-								   for (Figure d: connection) {
-									   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }
-									   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
-										   for (Figure e: keyAttribute) {
-											   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
-												   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-												   keyAtt = e.toString();
-											   }
-										   }                       
-									   }                      
-								   }  
-							   }
+						   mycontent = "\nBEGIN\n\tIF INSERTING THEN\n";
+						   bw.write(mycontent);
+						   int aux = 0;
+						   for (int l = 0; l < specName.size(); l++){
+							   if(i != l){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux++;
+							   }   
+						   }					   
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
 						   }
-					   }				   
-				   }
-				   for (Figure f : genSpecLineConn) {
-					   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
-						   for (Figure g : strongEntity) {
-							   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
-								   for (Figure h: connection) {
-									   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-										   for (Figure i: keyAttribute) {
-											   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-												   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-												   specKey.add(i.toString());
-												   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-												   bw.write(mycontent);
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   bw.write(mycontent);					   
+					   }
+				   } else {
+					   for (Figure b : doubleLineGenSpecConn) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
 											   }
-										   }
-									   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-										   for (Figure i: keyAttribute) {
-											   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-												   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-												   specKey.add(i.toString());
-												   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-												   bw.write(mycontent);
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   } else if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+							   for (Figure c : strongEntity) {
+								   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+									   for (Figure d: connection) {
+										   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
 											   }
-										   }                       
-									   }                      
+										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+											   for (Figure e: keyAttribute) {
+												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+													   keyAtt = e.toString();
+												   }
+											   }                       
+										   }                      
+									   }  
+								   }
+							   }
+						   }				   
+					   }
+					   for (Figure f : genSpecLineConn) {
+						   if (((ConnectionFigure)f).getStartFigure().equals(a)) {
+							   for (Figure g : strongEntity) {
+								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
+									   for (Figure h: connection) {
+										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }
+										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
+											   for (Figure i: keyAttribute) {
+												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
+													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+													   specKey.add(i.toString());
+													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
+													   bw.write(mycontent);
+												   }
+											   }                       
+										   }                      
+									   }
 								   }
 							   }
 						   }
 					   }
+					   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + ownerEntity + " AFTER INSERT OR DELETE OR UPDATE ON " + ownerEntity + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "X" + i + " number; ";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "\nBEGIN\n\tIF INSTERTING THEN\n";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey.get(i) + " = :n." + keyAtt + ";\n";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "\t\tIF(";
+					   bw.write(mycontent);
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent2 = "X" + i + "+ ";
+						   bw.write(mycontent2);
+					   }
+					   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+					   bw.write(mycontent);
+
+
+					   for (int i = 0; i < specName.size(); i++) {
+						   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + specName.get(i) + " AFTER INSERT OR DELETE OR UPDATE ON " + specName.get(i) + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
+						   bw.write(mycontent);
+						   for (int j = 0; j < specName.size()-1; j++) {
+							   mycontent2 = "X" + j + " number; ";
+							   bw.write(mycontent2);
+						   }
+						   mycontent = "\nBEGIN\n\tIF INSERTING THEN\n";
+						   bw.write(mycontent);
+						   int aux = 0;
+						   for (int l = 0; l < specName.size(); l++){
+							   if(i != l){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux++;
+							   }   
+						   }					   
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
+						   }
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   bw.write(mycontent);
+
+						   mycontent = "\tIF DELETING THEN\n";
+						   bw.write(mycontent);
+						   int aux2 = 0;
+						   for (int l = 0; l < specName.size(); l++){
+							   if(i != l){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux2 + " FROM " + ownerEntity + " c WHERE c." + keyAtt + " = :o." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux2++;
+							   }   
+						   }					   
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
+						   }
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   bw.write(mycontent);
+
+						   mycontent = "\tIF UPDATING THEN\n";
+						   bw.write(mycontent);
+						   int aux3 = 0;
+						   for (int l = 0; l < specName.size(); l++){
+							   if(i != l){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux3 + " FROM " + ownerEntity + " c WHERE c." + keyAtt + " = :o." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux3++;
+							   }   
+						   }
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
+						   }
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   bw.write(mycontent);
+						   int aux4 = 0;
+						   for (int m = 0; m < specName.size(); m++){
+							   if(i != m){
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux4 + " FROM " + specName.get(m) + " c WHERE c." + specKey.get(m) + " = :n." + specKey.get(i) + ";\n";
+								   bw.write(mycontent2);
+								   aux4++;
+							   }   
+						   }
+						   mycontent = "\t\tIF(";
+						   bw.write(mycontent);
+						   for (int l = 0; l < specName.size()-1; l++) {
+							   mycontent2 = "X" + l + "+ ";
+							   bw.write(mycontent2);
+						   }
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   bw.write(mycontent);
+					   }
 				   }
-				   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTriiger_" + ownerEntity + " AFTER INSERT OR DELETE OR UPDATE ON " + ownerEntity + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
-				   bw.write(mycontent);
-				   for (int i = 0; i < specName.size(); i++) {
-					   mycontent2 = "X" + i + " number; ";
-					   bw.write(mycontent2);
-				   }
-				   mycontent = "\nBEGIN\n\tIF INSTERTING THEN\n";
-				   bw.write(mycontent);
-				   for (int i = 0; i < specName.size(); i++) {
-					   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + "c WHERE c." + specKey.get(i) + " = :n." + keyAtt + ";\n";
-					   bw.write(mycontent2);
-				   }
-				   mycontent = "\t\tIF(";
-				   bw.write(mycontent);
-				   for (int i = 0; i < specName.size(); i++) {
-					   mycontent2 = "X" + i + "+ ";
-					   bw.write(mycontent2);
-				   }
-				   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;";
-				   bw.write(mycontent);
 			   }
 		   }
-		   
 		   JOptionPane.showMessageDialog(null, "GenSpec Created");
 	   } catch (IOException ioe) {
 		   ioe.printStackTrace();
