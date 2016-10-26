@@ -197,6 +197,7 @@ public class ButtonFactory {
         a.add(new SelectSameAction(editor));
         a.add(null); // separator
         a.add(new SelectAttributeTypeAction(editor));
+        a.add(new IncludeSqlStatementAction(editor));
         return a;
     }
     public static Collection<Action> createSelectionActions(DrawingEditor editor) {

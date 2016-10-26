@@ -36,6 +36,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.draw.action.IncludeSqlStatementAction;
 import org.jhotdraw.draw.action.SelectAttributeTypeAction;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -244,6 +245,16 @@ public class DelegationSelectionTool extends SelectionTool {
         		    		continue;
         		    	}
         	}
+        	
+        	if (a != null && a instanceof IncludeSqlStatementAction){
+        		DrawingView v = this.getView();
+        		if (!(v.getSelectedFigures() != null &&
+    		    		v.getSelectedFigures().size() == 1 &&
+    		    		v.getSelectedFigures().toArray()[0] instanceof AtributoDerivadoFigure)){
+        			continue;
+        		}
+        	}
+        	
             if (a != null && a.getValue(Actions.SUBMENU_KEY) != null) {
                 if (submenuName == null || ! submenuName.equals(a.getValue(Actions.SUBMENU_KEY))) {
                     submenuName = (String) a.getValue(Actions.SUBMENU_KEY);

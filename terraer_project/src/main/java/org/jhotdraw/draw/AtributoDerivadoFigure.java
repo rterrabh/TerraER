@@ -17,7 +17,11 @@ package org.jhotdraw.draw;
 import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
+import java.util.Collection;
 
+import javax.swing.Action;
+
+import org.jhotdraw.draw.action.IncludeSqlStatementAction;
 import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -34,13 +38,14 @@ import org.jhotdraw.xml.DOMInput;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class AtributoDerivadoFigure extends GroupFigure implements AttributeTypeElement {
+public class AtributoDerivadoFigure extends GroupFigure {
 	private TextFigure tf;
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
     private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
     private boolean nullable;
+    private String sql;
 
 	public AtributoDerivadoFigure(){
     	super();
@@ -113,13 +118,21 @@ public class AtributoDerivadoFigure extends GroupFigure implements AttributeType
 		this.attributeType = attributeType;
 	}
     
-	@Override
+
 	public boolean isNullable() {
 		return this.nullable;
 	}
 	
-	@Override
+	
 	public void setNullable(boolean nullable) {
 		this.nullable = nullable;
+	}
+	
+	public String getSql() {
+		return this.sql;
+	}
+	
+	public void setSql(String sql) {
+		this.sql = sql;
 	}
 }
