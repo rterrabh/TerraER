@@ -17,13 +17,8 @@ package org.jhotdraw.draw;
 import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
-import java.util.Collection;
 
-import javax.swing.Action;
-
-import org.jhotdraw.draw.action.IncludeSqlStatementAction;
 import org.jhotdraw.enums.AttributeTypeEnum;
-import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -44,7 +39,6 @@ public class AtributoDerivadoFigure extends GroupFigure {
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
     private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
-    private boolean nullable;
     private String sql;
 
 	public AtributoDerivadoFigure(){
@@ -116,16 +110,6 @@ public class AtributoDerivadoFigure extends GroupFigure {
 
 	public void setAttributeType(AttributeTypeEnum attributeType) {
 		this.attributeType = attributeType;
-	}
-    
-
-	public boolean isNullable() {
-		return this.nullable;
-	}
-	
-	
-	public void setNullable(boolean nullable) {
-		this.nullable = nullable;
 	}
 	
 	public String getSql() {
