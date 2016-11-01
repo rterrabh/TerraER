@@ -127,12 +127,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
         
         generateTables(strongEntity, weakEntity, connection, attribute, keyAttribute, partialKeyAttribute, derivedAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
-        generatePartialKey(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship);
+        generatePartialKey(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship, genspecDisjoint, genspecOverlap, singleLineGenSpecConn, doubleLineGenSpecConn, genSpecLineConn);
         generateEntityRelationship (entityRelationship, connection, attribute, keyAttribute, derivedAttribute);
         generateGenSpec(strongEntity, connection, keyAttribute, genspecDisjoint, genspecOverlap, singleLineGenSpecConn, doubleLineGenSpecConn, genSpecLineConn);
         generateRelationships(strongEntity, connection, keyAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, relationship, entityRelationship);
         generateMultivaluedAttribute(strongEntity, weakEntity, weakRelationship, entityRelationship, connection, keyAttribute, partialKeyAttribute, multivaluedAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN);
-        
+        generateDerivedAttribute(strongEntity, weakEntity, entityRelationship, connection, derivedAttribute);
     }
 
 	public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute){
@@ -165,13 +165,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
             					mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
             					bw.write(mycontent);
             				}
-            			}
-            			/*for (Figure m: derivedAttribute) {
-            				if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
-            					mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
-            					bw.write(mycontent);
-            				}
-            			}*/            			
+            			}            			           			
             		} else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
             			for (Figure k: attribute) {
             				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
@@ -184,16 +178,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
             					mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
             					bw.write(mycontent);
             				}
-            			}
-            			/*for (Figure m: derivedAttribute) {
-            				if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
-            					mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
-            					bw.write(mycontent);
-            				}
-            			}*/            			
+            			}            			            			
             		}                      
             	}
-            	mycontent = ");";
+            	mycontent = ");\n";
             	bw.write(mycontent);
             }
 
@@ -214,12 +202,6 @@ public class GenerateDDLAction extends AbstractProjectAction {
             					bw.write(mycontent);
             				}
             			}
-            			/*for (Figure e: derivedAttribute) {
-            				if (((ConnectionFigure)b).getEndFigure().equals(((AtributoDerivadoFigure)e))) {
-            					mycontent = e.toString() + " " + ((AtributoDerivadoFigure)e).getAttributeType() + " " + (((AtributoDerivadoFigure)e).isNullable() != true ? "NOT NULL" : "")  + ",\n";
-            					bw.write(mycontent);
-            				}
-            			}*/
             		} else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigure)a))){
             			for (Figure c: attribute) {
             				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoFigure)c))) {
@@ -233,15 +215,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
             					bw.write(mycontent);
             				}
             			}
-            			/*for (Figure e: derivedAttribute) {
-            				if (((ConnectionFigure)b).getStartFigure().equals(((AtributoDerivadoFigure)e))) {
-            					mycontent = e.toString() + " " + ((AtributoDerivadoFigure)e).getAttributeType() + " " + (((AtributoDerivadoFigure)e).isNullable() != true ? "NOT NULL" : "") + ",\n";
-            					bw.write(mycontent);
-            				}
-            			}*/
             		}                      
             	}
-            	mycontent = ");";
+            	mycontent = ");\n";
             	bw.write(mycontent); 
             }
         } catch (IOException ioe) {
@@ -266,7 +242,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         		oldLine += currentLine + "\n";
         	}
         	
-        	String replacedLine = oldLine.replace(",\n);", "\n);\n\n");
+        	String replacedLine = oldLine.replace(",\n);", "\n);\n");
         	bw.write(replacedLine);
         	JOptionPane.showMessageDialog(null, "File written Successfully");
         } catch (Exception e) {
@@ -305,14 +281,14 @@ public class GenerateDDLAction extends AbstractProjectAction {
                    if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
                        for (Figure k: keyAttribute) {
                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)k))) {
-                               mycontent = "ALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
+                               mycontent = "\nALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n" ;
                                bw.write(mycontent);
                            }
                        }
                    } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
                 	   for (Figure k: keyAttribute) {
                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)k))) {
-                               mycontent = "ALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n\n" ;
+                               mycontent = "\nALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n" ;
                                bw.write(mycontent);
                            }
                        }                       
@@ -331,7 +307,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
        }
    }
    
-   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> singleLineConnectionUm, ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm, ArrayList<Figure> doubleLineConnectionN, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship){
+   public void generatePartialKey(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> singleLineConnectionUm, ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm, ArrayList<Figure> doubleLineConnectionN, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship, ArrayList<Figure> genspecDisjoint, ArrayList<Figure> genspecOverlap, ArrayList<Figure> singleLineGenSpecConn, ArrayList<Figure> doubleLineGenSpecConn, ArrayList<Figure> genSpecLineConn){
 	   BufferedWriter bw = null;
        try {
 
@@ -340,6 +316,14 @@ public class GenerateDDLAction extends AbstractProjectAction {
            lineconnectors.addAll(singleLineConnectionN);
            lineconnectors.addAll(doubleLineConnectionUm);
            lineconnectors.addAll(doubleLineConnectionN);
+           
+           ArrayList<Figure> genspecFigures = new ArrayList<Figure>();
+           genspecFigures.addAll(genspecDisjoint);
+           genspecFigures.addAll(genspecOverlap);
+           
+           ArrayList<Figure> genspecConnectors = new ArrayList<Figure>();
+           genspecConnectors.addAll(singleLineGenSpecConn);
+           genspecConnectors.addAll(doubleLineGenSpecConn);
            
            String mycontent = new String();
            String mycontent2 = new String();
@@ -357,8 +341,71 @@ public class GenerateDDLAction extends AbstractProjectAction {
         		   if (((ConnectionFigure)g).getEndFigure().equals(((RelacionamentoFracoFigure)f))) {
         			   for (Figure h : strongEntity) {
         				   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFigure)h))) {
+        					   for (Figure i : genSpecLineConn) {
+        						   if(((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
+        							   for (Figure j : genspecFigures){
+        								   if(((ConnectionFigure)i).getStartFigure().equals(j)){
+        									   for (Figure k : genspecConnectors){
+        										   if (((ConnectionFigure)k).getStartFigure().equals(j)){
+        											   for (Figure l : strongEntity){
+        												   if (((ConnectionFigure)k).getEndFigure().equals(l)){
+        													   for (Figure m: connection) {
+        						        						   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
+        						        							   for (Figure n: keyAttribute) {
+        						        								   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
+        						        									   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+        						        									   keyAtt = n.toString();
+        						        									   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+        						        									   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+        						        								   }
+        						        							   }
+        						        						   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
+        						        							   for (Figure n: keyAttribute) {
+        						        								   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
+        						        									   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+        						        									   keyAtt = n.toString();
+        						        									   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+        						        									   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+        						        								   }
+        						        							   }                       
+        						        						   }                      
+        						        					   }
+        												   }
+        											   }
+        										   } else if (((ConnectionFigure)k).getEndFigure().equals(j)){
+        											   for (Figure l : strongEntity){
+        												   if (((ConnectionFigure)k).getStartFigure().equals(l)){
+        													   for (Figure m: connection) {
+        						        						   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
+        						        							   for (Figure n: keyAttribute) {
+        						        								   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
+        						        									   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+        						        									   keyAtt = n.toString();
+        						        									   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+        						        									   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+        						        								   }
+        						        							   }
+        						        						   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
+        						        							   for (Figure n: keyAttribute) {
+        						        								   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
+        						        									   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+        						        									   keyAtt = n.toString();
+        						        									   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+        						        									   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+        						        								   }
+        						        							   }                       
+        						        						   }                      
+        						        					   }
+        												   }
+        											   }
+        										   }
+        									   }
+        								   }
+        							   }
+        						   }
+        					   }
         					   for (Figure i: connection) {
-        						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){
+        						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){    							   
         							   for (Figure j: keyAttribute) {
         								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveFigure)j))) {
         									   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
@@ -386,9 +433,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
         							   for (Figure j: partialKeyAttribute) {
         								   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
-        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
-        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + "owner_" + keyAtt + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
-        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        									   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
         		                               bw.write(mycontent);
         									   bw.write(mycontent2);
         									   bw.write(mycontent3);
@@ -397,9 +444,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
         							   for (Figure j: partialKeyAttribute) {
         								   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
-        									   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD owner_" + keyAtt + " " + keyAttType + " " + keyAttNullable + ";\n";  
-        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + "owner_" + keyAtt + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
-        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", owner_" + keyAtt + ");\n" ;
+        									   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+        									   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+        									   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
         		                               bw.write(mycontent);
         									   bw.write(mycontent2);
         									   bw.write(mycontent3);
@@ -434,7 +481,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	            
 	            
 	            for (Figure i: entityRelationship) {
-	                mycontent = "CREATE TABLE " + i.toString().toUpperCase() + "(\n";
+	                mycontent = "\nCREATE TABLE " + i.toString().toUpperCase() + "(\n";
 	                bw.write(mycontent);
 	                for (Figure j: connection) {
 	                    if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeRelacionamentoFigure)i))){
@@ -449,13 +496,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	                                mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
 	                                bw.write(mycontent);
 	                            }
-	                        }
-	                        /*for (Figure m: derivedAttribute) {
-	                            if (((ConnectionFigure)j).getEndFigure().equals(((AtributoDerivadoFigure)m))) {
-	                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "")  + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }*/	                        
+	                        }                       
 	                    } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeRelacionamentoFigure)i))){
 	                        for (Figure k: attribute) {
 	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
@@ -469,15 +510,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	                                bw.write(mycontent);
 	                            }
 	                        }
-	                        /*for (Figure m: derivedAttribute) {
-	                            if (((ConnectionFigure)j).getStartFigure().equals(((AtributoDerivadoFigure)m))) {
-	                                mycontent = m.toString() + " " + ((AtributoDerivadoFigure)m).getAttributeType() + " " + (((AtributoDerivadoFigure)m).isNullable() != true ? "NOT NULL" : "") + ",\n";
-	                                bw.write(mycontent);
-	                            }
-	                        }*/
 	                    }                      
 	                }
-	                mycontent = ");";
+	                mycontent = ");\n";
 	                bw.write(mycontent);                    
 	            }
 	        } catch (IOException ioe) {
@@ -502,7 +537,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        		oldLine += currentLine + "\n";
 	        	}
 	        	
-	        	String replacedLine = oldLine.replace(",\n);", "\n);\n\n");
+	        	String replacedLine = oldLine.replace(",\n);", "\n);\n");
 	        	bw.write(replacedLine);
 	        	JOptionPane.showMessageDialog(null, "File written Successfully");
 	        } catch (Exception e) {
@@ -534,10 +569,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 
 		   String mycontent = new String();
 		   String mycontent2 = new String();
+		   String mycontent3 = new String();
 		   String ownerEntity = new String(); 
-		   String keyAtt = new String();
+		   String ownerKey = new String();
+		   String ownerKeyType = new String();
+		   String specKey = new String();		   
 		   ArrayList<String> specName = new ArrayList<String>();
-		   ArrayList<String> specKey = new ArrayList<String>();
 		   File file = new File("/home/shinahk/Desktop/Test.sql");
 		   FileWriter fw = new FileWriter(file,true);
 		   bw = new BufferedWriter(fw);
@@ -554,14 +591,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -576,14 +615,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -598,19 +639,21 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
 									   for (Figure h: connection) {
 										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";   
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }                       
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   }                      
 									   }
 								   }
@@ -627,14 +670,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -649,14 +694,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -671,23 +718,23 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
 									   for (Figure h: connection) {
 										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }                       
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   }                      
 									   }
 								   }
@@ -703,7 +750,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   mycontent = "\nBEGIN\n\tIF INSTERTING THEN\n";
 					   bw.write(mycontent);
 					   for (int i = 0; i < specName.size(); i++) {
-						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey.get(i) + " = :n." + keyAtt + ";\n";
+						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey + " = :n." + ownerKey + ";\n";
 						   bw.write(mycontent2);
 					   }
 					   mycontent = "\t\tIF(";
@@ -728,7 +775,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   int aux = 0;
 						   for (int l = 0; l < specName.size(); l++){
 							   if(i != l){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey + " = :n." + specKey + ";\n";
 								   bw.write(mycontent2);
 								   aux++;
 							   }   
@@ -739,12 +786,14 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   mycontent2 = "X" + l + "+ ";
 							   bw.write(mycontent2);
 						   }
-						   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
 						   bw.write(mycontent);					   
 					   }
 				   }
 			   }
-		   } else {
+		   }
+		   
+		   if (genspecDisjoint.size() > 0){
 			   for (Figure a : genspecDisjoint) {
 				   if (singleLineGenSpecConn.size() > 0){
 					   for (Figure b : singleLineGenSpecConn) {
@@ -756,14 +805,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -778,14 +829,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -800,23 +853,23 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
 									   for (Figure h: connection) {
 										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") ON DELETE CASCADE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }                       
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);                       
 										   }                      
 									   }
 								   }
@@ -835,7 +888,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   int aux = 0;
 						   for (int l = 0; l < specName.size(); l++){
 							   if(i != l){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey + " = :n." + specKey + ";\n";
 								   bw.write(mycontent2);
 								   aux++;
 							   }   
@@ -846,7 +899,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   mycontent2 = "X" + l + "+ ";
 							   bw.write(mycontent2);
 						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
 						   bw.write(mycontent);					   
 					   }
 				   } else {
@@ -859,14 +912,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -881,14 +936,16 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }
 										   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
 											   for (Figure e: keyAttribute) {
 												   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
 													   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
-													   keyAtt = e.toString();
+													   ownerKey = e.toString();
+													   ownerKeyType = ((AtributoChaveFigure)e).getAttributeType().toString();
 												   }
 											   }                       
 										   }                      
@@ -903,23 +960,23 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   if (((ConnectionFigure)f).getEndFigure().equals(g)) {
 									   for (Figure h: connection) {
 										   if (((ConnectionFigure)h).getStartFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getEndFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   } else if (((ConnectionFigure)h).getEndFigure().equals(((EntidadeFigure)g))){
-											   for (Figure i: keyAttribute) {
-												   if (((ConnectionFigure)h).getStartFigure().equals(((AtributoChaveFigure)i))) {
-													   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
-													   specKey.add(i.toString());
-													   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + i.toString() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ") INITIALLY DEFERRED DEFERRABLE;\n";   
-													   bw.write(mycontent);
-												   }
-											   }                       
+											   specName.add(g.toString().toUpperCase().replaceAll("\\s+", "_"));
+											   specKey = ownerKey + "_" + ownerEntity.toLowerCase();
+											   mycontent = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + specKey + " " + ownerKeyType + " NOT NULL;\n";
+											   mycontent2 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") ON DELETE CASCADE;\n";
+											   mycontent3 = "ALTER TABLE " + g.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + g.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + specKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+											   bw.write(mycontent);
+											   bw.write(mycontent2);
+											   bw.write(mycontent3);
 										   }                      
 									   }
 								   }
@@ -935,7 +992,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   mycontent = "\nBEGIN\n\tIF INSTERTING THEN\n";
 					   bw.write(mycontent);
 					   for (int i = 0; i < specName.size(); i++) {
-						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey.get(i) + " = :n." + keyAtt + ";\n";
+						   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + i + " FROM " + specName.get(i) + " c WHERE c." + specKey + " = :n." + ownerKey + ";\n";
 						   bw.write(mycontent2);
 					   }
 					   mycontent = "\t\tIF(";
@@ -951,81 +1008,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   for (int i = 0; i < specName.size(); i++) {
 						   mycontent = "\nCREATE OR REPLACE TRIGGER genspecTrigger_" + specName.get(i) + " AFTER INSERT OR DELETE OR UPDATE ON " + specName.get(i) + "\nREFERENCING NEW AS n OLD as o FOR EACH ROW\nDECLARE ";
 						   bw.write(mycontent);
-						   for (int j = 0; j < specName.size()-1; j++) {
+						   for (int j = 0; j < specName.size(); j++) {
 							   mycontent2 = "X" + j + " number; ";
 							   bw.write(mycontent2);
 						   }
 						   mycontent = "\nBEGIN\n\tIF INSERTING THEN\n";
 						   bw.write(mycontent);
-						   int aux = 0;
+						   int aux = 1;
 						   for (int l = 0; l < specName.size(); l++){
 							   if(i != l){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey.get(l) + " = :n." + specKey.get(i) + ";\n";
+								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux + " FROM " + specName.get(l) + " c WHERE c." + specKey + " = :n." + specKey + ";\n";
 								   bw.write(mycontent2);
 								   aux++;
 							   }   
 						   }					   
 						   mycontent = "\t\tIF(";
 						   bw.write(mycontent);
-						   for (int l = 0; l < specName.size()-1; l++) {
+						   for (int l = 1; l < specName.size(); l++) {
 							   mycontent2 = "X" + l + "+ ";
 							   bw.write(mycontent2);
 						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\n";
 						   bw.write(mycontent);
+						   
+						   mycontent = "\tIF DELETING THEN\n\t\tSELECT COUNT(*) INTO X0 FROM " + ownerEntity + " c WHERE c." + ownerKey + " = :o." + specKey + ";\n";
+						   bw.write(mycontent);					   
+						   mycontent2 = "\t\tIF(X0 != 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+2 + ", 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   bw.write(mycontent2);
+						   
+						   mycontent = "\tIF UPDATING THEN\n\t\tIF(:n." + specKey + " != :o." + specKey + ") THEN\n";
+						   bw.write(mycontent);
+						   mycontent = "\t\t\tSELECT COUNT(*) INTO X0 FROM " + ownerEntity + " c WHERE c." + ownerKey + " = :o." + specKey + ";\n";
+						   bw.write(mycontent);					   
+						   mycontent2 = "\t\t\tIF(X0 != 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+3 + ", 'Violação detectada!'); END IF;\n";
+						   bw.write(mycontent2);
 
-						   mycontent = "\tIF DELETING THEN\n";
-						   bw.write(mycontent);
-						   int aux2 = 0;
+						   int aux2 = 1;
 						   for (int l = 0; l < specName.size(); l++){
 							   if(i != l){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux2 + " FROM " + ownerEntity + " c WHERE c." + keyAtt + " = :o." + specKey.get(i) + ";\n";
+								   mycontent2 = "\t\t\tSELECT COUNT(*) INTO X" + aux2 + " FROM " + specName.get(l) + " c WHERE c." + specKey + " = :n." + specKey + ";\n";
+								   mycontent3 = "\t\t\tIF(X" + aux2 + "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n";								   
 								   bw.write(mycontent2);
+								   bw.write(mycontent3);
 								   aux2++;
 							   }   
-						   }					   
-						   mycontent = "\t\tIF(";
-						   bw.write(mycontent);
-						   for (int l = 0; l < specName.size()-1; l++) {
-							   mycontent2 = "X" + l + "+ ";
-							   bw.write(mycontent2);
 						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
-						   bw.write(mycontent);
-
-						   mycontent = "\tIF UPDATING THEN\n";
-						   bw.write(mycontent);
-						   int aux3 = 0;
-						   for (int l = 0; l < specName.size(); l++){
-							   if(i != l){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux3 + " FROM " + ownerEntity + " c WHERE c." + keyAtt + " = :o." + specKey.get(i) + ";\n";
-								   bw.write(mycontent2);
-								   aux3++;
-							   }   
-						   }
-						   mycontent = "\t\tIF(";
-						   bw.write(mycontent);
-						   for (int l = 0; l < specName.size()-1; l++) {
-							   mycontent2 = "X" + l + "+ ";
-							   bw.write(mycontent2);
-						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\n";
-						   bw.write(mycontent);
-						   int aux4 = 0;
-						   for (int m = 0; m < specName.size(); m++){
-							   if(i != m){
-								   mycontent2 = "\t\tSELECT COUNT(*) INTO X" + aux4 + " FROM " + specName.get(m) + " c WHERE c." + specKey.get(m) + " = :n." + specKey.get(i) + ";\n";
-								   bw.write(mycontent2);
-								   aux4++;
-							   }   
-						   }
-						   mycontent = "\t\tIF(";
-						   bw.write(mycontent);
-						   for (int l = 0; l < specName.size()-1; l++) {
-							   mycontent2 = "X" + l + "+ ";
-							   bw.write(mycontent2);
-						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
+						   mycontent = "\t\tEND IF;\n\tEND IF\nEND;\n";
 						   bw.write(mycontent);
 					   }
 				   }
@@ -1051,8 +1079,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   String entRel = new String();
 		   String ownerEntity = new String();
 		   String ownerKey = new String();
+		   String ownerKeyType = new String();
 		   String ownerEntity2 = new String();
 		   String ownerKey2 = new String();
+		   String ownerKeyType2 = new String();
 		   String mycontent = new String();
 		   String mycontent2 = new String();
 		   String mycontent3 = new String();
@@ -1085,6 +1115,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1092,6 +1123,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1108,6 +1140,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1115,6 +1148,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1122,9 +1156,13 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   }
 						   }
 					   }
-					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+					   mycontent = "\nALTER TABLE " + entRel + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL";
+					   bw.write(mycontent);
+					   bw.write(mycontent2);
+					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
@@ -1138,6 +1176,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1145,6 +1184,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1161,6 +1201,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1168,6 +1209,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1175,9 +1217,13 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   }
 						   }
 					   }
-					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+					   mycontent = "\nALTER TABLE " + entRel + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL";
+					   bw.write(mycontent);
+					   bw.write(mycontent2);
+					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
@@ -1191,6 +1237,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1198,6 +1245,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey = h.toString();
+												   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1214,6 +1262,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }		            			
 									   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
@@ -1221,6 +1270,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 											   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
 												   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
 												   ownerKey2 = h.toString();
+												   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
 											   }
 										   }			            			
 									   }                      
@@ -1228,9 +1278,13 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   }
 						   }
 					   }
-					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+					   mycontent = "\nALTER TABLE " + entRel + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL";
+					   bw.write(mycontent);
+					   bw.write(mycontent2);
+					   mycontent = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK_" + entRel + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+					   mycontent2 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT FK2_" + entRel + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+					   mycontent3 = "\nALTER TABLE " + entRel + " ADD CONSTRAINT PK_" + entRel + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
@@ -1316,8 +1370,8 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				   for (int i = 1; i < slcUm.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)slcUm.get(i)).getStartFigure().equals(f)) {
-							   mycontent = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + " " + ownerKeyType + ";\n";
-							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + ";\n";
+							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 							   bw.write(mycontent);
 							   bw.write(mycontent2);
 						   }
@@ -1353,8 +1407,8 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   for (int i = 0; i < dlcUm.size(); i++) {
 						   for (Figure f : strongEntity) {
 							   if (((ConnectionFigure)dlcUm.get(i)).getStartFigure().equals(f)) {
-								   mycontent = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + " " + ownerKeyType + " NOT NULL;\n";
-								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+								   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
+								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 								   bw.write(mycontent);
 								   bw.write(mycontent2);
 							   }
@@ -1364,8 +1418,8 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   for (int i = 0; i < slcN.size(); i++) {
 						   for (Figure f : strongEntity) {
 							   if (((ConnectionFigure)slcN.get(i)).getStartFigure().equals(f)) {
-								   mycontent = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + " " + ownerKeyType + ";\n";
-								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+								   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + ";\n";
+								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 								   bw.write(mycontent);
 								   bw.write(mycontent2);
 							   }
@@ -1375,8 +1429,8 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   for (int i = 0; i < dlcN.size(); i++) {
 						   for (Figure f : strongEntity) {
 							   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
-								   mycontent = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + " " + ownerKeyType + " NOT NULL;\n";
-								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+								   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
+								   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 								   bw.write(mycontent);
 								   bw.write(mycontent2);
 							   }
@@ -1435,10 +1489,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   }
 						   }
 					   }
-					   mycontent = "CREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL\n);\n";
-					   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-					   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-					   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+					   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL\n);\n";
+					   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+					   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+					   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
@@ -1478,22 +1532,22 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   }
 						   }
 					   }
-					   mycontent = "ALTER TABLE " + ownerEntity2 + " ADD " + ownerKey + " " + ownerKeyType + " NOT NULL;\n";
-					   mycontent2 = "\nALTER TABLE " + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity2 + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") INITIALLY DEFERRED DEFERREABLE;\n";
+					   mycontent = "\nALTER TABLE " + ownerEntity2 + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
+					   mycontent2 = "\nALTER TABLE " + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity2 + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ") INITIALLY DEFERRED DEFERREABLE;\n";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   mycontent = "\nCREATE OR REPLACE TRIGGER relTrigger_" + ownerEntity + " AFTER INSERT OR DELETE OR UPDATE ON " + ownerEntity + "\nREFERENCING NEW AS n OLD AS o FOR EACH ROW\nDECLARE X number;\nBEGIN\n\tIF INSERTING THEN";
-					   mycontent2 = "\n\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :n." + ownerKey + ";\n\t\tIF (X = 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violacao detectada!'); END IF;\n\tELSEIF UPDATING THEN\n\t\tIF(:n." + ownerKey + " != :o." + ownerKey + ") THEN";
-					   mycontent3 = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :o." + ownerKey + ";\n\t\t\tIF (X != 0) THEN RAISE_APPLICATION_ERROR(-20001, 'Violacao detectada!'); END IF;";
-					   mycontent4 = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :n." + ownerKey + ";\n\t\t\tIF (X = 0) THEN RAISE_APPLICATION_ERROR(-20002, 'Violacao detectada!'); END IF;\n\t\tEND IF;\n\tELSEIF DELETING THEN";
+					   mycontent2 = "\n\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :n." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\tIF (X = 0) THEN RAISE_APPLICATION_ERROR(-20000, 'Violacao detectada!'); END IF;\n\tELSEIF UPDATING THEN\n\t\tIF(:n." + ownerKey + "_" + ownerEntity.toLowerCase() + " != :o." + ownerKey + "_" + ownerEntity.toLowerCase() + ") THEN";
+					   mycontent3 = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :o." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\t\tIF (X != 0) THEN RAISE_APPLICATION_ERROR(-20001, 'Violacao detectada!'); END IF;";
+					   mycontent4 = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :n." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\t\tIF (X = 0) THEN RAISE_APPLICATION_ERROR(-20002, 'Violacao detectada!'); END IF;\n\t\tEND IF;\n\tELSEIF DELETING THEN";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
 					   bw.write(mycontent4);
-					   mycontent = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :o." + ownerKey + ";\n\t\tIF (X != 0) THEN RAISE_APPLICATION_ERROR(-20003, 'Violacao detectada!'); END IF;\n\tEND IF\nEND;\n";
+					   mycontent = "\n\t\t\tSELECT COUNT (*) INTO X FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :o." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\tIF (X != 0) THEN RAISE_APPLICATION_ERROR(-20003, 'Violacao detectada!'); END IF;\n\tEND IF\nEND;\n";
 					   mycontent2 = "\nCREATE OR REPLACE TRIGGER relTrigger_" + ownerEntity2 + " AFTER INSERT OR DELETE OR UPDATE ON " + ownerEntity2 + "\nREFERENCING NEW AS n OLD AS o FOR EACH ROW\nDECLARE Y number; PRAGMA AUTONOMOUS_TRANSACTION;\nBEGIN\n\tIF DELETING THEN";
-					   mycontent3 = "\n\t\tSELECT COUNT (*) INTO Y FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :o." + ownerKey + ";\n\t\tIF (Y != 0) THEN RAISE_APPLICATION_ERROR(-20004, 'Violacao detectada!'); END IF;\n\tELSEIF UPDATING THEN\n\t\tIF(:o." + ownerKey + " != :n." + ownerKey + ") THEN";
-					   mycontent4 = "\n\t\t\tSELECT COUNT (*) INTO Y FROM " + ownerEntity2 + " c WHERE c." + ownerKey + " = :o." + ownerKey + ";\n\t\t\tIF (Y != 0) THEN RAISE_APPLICATION_ERROR(-20005, 'Violacao detectada!'); END IF;\n\t\tEND IF;\n\tEND IF;\nEND;";
+					   mycontent3 = "\n\t\tSELECT COUNT (*) INTO Y FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :o." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\tIF (Y != 0) THEN RAISE_APPLICATION_ERROR(-20004, 'Violacao detectada!'); END IF;\n\tELSEIF UPDATING THEN\n\t\tIF(:o." + ownerKey + "_" + ownerEntity.toLowerCase() + " != :n." + ownerKey + "_" + ownerEntity.toLowerCase() + ") THEN";
+					   mycontent4 = "\n\t\t\tSELECT COUNT (*) INTO Y FROM " + ownerEntity2 + " c WHERE c." + ownerKey + "_" + ownerEntity.toLowerCase() + " = :o." + ownerKey + "_" + ownerEntity.toLowerCase() + ";\n\t\t\tIF (Y != 0) THEN RAISE_APPLICATION_ERROR(-20005, 'Violacao detectada!'); END IF;\n\t\tEND IF;\n\tEND IF;\nEND;";
 					   bw.write(mycontent);
 					   bw.write(mycontent2);
 					   bw.write(mycontent3);
@@ -1550,10 +1604,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   }
 					   }
 				   }
-				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL\n);\n";
-				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL\n);\n";
+				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 				   bw.write(mycontent);
 				   bw.write(mycontent2);
 				   bw.write(mycontent3);
@@ -1609,10 +1663,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   }
 					   }
 				   }
-				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL\n);\n";
-				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL\n);\n";
+				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 				   bw.write(mycontent);
 				   bw.write(mycontent2);
 				   bw.write(mycontent3);
@@ -1668,10 +1722,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   }
 					   }
 				   }
-				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL\n);\n";
-				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
-				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
-				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + ", " + ownerKey2 + ");\n";
+				   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + ownerEntity2 + "(\n\t" + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + " " + ownerKeyType2 + " NOT NULL\n);\n";
+				   mycontent2 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+				   mycontent3 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT FK2_" + ownerEntity + "_" + ownerEntity2 + " FOREING KEY (" + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ") REFERENCES " + ownerEntity2 + " (" + ownerKey2 + ");\n";
+				   mycontent4 = "\nALTER TABLE " + ownerEntity + "_" + ownerEntity2 + " ADD CONSTRAINT PK_" + ownerEntity + "_" + ownerEntity2 + " PRIMARY KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ", " + ownerKey2 + "_" + ownerEntity2.toLowerCase() + ");\n";
 				   bw.write(mycontent);
 				   bw.write(mycontent2);
 				   bw.write(mycontent3);
@@ -1734,12 +1788,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
         			   for (Figure d: multivaluedAttribute) {
         				   if (((ConnectionFigure)b).getEndFigure().equals(((AtributoMultivaloradoFigure)d))) {
         					   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\tpk_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-        					   mycontent3 = "\n\t" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)d).getAttributeType() + " " + (((AtributoMultivaloradoFigure)d).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\tpk_" + d.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+        					   mycontent3 = "\n\t" + d.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)d).getAttributeType() + " " + (((AtributoMultivaloradoFigure)d).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
         					   bw.write(mycontent);
         					   bw.write(mycontent2);
         					   bw.write(mycontent3);
-        					   mycontent = "ALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+        					   mycontent = "\nALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + d.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
         					   mycontent2 = "ALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
         					   bw.write(mycontent);
         					   bw.write(mycontent2);
@@ -1756,12 +1810,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
         			   for (Figure d: multivaluedAttribute) {
         				   if (((ConnectionFigure)b).getStartFigure().equals(((AtributoMultivaloradoFigure)d))) {
         					   mycontent = "\nCREATE TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\tpk_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-        					   mycontent3 = "\n\t" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)d).getAttributeType() + " " + (((AtributoMultivaloradoFigure)d).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\tpk_" + d.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+        					   mycontent3 = "\n\t" + d.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)d).getAttributeType() + " " + (((AtributoMultivaloradoFigure)d).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
         					   bw.write(mycontent);
         					   bw.write(mycontent2);
         					   bw.write(mycontent3);
-        					   mycontent = "ALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+        					   mycontent = "\nALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + d.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
         					   mycontent2 = "ALTER TABLE " + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + ownerEntity + "_" + d.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
         					   bw.write(mycontent);
         					   bw.write(mycontent2);                                
@@ -1820,12 +1874,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   for (Figure k: multivaluedAttribute) {
         							   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoMultivaloradoFigure)k)) && done == false) {
         								   mycontent = "\nCREATE TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-        								   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + partialKey + " " + partialKeyType + " NOT NULL,\n\tpk_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-        								   mycontent3 = "\n\t" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)k).getAttributeType() + " " + (((AtributoMultivaloradoFigure)k).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+        								   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + partialKey + " " + partialKeyType + " NOT NULL,\n\tpk_" + k.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+        								   mycontent3 = "\n\t" + k.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)k).getAttributeType() + " " + (((AtributoMultivaloradoFigure)k).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
         								   bw.write(mycontent);
         								   bw.write(mycontent2);
         								   bw.write(mycontent3);
-        								   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+        								   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + k.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
         								   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + partialKey + ", " + ownerKey + ") REFERENCES " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " (" + partialKey + ", " + ownerKey + ");\n";
         								   bw.write(mycontent);
         								   bw.write(mycontent2);        					                                   
@@ -1836,12 +1890,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
         						   for (Figure k: multivaluedAttribute) {
         							   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoMultivaloradoFigure)k)) && done == false) {
         								   mycontent = "\nCREATE TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-        								   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + partialKey + " " + partialKeyType + " NOT NULL,\n\tpk_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-        								   mycontent3 = "\n\t" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)k).getAttributeType() + " " + (((AtributoMultivaloradoFigure)k).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+        								   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + partialKey + " " + partialKeyType + " NOT NULL,\n\tpk_" + k.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+        								   mycontent3 = "\n\t" + k.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)k).getAttributeType() + " " + (((AtributoMultivaloradoFigure)k).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
         								   bw.write(mycontent);
         								   bw.write(mycontent2);
         								   bw.write(mycontent3);
-        								   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+        								   mycontent = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + k.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
         								   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + "_" + k.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + partialKey + ", " + ownerKey + ") REFERENCES " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " (" + partialKey + ", " + ownerKey + ");\n";
         								   bw.write(mycontent);
         								   bw.write(mycontent2);
@@ -1919,12 +1973,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
@@ -1934,12 +1988,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);                                
@@ -1999,12 +2053,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
@@ -2014,12 +2068,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);                                
@@ -2079,12 +2133,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getEndFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
@@ -2094,12 +2148,12 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        			   for (Figure l: multivaluedAttribute) {
 	        				   if (((ConnectionFigure)j).getStartFigure().equals(((AtributoMultivaloradoFigure)l))) {
 	        					   mycontent = "\nCREATE TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + "(";
-	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
-	        					   mycontent3 = "\n\t" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
+	        					   mycontent2 = "\n\t" + ownerKey + " " + ownerKeyType + " NOT NULL,\n\t" + ownerKey2 + " " + ownerKeyType2 + " NOT NULL,\n\tpk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " NUMBER NOT NULL,";
+	        					   mycontent3 = "\n\t" + l.toString().toLowerCase().replaceAll("\\s+", "_") + " " + ((AtributoMultivaloradoFigure)l).getAttributeType() + " " + (((AtributoMultivaloradoFigure)l).isNullable() != true ? "NOT NULL" : "") + "\n);\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);
 	        					   bw.write(mycontent3);
-	        					   mycontent = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + ");\n";
+	        					   mycontent = "\nALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (pk_" + l.toString().toLowerCase().replaceAll("\\s+", "_") + ");\n";
 	        					   mycontent2 = "ALTER TABLE " + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + entRel + "_" + l.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + ", " + ownerKey2 + ") REFERENCES " + entRel + " (" + ownerKey + ", " + ownerKey2 + ");\n";
 	        					   bw.write(mycontent);
 	        					   bw.write(mycontent2);                                
@@ -2120,5 +2174,99 @@ public class GenerateDDLAction extends AbstractProjectAction {
              JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
          }
        }
+   }
+   
+   private void generateDerivedAttribute(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> entityRelationship, ArrayList<Figure> connection, ArrayList<Figure> derivedAttribute) {
+	   BufferedWriter bw = null;
+	   try {
+		   
+		   String mycontent = new String();
+		   String mycontent2 = new String();
+		   File file = new File("/home/shinahk/Desktop/Test.sql");
+		   FileWriter fw = new FileWriter(file,true);
+		   bw = new BufferedWriter(fw);
+		   
+		   for (Figure a : strongEntity) {
+			   for (Figure b : connection) {
+				   if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   } else if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   }
+			   }
+		   }
+		   
+		   for (Figure a : weakEntity) {
+			   for (Figure b : connection) {
+				   if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   } else if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   }
+			   }
+		   }
+		   
+		   for (Figure a : entityRelationship) {
+			   for (Figure b : connection) {
+				   if (((ConnectionFigure)b).getStartFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getEndFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   } else if (((ConnectionFigure)b).getEndFigure().equals(a)) {
+					   for (Figure c : derivedAttribute) {
+						   if (((ConnectionFigure)b).getStartFigure().equals(c)) {
+							   mycontent = "\nCREATE OR REPLACE VIEW VW_" + a.toString().toUpperCase().replaceAll("\\s+", "_") + " AS (\n";
+							   bw.write(mycontent);
+							   mycontent2 = ((AtributoDerivadoFigure)c).getSql() + "\n);";
+							   bw.write(mycontent2);
+						   }
+					   }
+				   }
+			   }
+		   }
+		   
+		   JOptionPane.showMessageDialog(null, "Derived Attribute Created");
+	   } catch (IOException ioe) {
+		   ioe.printStackTrace();
+	   } finally { 
+		   try {
+			   if(bw!=null) bw.close();
+		   } catch(Exception ex) {
+			   JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
+		   }
+	   }       
    }
 }
