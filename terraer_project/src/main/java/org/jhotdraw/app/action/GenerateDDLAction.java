@@ -244,7 +244,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         	
         	String replacedLine = oldLine.replace(",\n);", "\n);\n");
         	bw.write(replacedLine);
-        	JOptionPane.showMessageDialog(null, "File written Successfully");
+        	JOptionPane.showMessageDialog(null, "Tables Created");
         } catch (Exception e) {
         	return;
         } finally {
@@ -539,7 +539,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	        	
 	        	String replacedLine = oldLine.replace(",\n);", "\n);\n");
 	        	bw.write(replacedLine);
-	        	JOptionPane.showMessageDialog(null, "File written Successfully");
+	        	JOptionPane.showMessageDialog(null, "Entity Relationship Created");
 	        } catch (Exception e) {
 	        	return;
 	        } finally {
@@ -756,7 +756,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   mycontent = "\t\tIF(";
 					   bw.write(mycontent);
 					   for (int i = 0; i < specName.size(); i++) {
-						   mycontent2 = "X" + i + "+ ";
+						   mycontent2 = "X" + i + " + ";
 						   bw.write(mycontent2);
 					   }
 					   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
@@ -783,7 +783,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   mycontent = "\t\tIF(";
 						   bw.write(mycontent);
 						   for (int l = 0; l < specName.size()-1; l++) {
-							   mycontent2 = "X" + l + "+ ";
+							   mycontent2 = "X" + l + " + ";
 							   bw.write(mycontent2);
 						   }
 						   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
@@ -896,7 +896,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   mycontent = "\t\tIF(";
 						   bw.write(mycontent);
 						   for (int l = 0; l < specName.size()-1; l++) {
-							   mycontent2 = "X" + l + "+ ";
+							   mycontent2 = "X" + l + " + ";
 							   bw.write(mycontent2);
 						   }
 						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
@@ -998,7 +998,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   mycontent = "\t\tIF(";
 					   bw.write(mycontent);
 					   for (int i = 0; i < specName.size(); i++) {
-						   mycontent2 = "X" + i + "+ ";
+						   mycontent2 = "X" + i + " + ";
 						   bw.write(mycontent2);
 					   }
 					   mycontent = "< 1) THEN RAISE_APPLICATION_ERROR(-20000, 'Violação detectada!'); END IF;\n\tEND IF;\nEND;\n";
@@ -1025,10 +1025,10 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   mycontent = "\t\tIF(";
 						   bw.write(mycontent);
 						   for (int l = 1; l < specName.size(); l++) {
-							   mycontent2 = "X" + l + "+ ";
+							   mycontent2 = "X" + l + " + ";
 							   bw.write(mycontent2);
 						   }
-						   mycontent = "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\n";
+						   mycontent = " != 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n\tEND IF;\n";
 						   bw.write(mycontent);
 						   
 						   mycontent = "\tIF DELETING THEN\n\t\tSELECT COUNT(*) INTO X0 FROM " + ownerEntity + " c WHERE c." + ownerKey + " = :o." + specKey + ";\n";
@@ -1047,7 +1047,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 						   for (int l = 0; l < specName.size(); l++){
 							   if(i != l){
 								   mycontent2 = "\t\t\tSELECT COUNT(*) INTO X" + aux2 + " FROM " + specName.get(l) + " c WHERE c." + specKey + " = :n." + specKey + ";\n";
-								   mycontent3 = "\t\t\tIF(X" + aux2 + "!= 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n";								   
+								   mycontent3 = "\t\t\tIF(X" + aux2 + " != 0) THEN RAISE_APPLICATION_ERROR(-2000" + i+1 + ", 'Violação detectada!'); END IF;\n";								   
 								   bw.write(mycontent2);
 								   bw.write(mycontent3);
 								   aux2++;
@@ -1058,8 +1058,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   }
 				   }
 			   }
-		   }
-		   JOptionPane.showMessageDialog(null, "GenSpec Created");
+		   }		   
 	   } catch (IOException ioe) {
 		   ioe.printStackTrace();
 	   } finally { 
@@ -1068,7 +1067,46 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   } catch(Exception ex) {
 			   JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
 		   }
-	   } 
+	   }
+	   
+	   BufferedReader br = null;
+       try {
+       	br = new BufferedReader(new FileReader("/home/shinahk/Desktop/Test.sql"));
+       	bw = new BufferedWriter(new FileWriter("/home/shinahk/Desktop/Test_Temp.sql"));
+
+       	String oldLine = "";
+       	String currentLine = "";
+       	
+       	while ((currentLine = br.readLine()) != null) {
+       		oldLine += currentLine + "\n";
+       	}
+       	
+       	String replacedLine = oldLine.replace("+ <", "<");
+       	String replacedLine2 = replacedLine.replace("+ !=", "!=");
+       	String replacedLine3 = replacedLine2.replace("+  !=", "!=");
+       	bw.write(replacedLine3);
+       	JOptionPane.showMessageDialog(null, "GenSpec Created");
+       } catch (Exception e) {
+       	return;
+       } finally {
+       	try {
+       		if(br != null)
+       			br.close();
+       	} catch (IOException e) {
+       		//
+       	}
+       	try {
+       		if(bw != null)
+       			bw.close();
+       	} catch (IOException e) {
+       		//
+       	}
+       }
+       File oldFile = new File("/home/shinahk/Desktop/Test.sql");
+       oldFile.delete();
+
+       File newFile = new File("/home/shinahk/Desktop/Test_Temp.sql");
+       newFile.renameTo(oldFile);
    }
    
    public void generateRelationships(ArrayList<Figure> strongEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> singleLineConnectionUm,	ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm,	ArrayList<Figure> doubleLineConnectionN, ArrayList<Figure> relationship, ArrayList<Figure> entityRelationship) {
@@ -1744,7 +1782,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   } catch(Exception ex) {
 			   JOptionPane.showMessageDialog(null, "Error in closing the BufferedWriter"+ex);
 		   }
-	   } 
+	   }
    }
    
    private void generateMultivaluedAttribute(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> weakRelationship, ArrayList<Figure> entityRelationship, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> multivaluedAttribute, ArrayList<Figure> singleLineConnectionUm, ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm, ArrayList<Figure> doubleLineConnectionN) {
@@ -2165,6 +2203,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 			   slcN.clear();
 			   dlcN.clear();
 		   }
+           JOptionPane.showMessageDialog(null, "Multivalued Attribute Created");
        } catch (IOException ioe) {
          ioe.printStackTrace();
        } finally { 
