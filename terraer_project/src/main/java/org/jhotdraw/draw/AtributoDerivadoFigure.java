@@ -18,9 +18,9 @@ import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
 
-import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
 
 /**
  * EllipseFigure.
@@ -38,7 +38,6 @@ public class AtributoDerivadoFigure extends GroupFigure {
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-    private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
     private String sql;
 
 	public AtributoDerivadoFigure(){
@@ -91,8 +90,9 @@ public class AtributoDerivadoFigure extends GroupFigure {
 	}
 
     public void read(DOMInput in) throws IOException {
-        super.read(in);
-        
+    	super.read(in);
+    	this.sql = in.getAttribute("sql", null);
+    	
         java.util.Collection<Figure> lst=getDecomposition();
         for( Figure f : lst){
             if(f instanceof TextFigure){
@@ -104,12 +104,10 @@ public class AtributoDerivadoFigure extends GroupFigure {
         }
     }   
     
-	public AttributeTypeEnum getAttributeType() {
-		return attributeType;
-	}
-
-	public void setAttributeType(AttributeTypeEnum attributeType) {
-		this.attributeType = attributeType;
+    @Override
+	public void write(DOMOutput out) throws IOException {
+		super.write(out);
+		out.addAttribute("sql", this.sql);
 	}
 	
 	public String getSql() {

@@ -21,6 +21,7 @@ import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
 
 /**
  * EllipseFigure.
@@ -92,6 +93,9 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
     public void read(DOMInput in) throws IOException {
         super.read(in);
         
+        this.nullable = in.getAttribute("nullable", false);
+        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+        
         java.util.Collection<Figure> lst=getDecomposition();
         for( Figure f : lst){
             if(f instanceof TextFigure){
@@ -102,6 +106,13 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
             }
         }
     }
+    
+    @Override
+	public void write(DOMOutput out) throws IOException {
+		super.write(out);
+		out.addAttribute("nullable", this.nullable);
+		out.addAttribute("attributeType", this.attributeType.getSqlType());
+	}
 
 	public AttributeTypeEnum getAttributeType() {
 		return attributeType;

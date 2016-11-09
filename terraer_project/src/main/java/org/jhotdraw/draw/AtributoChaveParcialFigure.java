@@ -21,6 +21,7 @@ import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
+import org.jhotdraw.xml.DOMOutput;
 
 /**
  * EllipseFigure.
@@ -92,19 +93,29 @@ public class AtributoChaveParcialFigure extends GroupFigure implements Attribute
 		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
-    public void read(DOMInput in) throws IOException {
-        super.read(in);
-        
-        java.util.Collection<Figure> lst=getDecomposition();
-        for( Figure f : lst){
-            if(f instanceof TextFigure){
-                tf=(TextFigure)f;
-            }
-            else if(f instanceof EllipseFigure){
-                ef=(EllipseFigure)f;
-            }
-        }
-    }   	
+	 public void read(DOMInput in) throws IOException {
+	        super.read(in);
+	        
+	        this.nullable = in.getAttribute("nullable", false);
+	        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+	        
+	        java.util.Collection<Figure> lst=getDecomposition();
+	        for( Figure f : lst){
+	            if(f instanceof TextFigure){
+	                tf=(TextFigure)f;
+	            }
+	            else if(f instanceof EllipseFigure){
+	                ef=(EllipseFigure)f;
+	            }
+	        }
+	    }
+	    
+	    @Override
+		public void write(DOMOutput out) throws IOException {
+			super.write(out);
+			out.addAttribute("nullable", this.nullable);
+			out.addAttribute("attributeType", this.attributeType.getSqlType());
+		}
 
 	public AttributeTypeEnum getAttributeType() {
 		return attributeType;
