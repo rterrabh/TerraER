@@ -39,7 +39,7 @@ public class ValidateModelAction extends AbstractProjectAction {
     public ValidateModelAction(Application app) {
     	super(app);
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
-        labels.configureAction(this, ID);
+        labels.configureAction(this, ID2);
         
     }
     

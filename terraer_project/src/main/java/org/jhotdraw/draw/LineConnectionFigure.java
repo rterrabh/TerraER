@@ -53,7 +53,7 @@ public class LineConnectionFigure extends LineFigure
     private Connector    endConnector;
     private Liner liner;
     
-    public static boolean validateEnabled = true;
+    public static boolean validateEnabled = false;
     
     private static int counter = 0;
     protected String title ;
