@@ -15,34 +15,50 @@ public class ModelValidation{
 				conn.getClass().equals(LabeledLineConnectionUmFigure.class)){
 			if (! (conn.getStartFigure() instanceof EntidadeFigure &&
 					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+					conn.getStartFigure() instanceof RelacionamentoFigure) &&					
 		//Labeled Connection
 		//Entity ---> Weak Relationship
 				! (conn.getStartFigure() instanceof EntidadeFigure &&
-					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&		
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&	
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
 		//Labeled Connection
 		//Entity ---> Entity Relationship
 				! (conn.getStartFigure() instanceof EntidadeFigure &&
 					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof EntidadeRelacionamentoFigure) &&
 		//Labeled Connection
 		//Weak Entity ---> Relationship
 				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
 					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFigure) &&
 		//Labeled Connection
 		//Weak Entity ---> Entity Relationship
 				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
 					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof EntidadeRelacionamentoFigure) &&
 		//Labeled Connection
 		//Weak Entity ---> Weak Relationship
 				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
-					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&		
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
 		//Labeled Connection
 		//Entity Relationship ---> Weak Relationship
 				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
-					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&	
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
 		//Labeled Connection
 		//Entity Relationship ---> Relationship
 				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
-					conn.getEndFigure() instanceof RelacionamentoFigure)
+					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFigure)
 					){
 				return Color.red;
 			}	
@@ -131,8 +147,59 @@ public class ModelValidation{
 					!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
 							conn.getEndFigure() instanceof AtributoDerivadoFigure) &&
 					!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
-							conn.getStartFigure() instanceof AtributoDerivadoFigure)
+							conn.getStartFigure() instanceof AtributoDerivadoFigure) &&
+		//Connection
+		//Relationship <---> Attribute 
+					!(conn.getStartFigure() instanceof RelacionamentoFigure&&
+						conn.getEndFigure() instanceof AtributoFigure ) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
+						conn.getStartFigure() instanceof AtributoFigure) &&
+						
+		//Connection
+		//Relationship <---> Key Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFigure &&
+							conn.getEndFigure() instanceof AtributoChaveFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
+							conn.getStartFigure() instanceof AtributoChaveFigure) &&
+		//Connection
+		//Relationship <---> Derived Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFigure &&
+							conn.getEndFigure() instanceof AtributoDerivadoFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
+							conn.getStartFigure() instanceof AtributoDerivadoFigure) &&
+		//Connection
+		//Relationship <---> Multivalue Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFigure &&
+							conn.getEndFigure() instanceof AtributoMultivaloradoFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
+							conn.getStartFigure() instanceof AtributoMultivaloradoFigure) &&
+		//Connection
+		//Relationship <---> Attribute 
+					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
+						conn.getEndFigure() instanceof AtributoFigure ) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
+						conn.getStartFigure() instanceof AtributoFigure) &&
+						
+		//Connection
+		//Relationship <---> Key Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getEndFigure() instanceof AtributoChaveFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getStartFigure() instanceof AtributoChaveFigure) &&
+		//Connection
+		//Relationship Relationship <---> Derived Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getEndFigure() instanceof AtributoDerivadoFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getStartFigure() instanceof AtributoDerivadoFigure) &&
+		//Connection
+		//Relationship Relationship <---> Multivalue Attribute
+					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getEndFigure() instanceof AtributoMultivaloradoFigure) &&
+					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
+							conn.getStartFigure() instanceof AtributoMultivaloradoFigure)
 					){
+		
 				return Color.red;
 			}	
 		}
