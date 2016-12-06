@@ -51,7 +51,7 @@ public class LabeledDoubleLineConnectionUmFigure extends
         tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
         tf.setFontSize(16);
         tf.setEditable(false);
-        LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0, -Math.PI / 4, 8));
+        LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5, -Math.PI / 4, 8));
         //this.setLiner(new ElbowLiner());
         this.add(tf);
 	}
