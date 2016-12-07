@@ -92,10 +92,10 @@ public class GeneralizacaoLineConnectionFigure extends LabeledLineConnectionFigu
         	anguloInicial = (270-arco)%360;
         }
         
-        g.setStroke(new BasicStroke(4.0f));
+        g.setStroke(new BasicStroke(1.0f));
         //g.drawString(""+arco, (int)this.getCenter().x,(int) this.getCenter().y);
         
-		g.drawArc((int)centerPoint.x-10, (int)centerPoint.y-10, 20, 20, (int) anguloInicial, 180);
+		g.drawArc((int)centerPoint.x-7, (int)centerPoint.y-7, 14, 14, (int) anguloInicial-15, 210);
     }
 	
 	@Override
