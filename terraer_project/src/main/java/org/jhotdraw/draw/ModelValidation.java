@@ -150,7 +150,7 @@ public class ModelValidation{
 							conn.getStartFigure() instanceof AtributoDerivadoFigure) &&
 		//Connection
 		//Relationship <---> Attribute 
-					!(conn.getStartFigure() instanceof RelacionamentoFigure&&
+					!(conn.getStartFigure() instanceof RelacionamentoFigure &&
 						conn.getEndFigure() instanceof AtributoFigure ) &&
 					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
 						conn.getStartFigure() instanceof AtributoFigure) &&
@@ -174,26 +174,26 @@ public class ModelValidation{
 					!(conn.getEndFigure() instanceof RelacionamentoFigure &&
 							conn.getStartFigure() instanceof AtributoMultivaloradoFigure) &&
 		//Connection
-		//Relationship <---> Attribute 
+		//Weak Relationship <---> Attribute 
 					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
 						conn.getEndFigure() instanceof AtributoFigure ) &&
 					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
 						conn.getStartFigure() instanceof AtributoFigure) &&
 						
 		//Connection
-		//Relationship <---> Key Attribute
+		//Weak Relationship <---> Key Attribute
 					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
 							conn.getEndFigure() instanceof AtributoChaveFigure) &&
 					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
 							conn.getStartFigure() instanceof AtributoChaveFigure) &&
 		//Connection
-		//Relationship Relationship <---> Derived Attribute
+		//Weak Relationship Relationship <---> Derived Attribute
 					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
 							conn.getEndFigure() instanceof AtributoDerivadoFigure) &&
 					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
 							conn.getStartFigure() instanceof AtributoDerivadoFigure) &&
 		//Connection
-		//Relationship Relationship <---> Multivalue Attribute
+		//Weak Relationship Relationship <---> Multivalue Attribute
 					!(conn.getStartFigure() instanceof RelacionamentoFracoFigure &&
 							conn.getEndFigure() instanceof AtributoMultivaloradoFigure) &&
 					!(conn.getEndFigure() instanceof RelacionamentoFracoFigure &&
