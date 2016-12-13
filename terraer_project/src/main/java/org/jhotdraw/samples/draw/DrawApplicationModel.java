@@ -54,6 +54,7 @@ import org.jhotdraw.draw.TextAreaTool;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextTool;
+import org.jhotdraw.draw.UniaoFigure;
 import org.jhotdraw.draw.action.ButtonFactory;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
@@ -166,6 +167,7 @@ public class DrawApplicationModel extends DefaultApplicationModel {
 
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new DisjuncaoFigure().init()), "createDisjuncao", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new SobreposicaoFigure().init()), "createSobreposicao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new UniaoFigure().init()), "createUniao", labels);
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoLineConnectionFigure()), "createGeneralizacaoConnection", labels);
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionGeneralizacaoFigure() ), "createElbowConnection", labels);        
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new DoubleLineConnectionGeneralizacaoFigure()), "createElbowDoubleConnection", labels);

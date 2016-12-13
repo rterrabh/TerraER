@@ -60,6 +60,7 @@ import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextNegritoFigure;
 import org.jhotdraw.draw.TriangleFigure;
+import org.jhotdraw.draw.UniaoFigure;
 import org.jhotdraw.xml.DefaultDOMFactory;
 /**
  * DrawFigureFactory.
@@ -99,6 +100,7 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         
         { SobreposicaoFigure.class, "sobreposicao"},
         { DisjuncaoFigure.class, "disjuncao"},
+        { UniaoFigure.class, "uniao"},
         { CircleFigure.class, "circ"},
         { LineConnectionFigure.class, "lcf"},
         { LabeledLineConnectionFigure.class, "llabel"},

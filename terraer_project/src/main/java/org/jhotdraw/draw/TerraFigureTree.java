@@ -314,6 +314,10 @@ public class TerraFigureTree extends JTree {
 						ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 						Ret=labels.getImageIcon("createSobreposicaoSmall", SobreposicaoFigure.class);
 					}
+					else if(f instanceof UniaoFigure){
+						ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+						Ret=labels.getImageIcon("createUniaoSmall", UniaoFigure.class);
+					}
 					else if(f instanceof DisjuncaoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createDisjuncaoSmall.png"));
 					}

@@ -509,6 +509,27 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
+					} else if (createdFigure.getClass().equals(UniaoFigure.class)) {
+						GroupFigure gf = (GroupFigure) createdFigure;
+						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+										anchor.y + (int) Math.max(bounds.height, 20))));
+						for (Figure f : gf.getChildren()) {
+							if (f.getClass().equals(CircleFigure.class)) {
+								f.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
+							} else if (f.getClass().equals(TextNegritoFigure.class)) {
+								TextNegritoFigure tf = (TextNegritoFigure) f;
+								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+								tf.setFontSize(16);
+								tf.setEditable(false);
+								f.setBounds(constrainPoint(new Point(anchor.x + 4, anchor.y + 1)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
+												anchor.y + (int) Math.max(bounds.height, 20))));
+							}
+						}
 					} else if (createdFigure.getClass().equals(SobreposicaoFigure.class)) {
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
