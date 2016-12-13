@@ -95,7 +95,7 @@ public class GeneralizacaoLineConnectionFigure extends LabeledLineConnectionFigu
         g.setStroke(new BasicStroke(1.0f));
         //g.drawString(""+arco, (int)this.getCenter().x,(int) this.getCenter().y);
         
-		g.drawArc((int)centerPoint.x-7, (int)centerPoint.y-7, 14, 14, (int) anguloInicial-15, 210);
+		g.drawArc((int)centerPoint.x-10, (int)centerPoint.y-10, 20, 20, (int) anguloInicial-15, 210);
     }
 	
 	@Override
