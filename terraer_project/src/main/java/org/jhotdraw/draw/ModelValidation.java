@@ -250,7 +250,7 @@ public class ModelValidation{
 				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
 						conn.getStartFigure() instanceof SobreposicaoFigure)&&
 		//Connection in Disjunction, Overlap or Union
-		//Weak Entity <---> Overlap
+		//Weak Entity <---> Union
 				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
 						conn.getEndFigure() instanceof UniaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
