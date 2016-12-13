@@ -207,37 +207,55 @@ public class ModelValidation{
 
 		else if (conn.getClass().equals(LineConnectionGeneralizacaoFigure.class) ||
 				conn.getClass().equals(DoubleLineConnectionGeneralizacaoFigure.class)){
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Disjunction
 			if (!(conn.getStartFigure() instanceof EntidadeFigure &&
 					conn.getEndFigure() instanceof DisjuncaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeFigure &&
 					conn.getStartFigure() instanceof DisjuncaoFigure)&&
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFigure &&
 						conn.getEndFigure() instanceof SobreposicaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeFigure &&
 						conn.getStartFigure() instanceof SobreposicaoFigure) &&
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
+		//Entity <---> Union
+				!(conn.getStartFigure() instanceof EntidadeFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof UniaoFigure) &&
+		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
 						conn.getEndFigure() instanceof SobreposicaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
 						conn.getStartFigure() instanceof SobreposicaoFigure) &&
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
 						conn.getEndFigure() instanceof DisjuncaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
 						conn.getStartFigure() instanceof DisjuncaoFigure)&&
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
+		//Entity Relationship <---> Union
+				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof UniaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
 						conn.getEndFigure() instanceof SobreposicaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
 						conn.getStartFigure() instanceof SobreposicaoFigure)&&
-		//Connection in Disjunction or Overlap
+		//Connection in Disjunction, Overlap or Union
+		//Weak Entity <---> Overlap
+				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof UniaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
 						conn.getEndFigure() instanceof DisjuncaoFigure) &&
