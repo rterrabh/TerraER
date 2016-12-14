@@ -9,9 +9,7 @@ public class ModelValidation{
 	public Color validateLineConnection(LineConnectionFigure conn){		
 
 		if (conn.getClass().equals(LabeledDoubleLineConnectionMuitosFigure.class) || 
-				conn.getClass().equals(LabeledDoubleLineConnectionUmFigure.class) ||
-				conn.getClass().equals(LabeledLineConnectionMuitosFigure.class) ||
-				conn.getClass().equals(LabeledLineConnectionUmFigure.class)){
+				conn.getClass().equals(LabeledDoubleLineConnectionUmFigure.class)){
 		//Labeled Connection 
 		//Entity ---> Relationship
 			if (! (conn.getStartFigure() instanceof EntidadeFigure &&
@@ -64,6 +62,64 @@ public class ModelValidation{
 				return Color.red;
 			}	
 		}
+		
+		else if ( conn.getClass().equals(LabeledLineConnectionMuitosFigure.class) ||
+				conn.getClass().equals(LabeledLineConnectionUmFigure.class)){
+		//Labeled Connection 
+		//Entity ---> Relationship
+			if (! (conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+					conn.getStartFigure() instanceof RelacionamentoFigure) &&					
+		//Labeled Connection
+		//Entity ---> Weak Relationship
+				! (conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&	
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
+		//Labeled Connection
+		//Entity ---> Entity Relationship
+				! (conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof EntidadeRelacionamentoFigure) &&
+		//Labeled Connection
+		//Weak Entity ---> Relationship
+				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFigure) &&
+		//Labeled Connection
+		//Weak Entity ---> Entity Relationship
+				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
+					conn.getEndFigure() instanceof EntidadeRelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof EntidadeRelacionamentoFigure) &&
+		//Labeled Connection
+		//Weak Entity ---> Weak Relationship
+				/*
+				! (conn.getStartFigure() instanceof EntidadeFracaFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
+				*/
+		//Labeled Connection
+		//Entity Relationship ---> Weak Relationship
+				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFracoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFracoFigure) &&
+		//Labeled Connection
+		//Entity Relationship ---> Relationship
+				! (conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+					conn.getEndFigure() instanceof RelacionamentoFigure) &&
+				! (conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof RelacionamentoFigure)
+					){
+				return Color.red;
+			}	
+		}
+
 
 		else if (conn.getClass().equals(LineConnectionFigure.class) ){
 		//Connection 
@@ -205,8 +261,7 @@ public class ModelValidation{
 			}	
 		}
 
-		else if (conn.getClass().equals(LineConnectionGeneralizacaoFigure.class) ||
-				conn.getClass().equals(DoubleLineConnectionGeneralizacaoFigure.class)){
+		else if (conn.getClass().equals(LineConnectionGeneralizacaoFigure.class)){
 		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Disjunction
 			if (!(conn.getStartFigure() instanceof EntidadeFigure &&
@@ -255,6 +310,72 @@ public class ModelValidation{
 						conn.getEndFigure() instanceof UniaoFigure) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
 						conn.getStartFigure() instanceof UniaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
+		//Weak Entity <---> Disjunction
+				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+						conn.getEndFigure() instanceof DisjuncaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof DisjuncaoFigure)
+					){
+				return Color.red;
+			}
+		}
+		
+		else if (conn.getClass().equals(DoubleLineConnectionGeneralizacaoFigure.class)){
+		//Connection in Disjunction, Overlap or Union
+		//Entity <---> Disjunction
+			if (!(conn.getStartFigure() instanceof EntidadeFigure &&
+					conn.getEndFigure() instanceof DisjuncaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFigure &&
+					conn.getStartFigure() instanceof DisjuncaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
+		//Entity <---> Overlap
+				!(conn.getStartFigure() instanceof EntidadeFigure &&
+						conn.getEndFigure() instanceof SobreposicaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof SobreposicaoFigure) &&
+		//Connection in Disjunction, Overlap or Union
+		//Entity <---> Union
+				/*
+				!(conn.getStartFigure() instanceof EntidadeFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFigure &&
+						conn.getStartFigure() instanceof UniaoFigure) &&
+				*/
+		//Connection in Disjunction, Overlap or Union
+		//Entity Relationship <---> Overlap
+				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getEndFigure() instanceof SobreposicaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof SobreposicaoFigure) &&
+		//Connection in Disjunction, Overlap or Union
+		//Entity Relationship <---> Disjunction
+				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getEndFigure() instanceof DisjuncaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof DisjuncaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
+		//Entity Relationship <---> Union
+				/*
+				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigure &&
+						conn.getStartFigure() instanceof UniaoFigure)&&
+				*/
+		//Connection in Disjunction, Overlap or Union
+		//Weak Entity <---> Overlap
+				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+						conn.getEndFigure() instanceof SobreposicaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof SobreposicaoFigure)&&
+		//Connection in Disjunction, Overlap or Union
+		//Weak Entity <---> Union
+				/*
+				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
+						conn.getEndFigure() instanceof UniaoFigure) &&
+				!(conn.getEndFigure() instanceof EntidadeFracaFigure &&
+						conn.getStartFigure() instanceof UniaoFigure)&&
+				*/
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeFracaFigure &&
