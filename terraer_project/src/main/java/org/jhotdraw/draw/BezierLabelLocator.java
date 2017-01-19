@@ -122,27 +122,27 @@ public class BezierLabelLocator implements Locator, DOMStorable {
                 p.x <= point.x + distance / 2) {
             if (p.y >= point.y) {
                 // South East
-                return new Point2D.Double(p.x - labelDim.width / 2, p.y);
+            	return new Point2D.Double(p.x - labelDim.width / 2, p.y);
             } else {
                 // North East
-                return new Point2D.Double(p.x - labelDim.width / 2, p.y - labelDim.height);
+            	return new Point2D.Double(p.x - labelDim.width / 2, p.y - labelDim.height);
             }
         } else {
             if (p.x >= point.x) {
                 if (p.y >= point.y) {
                     // South East
-                    return new Point2D.Double(p.x, p.y);
+                    return new Point2D.Double(p.x, p.y - labelDim.height/2);
                 } else {
                     // North East
-                    return new Point2D.Double(p.x, p.y - labelDim.height);
+                    return new Point2D.Double(p.x, p.y - labelDim.height/2);
                 }
             } else {
                 if (p.y >= point.y) {
                     // South West
-                    return new Point2D.Double(p.x - labelDim.width,  p.y);
+                    return new Point2D.Double(p.x - labelDim.width,  p.y - labelDim.height/2);
                 } else {
                     // North West
-                    return new Point2D.Double(p.x - labelDim.width, p.y - labelDim.height);
+                    return new Point2D.Double(p.x - labelDim.width, p.y - labelDim.height/2);
                 }
             }
         }
