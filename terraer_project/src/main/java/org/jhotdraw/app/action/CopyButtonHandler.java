@@ -13,8 +13,6 @@ import javax.swing.JTextArea;
 public class CopyButtonHandler implements ActionListener {
 	private JButton cpy;
 	private JTextArea textarea;
-	StringSelection stringSelection = new StringSelection(textarea.getText());
-	Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
 	public CopyButtonHandler(JButton cpy, JTextArea textarea){
 		this.cpy = cpy;
@@ -22,9 +20,11 @@ public class CopyButtonHandler implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evento) {
+		StringSelection stringSelection = new StringSelection(textarea.getText());
+		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		if(evento.getSource() == cpy){
 			clpbrd.setContents(stringSelection, null);
-			JOptionPane.showMessageDialog(null, "O botão CANCELA foi clicado");
+			JOptionPane.showMessageDialog(null, "Copied to Clipboard");
 		}
 	}
 
