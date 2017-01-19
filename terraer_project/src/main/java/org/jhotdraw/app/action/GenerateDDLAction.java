@@ -24,7 +24,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import org.jhotdraw.app.Application;
 import org.jhotdraw.draw.*;
@@ -46,6 +50,7 @@ import jdk.nashorn.internal.scripts.JO;
  */
 public class GenerateDDLAction extends AbstractProjectAction {
     public final static String ID = "generateDDL";
+    private String ddlBuffer = "";
    
     /** Creates a new instance. */
     public GenerateDDLAction(Application app) {
@@ -133,6 +138,14 @@ public class GenerateDDLAction extends AbstractProjectAction {
         generateRelationships(strongEntity, connection, keyAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, relationship, entityRelationship);
         generateMultivaluedAttribute(strongEntity, weakEntity, weakRelationship, entityRelationship, connection, keyAttribute, partialKeyAttribute, multivaluedAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN);
         generateDerivedAttribute(strongEntity, weakEntity, entityRelationship, connection, derivedAttribute);
+    
+        JFrame frame = new JFrame("Generated DDL");
+        JPanel panel = new JPanel();
+        JButton btn = new JButton("Copy To Clipboard");
+        JTextArea ta = new JTextArea();
+        
+        CopyButtonHandler handler = new CopyButtonHandler(btn,ta);
+        
     }
 
 	public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute){
