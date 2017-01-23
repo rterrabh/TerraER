@@ -267,6 +267,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   } else {
 			   ddlBuffer += mycontent;
 		   }
+		   multipleKeyAtt.clear();
 	   }
    }
    
