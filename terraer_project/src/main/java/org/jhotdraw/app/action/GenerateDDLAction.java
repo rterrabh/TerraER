@@ -133,7 +133,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         
         ddlBuffer = "";
         
-        generateTables(strongEntity, weakEntity, connection, attribute, keyAttribute, partialKeyAttribute, derivedAttribute);
+        generateTables(strongEntity, weakEntity, connection, attribute, keyAttribute, partialKeyAttribute);
         generatePrimaryKey(strongEntity, connection, keyAttribute);
         generatePartialKey(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship, genspecDisjoint, genspecOverlap, singleLineGenSpecConn, doubleLineGenSpecConn, genSpecLineConn);
         generateEntityRelationship (entityRelationship, connection, attribute, keyAttribute, derivedAttribute);
@@ -161,7 +161,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
         frame.setVisible(true);
     }
 
-	public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> derivedAttribute){
+	public void generateTables (ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute){
 		String mycontent = new String();
 		for (Figure i: strongEntity) {
 			mycontent = "CREATE TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + "(\n";
@@ -238,24 +238,35 @@ public class GenerateDDLAction extends AbstractProjectAction {
     
    public void generatePrimaryKey(ArrayList<Figure> strongEntity, ArrayList<Figure> connection, ArrayList<Figure> keyAttribute){
 	   String mycontent = new String();
+	   ArrayList<String> multipleKeyAtt = new ArrayList<String>();
 	   for (Figure i: strongEntity) {
 		   for (Figure j: connection) {
 			   if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
 				   for (Figure k: keyAttribute) {
 					   if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)k))) {
 						   mycontent = "\nALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n" ;
-						   ddlBuffer += mycontent;
+						   multipleKeyAtt.add(mycontent);
 					   }
 				   }
 			   } else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
 				   for (Figure k: keyAttribute) {
 					   if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)k))) {
 						   mycontent = "\nALTER TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + i.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + k.toString() + ");\n" ;
-						   ddlBuffer += mycontent;
+						   multipleKeyAtt.add(mycontent);
 					   }
 				   }                       
 			   }                      
-		   }                    
+		   }
+		   if(multipleKeyAtt.size() >= 2){
+			   int num = 1;
+			   for (int l = 0; l < multipleKeyAtt.size(); l++) {
+				   String aux = String.format("%02d", num);
+				   ddlBuffer += multipleKeyAtt.get(l).replaceAll(" PRIMARY KEY", "_<" + aux + "> PRIMARY KEY");
+				   num++;
+			   }
+		   } else {
+			   ddlBuffer += mycontent;
+		   }
 	   }
    }
    
