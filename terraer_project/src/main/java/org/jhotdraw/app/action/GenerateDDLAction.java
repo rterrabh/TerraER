@@ -971,9 +971,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	   String mycontent2 = new String();
 	   String mycontent3 = new String();
 
-	   if (entityRelationship.size() < 0) {
+	   if (entityRelationship.isEmpty()) {
 		   relationshipGenerator(strongEntity, connection, keyAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, relationship);
-	   } else if (entityRelationship.size() > 0) {
+	   } else if (!entityRelationship.isEmpty()) {
 		   relationshipGenerator(strongEntity, connection, keyAttribute, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, relationship);
 		   for (Figure a : entityRelationship) {
 			   //Check the number of connections to check the type of relationship
@@ -1009,12 +1009,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }			            			
 								   }                      
 							   }
+						   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
 						   }
 					   }
 				   }
 				   for (int i = 1; i < slcN.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)slcN.get(i)).getStartFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
+						   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
 							   for (Figure g: connection) {
 								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 									   for (Figure h: keyAttribute) {
@@ -1070,12 +1110,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }			            			
 								   }                      
 							   }
+						   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
 						   }
 					   }
 				   }
 				   for (int i = 0; i < dlcN.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
+						   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
 							   for (Figure g: connection) {
 								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 									   for (Figure h: keyAttribute) {
@@ -1131,12 +1211,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }			            			
 								   }                      
 							   }
+						   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
 						   }
 					   }
 				   }
 				   for (int i = 1; i < dlcN.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
+						   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
 							   for (Figure g: connection) {
 								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 									   for (Figure h: keyAttribute) {
@@ -1196,21 +1316,45 @@ public class GenerateDDLAction extends AbstractProjectAction {
 		   //Check the number of connections to check the type of relationship
 		   for (Figure b : singleLineConnectionUm) {
 			   if(((ConnectionFigure)b).getEndFigure().equals(a)) slcUm.add(b);
+			   if(((ConnectionFigure)b).getStartFigure().equals(a)) slcUm.add(b);
 		   }
 		   for (Figure c : singleLineConnectionN) {
 			   if(((ConnectionFigure)c).getEndFigure().equals(a)) slcN.add(c);
+			   if(((ConnectionFigure)c).getStartFigure().equals(a)) slcN.add(c);
 		   }
 		   for (Figure d : doubleLineConnectionUm) {
 			   if(((ConnectionFigure)d).getEndFigure().equals(a)) dlcUm.add(d);
+			   if(((ConnectionFigure)d).getStartFigure().equals(a)) dlcUm.add(d);
 		   }
 		   for (Figure e : doubleLineConnectionN) {
 			   if(((ConnectionFigure)e).getEndFigure().equals(a)) dlcN.add(e);
+			   if(((ConnectionFigure)e).getStartFigure().equals(a)) dlcN.add(e);
 		   }
 		   //1-1 Relationship (both partial participation)
-		   if (slcUm.size() == 2){  
+		   if (slcUm.size() == 2){
 			   for (int i = 0; i < slcUm.size()-1; i++) {
 				   for (Figure f : strongEntity) {
 					   if (((ConnectionFigure)slcUm.get(i)).getStartFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
+					   } else if (((ConnectionFigure)slcUm.get(i)).getEndFigure().equals(f)) {
 						   for (Figure g: connection) {
 							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 								   for (Figure h: keyAttribute) {
@@ -1236,6 +1380,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
 			   for (int i = 1; i < slcUm.size(); i++) {
 				   for (Figure f : strongEntity) {
 					   if (((ConnectionFigure)slcUm.get(i)).getStartFigure().equals(f)) {
+						   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + ";\n";
+						   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+						   ddlBuffer += mycontent;
+						   ddlBuffer += mycontent2;
+					   } else if (((ConnectionFigure)slcUm.get(i)).getEndFigure().equals(f)) {
 						   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + ";\n";
 						   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 						   ddlBuffer += mycontent;
@@ -1266,6 +1415,26 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   }			            			
 							   }                      
 						   }
+					   } else if (((ConnectionFigure)slcUm.get(i)).getEndFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
 					   }
 				   }
 			   }
@@ -1273,6 +1442,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				   for (int i = 0; i < dlcUm.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)dlcUm.get(i)).getStartFigure().equals(f)) {
+							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
+							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+							   ddlBuffer += mycontent;
+							   ddlBuffer += mycontent2;
+						   } else if (((ConnectionFigure)dlcUm.get(i)).getEndFigure().equals(f)) {
 							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
 							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 							   ddlBuffer += mycontent;
@@ -1288,6 +1462,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
 							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 							   ddlBuffer += mycontent;
 							   ddlBuffer += mycontent2;
+						   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
+							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + ";\n";
+							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+							   ddlBuffer += mycontent;
+							   ddlBuffer += mycontent2;
 						   }
 					   }
 				   } 
@@ -1295,6 +1474,11 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				   for (int i = 0; i < dlcN.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
+							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
+							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
+							   ddlBuffer += mycontent;
+							   ddlBuffer += mycontent2;
+						   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
 							   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + ownerKey + "_" + ownerEntity.toLowerCase() + " " + ownerKeyType + " NOT NULL;\n";
 							   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + ownerKey + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + ownerKey + ");\n";
 							   ddlBuffer += mycontent;
@@ -1327,12 +1511,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }			            			
 								   }                      
 							   }
+						   } else if (((ConnectionFigure)dlcUm.get(i)).getEndFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
 						   }
 					   }
 				   }
 				   for (int i = 1; i < dlcUm.size(); i++) {
 					   for (Figure f : strongEntity) {
 						   if (((ConnectionFigure)dlcUm.get(i)).getStartFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey2 = h.toString();
+											   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
+						   } else if (((ConnectionFigure)dlcUm.get(i)).getEndFigure().equals(f)) {
 							   for (Figure g: connection) {
 								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 									   for (Figure h: keyAttribute) {
@@ -1386,6 +1610,26 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }			            			
 								   }                      
 							   }
+						   } else if (((ConnectionFigure)dlcUm.get(i)).getEndFigure().equals(f)) {
+							   for (Figure g: connection) {
+								   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }		            			
+								   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+									   for (Figure h: keyAttribute) {
+										   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+											   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+											   ownerKey = h.toString();
+											   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+										   }
+									   }			            			
+								   }                      
+							   }
 						   }
 					   }
 				   }
@@ -1393,6 +1637,8 @@ public class GenerateDDLAction extends AbstractProjectAction {
 					   for (int j = 0; j < dlcN.size(); j++) {
 						   for (Figure k : strongEntity) {
 							   if (((ConnectionFigure)dlcN.get(j)).getStartFigure().equals(k)) {
+								   ownerEntity2 = k.toString().toUpperCase().replaceAll("\\s+", "_");
+							   } else if (((ConnectionFigure)dlcN.get(j)).getEndFigure().equals(k)) {
 								   ownerEntity2 = k.toString().toUpperCase().replaceAll("\\s+", "_");
 							   }
 						   }
@@ -1442,12 +1688,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   }			            			
 							   }                      
 						   }
+					   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
 					   }
 				   }
 			   }
 			   for (int i = 1; i < slcN.size(); i++) {
 				   for (Figure f : strongEntity) {
 					   if (((ConnectionFigure)slcN.get(i)).getStartFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
+					   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
 						   for (Figure g: connection) {
 							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 								   for (Figure h: keyAttribute) {
@@ -1501,12 +1787,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   }			            			
 							   }                      
 						   }
+					   } else if (((ConnectionFigure)slcN.get(i)).getEndFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
 					   }
 				   }
 			   }
 			   for (int i = 0; i < dlcN.size(); i++) {
 				   for (Figure f : strongEntity) {
 					   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
+					   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
 						   for (Figure g: connection) {
 							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 								   for (Figure h: keyAttribute) {
@@ -1560,12 +1886,52 @@ public class GenerateDDLAction extends AbstractProjectAction {
 								   }			            			
 							   }                      
 						   }
+					   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey = h.toString();
+										   ownerKeyType = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
 					   }
 				   }
 			   }
 			   for (int i = 1; i < dlcN.size(); i++) {
 				   for (Figure f : strongEntity) {
 					   if (((ConnectionFigure)dlcN.get(i)).getStartFigure().equals(f)) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }		            			
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(f)){
+								   for (Figure h: keyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveFigure)h))) {
+										   ownerEntity2 = f.toString().toUpperCase().replaceAll("\\s+", "_");
+										   ownerKey2 = h.toString();
+										   ownerKeyType2 = ((AtributoChaveFigure)h).getAttributeType().toString();
+									   }
+								   }			            			
+							   }                      
+						   }
+					   } else if (((ConnectionFigure)dlcN.get(i)).getEndFigure().equals(f)) {
 						   for (Figure g: connection) {
 							   if (((ConnectionFigure)g).getStartFigure().equals(f)){
 								   for (Figure h: keyAttribute) {
