@@ -264,8 +264,9 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				   ddlBuffer += multipleKeyAtt.get(l).replaceAll(" PRIMARY KEY", "_<" + aux + "> PRIMARY KEY");
 				   num++;
 			   }
-		   } else {
+		   } else if (!multipleKeyAtt.isEmpty() && multipleKeyAtt.size() < 2 ){
 			   ddlBuffer += mycontent;
+			   multipleKeyAtt.clear();
 		   }
 		   multipleKeyAtt.clear();
 	   }
@@ -294,65 +295,69 @@ public class GenerateDDLAction extends AbstractProjectAction {
 	   String keyAttType = new String();
 	   String keyAttNullable = new String();
 
-	   for (Figure f : weakRelationship) {
-		   for (Figure g : lineconnectors) {
-			   if (((ConnectionFigure)g).getEndFigure().equals(((RelacionamentoFracoFigure)f))) {
-				   for (Figure h : strongEntity) {
-					   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFigure)h))) {
-						   for (Figure i : genSpecLineConn) {
-							   if(((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
-								   for (Figure j : genspecFigures){
-									   if(((ConnectionFigure)i).getStartFigure().equals(j)){
-										   for (Figure k : genspecConnectors){
-											   if (((ConnectionFigure)k).getStartFigure().equals(j)){
-												   for (Figure l : strongEntity){
-													   if (((ConnectionFigure)k).getEndFigure().equals(l)){
-														   for (Figure m: connection) {
-															   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
-																   for (Figure n: keyAttribute) {
-																	   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
-																		   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
-																		   keyAtt = n.toString();
-																		   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
-																		   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+	   if(genspecFigures.isEmpty()){
+		   partialKeyGenerator(strongEntity, weakEntity, connection, singleLineConnectionUm, singleLineConnectionN, doubleLineConnectionUm, doubleLineConnectionN, keyAttribute, partialKeyAttribute, weakRelationship);
+	   } else if (!genspecFigures.isEmpty()){
+		   for (Figure f : weakRelationship) {
+			   for (Figure g : lineconnectors) {
+				   if (((ConnectionFigure)g).getEndFigure().equals(((RelacionamentoFracoFigure)f))) {
+					   for (Figure h : strongEntity) {
+						   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFigure)h))) {
+							   for (Figure i : genSpecLineConn) {
+								   if(((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
+									   for (Figure j : genspecFigures){
+										   if(((ConnectionFigure)i).getStartFigure().equals(j)){
+											   for (Figure k : genspecConnectors){
+												   if (((ConnectionFigure)k).getStartFigure().equals(j)){
+													   for (Figure l : strongEntity){
+														   if (((ConnectionFigure)k).getEndFigure().equals(l)){
+															   for (Figure m: connection) {
+																   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
+																	   for (Figure n: keyAttribute) {
+																		   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
+																			   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+																			   keyAtt = n.toString();
+																			   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+																			   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+																		   }
 																	   }
-																   }
-															   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
-																   for (Figure n: keyAttribute) {
-																	   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
-																		   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
-																		   keyAtt = n.toString();
-																		   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
-																		   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
-																	   }
-																   }                       
-															   }                      
+																   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
+																	   for (Figure n: keyAttribute) {
+																		   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
+																			   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+																			   keyAtt = n.toString();
+																			   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+																			   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+																		   }
+																	   }                       
+																   }                      
+															   }
 														   }
 													   }
-												   }
-											   } else if (((ConnectionFigure)k).getEndFigure().equals(j)){
-												   for (Figure l : strongEntity){
-													   if (((ConnectionFigure)k).getStartFigure().equals(l)){
-														   for (Figure m: connection) {
-															   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
-																   for (Figure n: keyAttribute) {
-																	   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
-																		   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
-																		   keyAtt = n.toString();
-																		   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
-																		   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+												   } else if (((ConnectionFigure)k).getEndFigure().equals(j)){
+													   for (Figure l : strongEntity){
+														   if (((ConnectionFigure)k).getStartFigure().equals(l)){
+															   for (Figure m: connection) {
+																   if (((ConnectionFigure)m).getStartFigure().equals(((EntidadeFigure)l))){    							   
+																	   for (Figure n: keyAttribute) {
+																		   if (((ConnectionFigure)m).getEndFigure().equals(((AtributoChaveFigure)n))) {
+																			   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+																			   keyAtt = n.toString();
+																			   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+																			   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+																		   }
 																	   }
-																   }
-															   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
-																   for (Figure n: keyAttribute) {
-																	   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
-																		   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
-																		   keyAtt = n.toString();
-																		   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
-																		   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
-																	   }
-																   }                       
-															   }                      
+																   } else if (((ConnectionFigure)m).getEndFigure().equals(((EntidadeFigure)l))){
+																	   for (Figure n: keyAttribute) {
+																		   if (((ConnectionFigure)m).getStartFigure().equals(((AtributoChaveFigure)n))) {
+																			   ownerEntity = l.toString().toUpperCase().replaceAll("\\s+", "_");
+																			   keyAtt = n.toString();
+																			   keyAttType = ((AtributoChaveFigure)n).getAttributeType().toString();
+																			   keyAttNullable = (((AtributoChaveFigure)n).isNullable() != true ? "NOT NULL" : "");
+																		   }
+																	   }                       
+																   }                      
+															   }
 														   }
 													   }
 												   }
@@ -361,50 +366,304 @@ public class GenerateDDLAction extends AbstractProjectAction {
 									   }
 								   }
 							   }
+							   for (Figure i: connection) {
+								   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){    							   
+									   for (Figure j: keyAttribute) {
+										   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveFigure)j))) {
+											   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = j.toString();
+											   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
+											   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+										   }
+									   }
+								   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
+									   for (Figure j: keyAttribute) {
+										   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveFigure)j))) {
+											   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
+											   keyAtt = j.toString();
+											   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
+											   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+										   }
+									   }                       
+								   }                      
+							   }    
 						   }
-						   for (Figure i: connection) {
-							   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFigure)h))){    							   
-								   for (Figure j: keyAttribute) {
-									   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveFigure)j))) {
-										   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
-										   keyAtt = j.toString();
-										   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
-										   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+					   }
+					   for (Figure h : weakEntity) {
+						   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)h))) {
+							   for (Figure i: connection) {
+								   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
+									   for (Figure j: partialKeyAttribute) {
+										   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
+											   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+											   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+											   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+											   ddlBuffer += mycontent;
+											   ddlBuffer += mycontent2;
+											   ddlBuffer += mycontent3;
+										   }
+									   }
+								   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
+									   for (Figure j: partialKeyAttribute) {
+										   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
+											   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+											   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+											   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+											   ddlBuffer += mycontent;
+											   ddlBuffer += mycontent2;
+											   ddlBuffer += mycontent3;
+										   }
+									   }                       
+								   }                      
+							   }    
+						   } else if (((ConnectionFigure)g).getEndFigure().equals(((EntidadeFracaFigure)h))) {
+							   for (Figure i: connection) {
+								   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
+									   for (Figure j: partialKeyAttribute) {
+										   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
+											   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+											   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+											   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+											   ddlBuffer += mycontent;
+											   ddlBuffer += mycontent2;
+											   ddlBuffer += mycontent3;
+										   }
+									   }
+								   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
+									   for (Figure j: partialKeyAttribute) {
+										   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
+											   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+											   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+											   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+											   ddlBuffer += mycontent;
+											   ddlBuffer += mycontent2;
+											   ddlBuffer += mycontent3;
+										   }
+									   }                       
+								   }                      
+							   }    
+						   }
+					   }
+				   }
+			   }
+		   }
+	   }
+   }
+   
+   public void partialKeyGenerator(ArrayList<Figure> strongEntity, ArrayList<Figure> weakEntity, ArrayList<Figure> connection, ArrayList<Figure> singleLineConnectionUm, ArrayList<Figure> singleLineConnectionN, ArrayList<Figure> doubleLineConnectionUm, ArrayList<Figure> doubleLineConnectionN, ArrayList<Figure> keyAttribute, ArrayList<Figure> partialKeyAttribute, ArrayList<Figure> weakRelationship){
+	   ArrayList<Figure> lineconnectors = new ArrayList<Figure>();
+	   lineconnectors.addAll(singleLineConnectionUm);
+	   lineconnectors.addAll(singleLineConnectionN);
+	   lineconnectors.addAll(doubleLineConnectionUm);
+	   lineconnectors.addAll(doubleLineConnectionN);
+
+	   String mycontent = new String();
+	   String mycontent2 = new String();
+	   String mycontent3 = new String();
+	   String ownerEntity = new String(); 
+	   String keyAtt = new String();
+	   String keyAttType = new String();
+	   String keyAttNullable = new String();
+
+	   for (Figure a : weakRelationship) {
+		   for (Figure b : lineconnectors) {
+			   if (((ConnectionFigure)b).getEndFigure().equals(((RelacionamentoFracoFigure)a))){
+				   for (Figure c : strongEntity) {
+					   if(((ConnectionFigure)b).getStartFigure().equals(((EntidadeFigure)c))){
+						   for (Figure d: connection) {
+							   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){    							   
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
 									   }
 								   }
-							   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFigure)h))){
-								   for (Figure j: keyAttribute) {
-									   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveFigure)j))) {
-										   ownerEntity = h.toString().toUpperCase().replaceAll("\\s+", "_");
-										   keyAtt = j.toString();
-										   keyAttType = ((AtributoChaveFigure)j).getAttributeType().toString();
-										   keyAttNullable = (((AtributoChaveFigure)j).isNullable() != true ? "NOT NULL" : "");
+							   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }                       
+							   }                      
+						   } 
+					   } else if(((ConnectionFigure)b).getEndFigure().equals(((EntidadeFigure)c))){
+						   for (Figure d: connection) {
+							   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){    							   
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }
+							   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }                       
+							   }                      
+						   } 
+					   }
+				   }
+				   for (Figure f : weakEntity) {
+					   if (((ConnectionFigure)b).getStartFigure().equals(((EntidadeFracaFigure)f))) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
+									   }
+								   }
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
+									   }
+								   }                       
+							   }                      
+						   }    
+					   } else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigure)f))) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
+									   }
+								   }
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
 									   }
 								   }                       
 							   }                      
 						   }    
 					   }
 				   }
-				   for (Figure h : weakEntity) {
-					   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)h))) {
-						   for (Figure i: connection) {
-							   if (((ConnectionFigure)i).getStartFigure().equals(((EntidadeFracaFigure)h))){
-								   for (Figure j: partialKeyAttribute) {
-									   if (((ConnectionFigure)i).getEndFigure().equals(((AtributoChaveParcialFigure)j))) {
-										   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
-										   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
-										   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+			   } else if (((ConnectionFigure)b).getStartFigure().equals(((RelacionamentoFracoFigure)a))){
+				   for (Figure c : strongEntity) {
+					   if(((ConnectionFigure)b).getStartFigure().equals(((EntidadeFigure)c))){
+						   for (Figure d: connection) {
+							   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){    							   
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }
+							   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }                       
+							   }                      
+						   } 
+					   } else if(((ConnectionFigure)b).getEndFigure().equals(((EntidadeFigure)c))){
+						   for (Figure d: connection) {
+							   if (((ConnectionFigure)d).getStartFigure().equals(((EntidadeFigure)c))){    							   
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getEndFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }
+							   } else if (((ConnectionFigure)d).getEndFigure().equals(((EntidadeFigure)c))){
+								   for (Figure e: keyAttribute) {
+									   if (((ConnectionFigure)d).getStartFigure().equals(((AtributoChaveFigure)e))) {
+										   ownerEntity = c.toString().toUpperCase().replaceAll("\\s+", "_");
+										   keyAtt = e.toString();
+										   keyAttType = ((AtributoChaveFigure)e).getAttributeType().toString();
+										   keyAttNullable = (((AtributoChaveFigure)e).isNullable() != true ? "NOT NULL" : "");
+									   }
+								   }                       
+							   }                      
+						   } 
+					   }
+				   }
+				   for (Figure f : weakEntity) {
+					   if (((ConnectionFigure)b).getStartFigure().equals(((EntidadeFracaFigure)f))) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
 										   ddlBuffer += mycontent;
 										   ddlBuffer += mycontent2;
 										   ddlBuffer += mycontent3;
 									   }
 								   }
-							   } else if (((ConnectionFigure)i).getEndFigure().equals(((EntidadeFracaFigure)h))){
-								   for (Figure j: partialKeyAttribute) {
-									   if (((ConnectionFigure)i).getStartFigure().equals(((AtributoChaveParcialFigure)j))) {
-										   mycontent = "\nALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
-										   mycontent2 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
-										   mycontent3 = "ALTER TABLE " + h.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + h.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + j.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
+									   }
+								   }                       
+							   }                      
+						   }    
+					   } else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigure)f))) {
+						   for (Figure g: connection) {
+							   if (((ConnectionFigure)g).getStartFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getEndFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
+										   ddlBuffer += mycontent;
+										   ddlBuffer += mycontent2;
+										   ddlBuffer += mycontent3;
+									   }
+								   }
+							   } else if (((ConnectionFigure)g).getEndFigure().equals(((EntidadeFracaFigure)f))){
+								   for (Figure h: partialKeyAttribute) {
+									   if (((ConnectionFigure)g).getStartFigure().equals(((AtributoChaveParcialFigure)h))) {
+										   mycontent = "\nALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD " + keyAtt + "_" + ownerEntity.toLowerCase() + " " + keyAttType + " " + keyAttNullable + ";\n";  
+										   mycontent2 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT FK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " FOREIGN KEY (" + keyAtt + "_" + ownerEntity.toLowerCase() + ") REFERENCES " + ownerEntity + " (" + keyAtt + ");\n";
+										   mycontent3 = "ALTER TABLE " + f.toString().toUpperCase().replaceAll("\\s+", "_") + " ADD CONSTRAINT PK_" + f.toString().toUpperCase().replaceAll("\\s+", "_") + " PRIMARY KEY (" + h.toString() + ", " + keyAtt + "_" + ownerEntity.toLowerCase() + ");\n" ;
 										   ddlBuffer += mycontent;
 										   ddlBuffer += mycontent2;
 										   ddlBuffer += mycontent3;
@@ -416,7 +675,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
 				   }
 			   }
 		   }
-	   }           
+	   }
    }
    
    public void generateEntityRelationship (ArrayList<Figure> entityRelationship, ArrayList<Figure> connection, ArrayList<Figure> attribute, ArrayList<Figure> keyAttribute, ArrayList<Figure> derivedAttribute){
