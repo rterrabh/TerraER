@@ -30,6 +30,8 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
+import org.jhotdraw.geom.BezierPath;
+import org.jhotdraw.geom.BezierPath.Node;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -240,6 +242,54 @@ public class ConnectionTool extends AbstractTool {
         }
     }
     
+	public void selfRelationshipHandle() {
+		for (Figure f : getDrawing().getFigures()) {
+			if (f.equals(createdFigure) || !(f instanceof LabeledLineConnectionFigure))
+				continue;
+			/*
+			 * if ( f instanceof LabeledDoubleLineConnectionMuitosFigure || f
+			 * instanceof LabeledDoubleLineConnectionUmFigure || f instanceof
+			 * LabeledLineConnectionMuitosFigure || f instanceof
+			 * LabeledLineConnectionUmFigure ){
+			 * 
+			 * }
+			 */
+			if (!((createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getStartFigure())
+					&& createdFigure.getEndFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure()))
+					|| (createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure())
+							&& createdFigure.getEndFigure()
+									.equals(((LabeledLineConnectionFigure) f).getStartFigure()))))
+				continue;
+
+			Point2D.Double start = createdFigure.getStartPoint();
+			Point2D.Double end = createdFigure.getEndPoint();
+			Point2D.Double variacao = new Point2D.Double(end.x - start.x, end.y - start.y);
+
+			Point2D.Double pontoCorte1 = new Point2D.Double(start.x + variacao.x / 3, start.y + variacao.y / 3);
+			Point2D.Double pontoCorte2 = new Point2D.Double(start.x + 2 * variacao.x / 3, start.y + 2 * variacao.y / 3);
+			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte1,
+					(float) (5f / this.getView().getScaleFactor()));
+			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte2,
+					(float) (5f / this.getView().getScaleFactor()));
+
+			double dir = Math.atan2(pontoCorte1.y - pontoCorte2.y, pontoCorte1.x - pontoCorte2.x);
+			double quartoCirculo = Math.PI / 2;
+			Point2D.Double n1 = new Point2D.Double(start.x + 80 * Math.cos(dir + quartoCirculo),
+					start.y + 80 * Math.sin(dir + quartoCirculo));
+			Point2D.Double n2 = new Point2D.Double(end.x + 80 * Math.cos(dir + quartoCirculo),
+					end.y + 80 * Math.sin(dir + quartoCirculo));
+
+			BezierPath.Node nodoPonto1 = ((BezierFigure) createdFigure).getNode(pontoCorte1);
+			BezierPath.Node nodoPonto2 = ((BezierFigure) createdFigure).getNode(pontoCorte2);
+			if (nodoPonto1 != null)
+				nodoPonto1.moveTo(n1);
+
+			if (nodoPonto2 != null)
+				nodoPonto2.moveTo(n2);
+		}
+
+	}
+    
     /**
      * Connects the figures if the mouse is released over another
      * figure.
@@ -263,6 +313,7 @@ public class ConnectionTool extends AbstractTool {
             	((GeneralizacaoLineConnectionFigure)createdFigure).init(this.getView());
             }*/
             
+            selfRelationshipHandle();
             createdFigure.updateConnection();
             createdFigure.changed();
             

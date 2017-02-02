@@ -389,7 +389,7 @@ public class BezierFigure extends AbstractAttributedFigure {
      * Adds a node to the list of points.
      */
     public void addNode(final int index, BezierPath.Node p) {
-    	@SuppressWarnings("unused")//anotação inserida por Terra
+    	@SuppressWarnings("unused")//anotacao inserida por Terra
     	final BezierPath.Node newPoint = new BezierPath.Node(p);
         path.add(index, p);
         invalidate();
@@ -492,6 +492,17 @@ public class BezierFigure extends AbstractAttributedFigure {
             }
         }
         return -1;
+    }
+    
+    public BezierPath.Node getNode(Point2D.Double p) {
+        BezierPath tp = path;
+        for (int i=0; i < tp.size(); i++) {
+            BezierPath.Node p2 = tp.get(i);
+            if (p2.x[0] == p.x && p2.y[0] == p.y) {
+                return p2;
+            }
+        }
+        return null;
     }
     /**
      * Gets the segment of the polyline that is hit by
