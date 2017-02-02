@@ -242,7 +242,7 @@ public class ConnectionTool extends AbstractTool {
         }
     }
     
-	public void selfRelationshipHandle() {
+	public void unaryRelationshipHandle() {
 		for (Figure f : getDrawing().getFigures()) {
 			if (f.equals(createdFigure) || !(f instanceof LabeledLineConnectionFigure))
 				continue;
@@ -313,7 +313,7 @@ public class ConnectionTool extends AbstractTool {
             	((GeneralizacaoLineConnectionFigure)createdFigure).init(this.getView());
             }*/
             
-            selfRelationshipHandle();
+            unaryRelationshipHandle();
             createdFigure.updateConnection();
             createdFigure.changed();
             
