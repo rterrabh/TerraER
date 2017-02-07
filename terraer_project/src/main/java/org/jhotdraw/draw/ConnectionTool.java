@@ -274,10 +274,10 @@ public class ConnectionTool extends AbstractTool {
 
 			double dir = Math.atan2(pontoCorte1.y - pontoCorte2.y, pontoCorte1.x - pontoCorte2.x);
 			double quartoCirculo = Math.PI / 2;
-			Point2D.Double n1 = new Point2D.Double(start.x + 80 * Math.cos(dir + quartoCirculo),
-					start.y + 80 * Math.sin(dir + quartoCirculo));
-			Point2D.Double n2 = new Point2D.Double(end.x + 80 * Math.cos(dir + quartoCirculo),
-					end.y + 80 * Math.sin(dir + quartoCirculo));
+			Point2D.Double n1 = new Point2D.Double(start.x + 70 * Math.cos(dir + quartoCirculo),
+					start.y + 70 * Math.sin(dir + quartoCirculo));
+			Point2D.Double n2 = new Point2D.Double(end.x + 70 * Math.cos(dir + quartoCirculo),
+					end.y + 70 * Math.sin(dir + quartoCirculo));
 
 			BezierPath.Node nodoPonto1 = ((BezierFigure) createdFigure).getNode(pontoCorte1);
 			BezierPath.Node nodoPonto2 = ((BezierFigure) createdFigure).getNode(pontoCorte2);

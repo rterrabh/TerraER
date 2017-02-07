@@ -1,0 +1,616 @@
+PACKAGE,CLASS,LINUX,MAC,WINDOWS,TOTAL
+net.n3.nanoxml,CDATAReader,0,0,0,4
+net.n3.nanoxml,ContentReader,4,4,4,4
+net.n3.nanoxml,NonValidator,7,7,7,15
+net.n3.nanoxml,PIReader,0,0,0,4
+net.n3.nanoxml,StdXMLBuilder,10,10,10,11
+net.n3.nanoxml,StdXMLParser,10,10,10,19
+net.n3.nanoxml,StdXMLReader,8,8,8,21
+net.n3.nanoxml,StdXMLReader.StackedReader,1,1,1,1
+net.n3.nanoxml,ValidatorPlugin,0,0,0,20
+net.n3.nanoxml,XMLAttribute,3,3,3,7
+net.n3.nanoxml,XMLElement,25,25,25,60
+net.n3.nanoxml,XMLEntityResolver,2,2,2,7
+net.n3.nanoxml,XMLException,0,0,0,14
+net.n3.nanoxml,XMLParseException,0,0,0,2
+net.n3.nanoxml,XMLParserFactory,2,2,2,4
+net.n3.nanoxml,XMLUtil,4,4,4,28
+net.n3.nanoxml,XMLValidationException,0,0,0,5
+net.n3.nanoxml,XMLWriter,5,5,5,8
+org.jhotdraw.app,AbstractApplication,21,21,21,24
+org.jhotdraw.app,AbstractApplication.new Runnable() {...},2,2,2,2
+org.jhotdraw.app,AbstractProject,21,22,21,23
+org.jhotdraw.app.action,AboutAction,2,2,2,2
+org.jhotdraw.app.action,AbstractApplicationAction,7,7,7,8
+org.jhotdraw.app.action,AbstractApplicationAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,AbstractProjectAction,9,10,9,12
+org.jhotdraw.app.action,AbstractProjectAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,AbstractProjectAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,AbstractSaveBeforeAction,2,5,2,5
+org.jhotdraw.app.action,AbstractSaveBeforeAction.new SheetListener() {...},2,2,2,2
+org.jhotdraw.app.action,AbstractSaveBeforeAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,AbstractSaveBeforeAction.new Worker() {...},0,3,0,3
+org.jhotdraw.app.action,Actions,1,1,1,3
+org.jhotdraw.app.action,Actions.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,ArrangeAction,0,0,0,2
+org.jhotdraw.app.action,ClearAction,2,0,2,2
+org.jhotdraw.app.action,ClearRecentFilesAction,5,5,5,6
+org.jhotdraw.app.action,ClearRecentFilesAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,CloseAction,2,2,2,2
+org.jhotdraw.app.action,CopyAction,2,2,2,2
+org.jhotdraw.app.action,CopyAllToClipboard,2,2,2,2
+org.jhotdraw.app.action,CopyButtonHandler,2,0,2,2
+org.jhotdraw.app.action,CutAction,2,2,2,2
+org.jhotdraw.app.action,DeleteAction,3,2,3,3
+org.jhotdraw.app.action,DuplicateAction,2,2,2,2
+org.jhotdraw.app.action,ExitAction,2,1,2,11
+org.jhotdraw.app.action,ExitAction.new SheetListener() {...},2,0,2,2
+org.jhotdraw.app.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,ExitAction.new Worker() {...},0,0,0,3
+org.jhotdraw.app.action,ExitAction.new Worker() {...},0,0,0,3
+org.jhotdraw.app.action,ExportAction,0,0,0,4
+org.jhotdraw.app.action,ExportAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,ExportAction.new Worker() {...},0,0,0,3
+org.jhotdraw.app.action,FindAction,0,0,0,2
+org.jhotdraw.app.action,FocusAction,0,3,0,6
+org.jhotdraw.app.action,FocusAction.new PropertyChangeListener() {...},0,2,0,2
+org.jhotdraw.app.action,GenerateDDLAction,11,1,11,12
+org.jhotdraw.app.action,GenerateTables,0,0,0,2
+org.jhotdraw.app.action,LoadAction,4,0,4,4
+org.jhotdraw.app.action,LoadAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,LoadAction.new Worker() {...},3,0,3,3
+org.jhotdraw.app.action,LoadRecentAction,3,0,3,3
+org.jhotdraw.app.action,LoadRecentAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,LoadRecentAction.new Worker() {...},3,0,3,3
+org.jhotdraw.app.action,MaximizeAction,0,3,0,3
+org.jhotdraw.app.action,MinimizeAction,0,3,0,3
+org.jhotdraw.app.action,NewAction,0,2,0,2
+org.jhotdraw.app.action,OpenAction,0,4,0,4
+org.jhotdraw.app.action,OpenAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,OpenAction.new Worker() {...},0,3,0,3
+org.jhotdraw.app.action,OpenRecentAction,0,4,0,4
+org.jhotdraw.app.action,OpenRecentAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.app.action,OpenRecentAction.new Worker() {...},0,3,0,3
+org.jhotdraw.app.action,OSXDropOnDockAction,0,1,0,2
+org.jhotdraw.app.action,OSXDropOnDockAction.new Worker() {...},0,0,0,3
+org.jhotdraw.app.action,OSXTogglePaletteAction,0,4,0,4
+org.jhotdraw.app.action,OSXTogglePaletteAction.new WindowAdapter() {...},0,2,0,2
+org.jhotdraw.app.action,PasteAction,2,2,2,2
+org.jhotdraw.app.action,PrintAction,3,3,3,5
+org.jhotdraw.app.action,PrintAction.new Worker() {...},0,0,0,3
+org.jhotdraw.app.action,ProjectPropertyAction,0,0,0,6
+org.jhotdraw.app.action,ProjectPropertyAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app.action,RedoAction,5,6,5,7
+org.jhotdraw.app.action,RedoAction.new PropertyChangeListener() {...},1,1,1,2
+org.jhotdraw.app.action,SaveAction,5,5,5,5
+org.jhotdraw.app.action,SaveAction.new SheetListener() {...},2,2,2,2
+org.jhotdraw.app.action,SaveAction.new Worker() {...},3,3,3,3
+org.jhotdraw.app.action,SaveAsAction,1,1,1,1
+org.jhotdraw.app.action,SelectAllAction,2,2,2,2
+org.jhotdraw.app.action,ToggleProjectPropertyAction,0,0,0,7
+org.jhotdraw.app.action,ToggleProjectPropertyAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app.action,ToggleToolBarAction,0,0,0,4
+org.jhotdraw.app.action,ToggleToolBarAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app.action,ToggleVisibleAction,2,0,2,2
+org.jhotdraw.app.action,ToggleVisibleAction.new ComponentAdapter() {...},3,0,3,3
+org.jhotdraw.app.action,UndoAction,5,6,5,7
+org.jhotdraw.app.action,UndoAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.app.action,ValidateModelAction,2,2,2,2
+org.jhotdraw.app,DefaultAppletApplication,0,0,0,7
+org.jhotdraw.app,DefaultApplicationModel,15,15,15,18
+org.jhotdraw.app,DefaultMDIApplication,0,0,0,19
+org.jhotdraw.app,DefaultMDIApplication.new InternalFrameAdapter() {...},0,0,0,2
+org.jhotdraw.app,DefaultMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app,DefaultMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app,DefaultMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app,DefaultMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.app,DefaultMDIApplication.new WindowAdapter() {...},0,0,0,2
+org.jhotdraw.app,DefaultOSXApplication,0,22,0,22
+org.jhotdraw.app,DefaultOSXApplication.new PropertyChangeListener() {...},0,2,0,2
+org.jhotdraw.app,DefaultOSXApplication.new PropertyChangeListener() {...},0,2,0,2
+org.jhotdraw.app,DefaultOSXApplication.new PropertyChangeListener() {...},0,2,0,2
+org.jhotdraw.app,DefaultOSXApplication.new WindowAdapter() {...},0,2,0,2
+org.jhotdraw.app,DefaultOSXApplication.new Worker() {...},0,3,0,3
+org.jhotdraw.app,DefaultSDIApplication,20,0,20,21
+org.jhotdraw.app,DefaultSDIApplication.new PropertyChangeListener() {...},2,0,2,2
+org.jhotdraw.app,DefaultSDIApplication.new PropertyChangeListener() {...},2,0,2,2
+org.jhotdraw.app,DefaultSDIApplication.new WindowAdapter() {...},3,0,3,3
+org.jhotdraw.application,AbstractDocumentOrientedApplication,0,0,0,37
+org.jhotdraw.application,AbstractDocumentOrientedApplication.new Worker() {...},0,0,0,3
+org.jhotdraw.application,AbstractDocumentView,0,0,0,20
+org.jhotdraw.application,AbstractMDIApplication,0,0,0,16
+org.jhotdraw.application,AbstractMDIApplication.new InternalFrameAdapter() {...},0,0,0,2
+org.jhotdraw.application,AbstractMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractMDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractMDIApplication.new WindowAdapter() {...},0,0,0,2
+org.jhotdraw.application,AbstractOSXApplication,0,0,0,19
+org.jhotdraw.application,AbstractOSXApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractOSXApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractOSXApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractOSXApplication.new WindowAdapter() {...},0,0,0,2
+org.jhotdraw.application,AbstractOSXApplication.new Worker() {...},0,0,0,3
+org.jhotdraw.application,AbstractSDIApplication,0,0,0,15
+org.jhotdraw.application,AbstractSDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractSDIApplication.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,AbstractSDIApplication.new WindowAdapter() {...},0,0,0,3
+org.jhotdraw.application.action,AboutAction,0,0,0,2
+org.jhotdraw.application.action,AbstractApplicationAction,0,0,0,12
+org.jhotdraw.application.action,AbstractApplicationAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,AbstractDocumentViewAction,0,0,0,11
+org.jhotdraw.application.action,AbstractDocumentViewAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,AbstractDocumentViewAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,AbstractSaveBeforeAction,0,0,0,5
+org.jhotdraw.application.action,AbstractSaveBeforeAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,AbstractSaveBeforeAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,AbstractSaveBeforeAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,Actions,0,0,0,3
+org.jhotdraw.application.action,Actions.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,ArrangeAction,0,0,0,2
+org.jhotdraw.application.action,ClearAction,0,0,0,2
+org.jhotdraw.application.action,ClearAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,ClearRecentFilesAction,0,0,0,6
+org.jhotdraw.application.action,ClearRecentFilesAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,CloseAction,0,0,0,2
+org.jhotdraw.application.action,CopyAction,0,0,0,2
+org.jhotdraw.application.action,CutAction,0,0,0,2
+org.jhotdraw.application.action,DeleteAction,0,0,0,3
+org.jhotdraw.application.action,DuplicateAction,0,0,0,2
+org.jhotdraw.application.action,ExitAction,0,0,0,11
+org.jhotdraw.application.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,ExitAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,ExitAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,ExitAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,ExportAction,0,0,0,4
+org.jhotdraw.application.action,ExportAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,ExportAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,FindAction,0,0,0,2
+org.jhotdraw.application.action,FocusAction,0,0,0,6
+org.jhotdraw.application.action,FocusAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,LoadAction,0,0,0,4
+org.jhotdraw.application.action,LoadAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,LoadAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,LoadRecentAction,0,0,0,3
+org.jhotdraw.application.action,LoadRecentAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,LoadRecentAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,MaximizeAction,0,0,0,3
+org.jhotdraw.application.action,MinimizeAction,0,0,0,3
+org.jhotdraw.application.action,NewAction,0,0,0,2
+org.jhotdraw.application.action,NewAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,OpenAction,0,0,0,4
+org.jhotdraw.application.action,OpenAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,OpenAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,OpenRecentAction,0,0,0,4
+org.jhotdraw.application.action,OpenRecentAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,OpenRecentAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,OSXDropOnDockAction,0,0,0,2
+org.jhotdraw.application.action,OSXDropOnDockAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,OSXTogglePaletteAction,0,0,0,5
+org.jhotdraw.application.action,OSXTogglePaletteAction.new WindowAdapter() {...},0,0,0,2
+org.jhotdraw.application.action,PasteAction,0,0,0,2
+org.jhotdraw.application.action,PrintAction,0,0,0,5
+org.jhotdraw.application.action,PrintAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,PropertyAction,0,0,0,6
+org.jhotdraw.application.action,PropertyAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,RedoAction,0,0,0,7
+org.jhotdraw.application.action,RedoAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,SaveAction,0,0,0,5
+org.jhotdraw.application.action,SaveAction.new SheetListener() {...},0,0,0,2
+org.jhotdraw.application.action,SaveAction.new Worker() {...},0,0,0,3
+org.jhotdraw.application.action,SaveAsAction,0,0,0,1
+org.jhotdraw.application.action,SelectAllAction,0,0,0,2
+org.jhotdraw.application.action,ToggleProjectPropertyAction,0,0,0,7
+org.jhotdraw.application.action,ToggleProjectPropertyAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,ToggleToolBarAction,0,0,0,4
+org.jhotdraw.application.action,ToggleToolBarAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application.action,ToggleVisibleAction,0,0,0,2
+org.jhotdraw.application.action,ToggleVisibleAction.new ComponentAdapter() {...},0,0,0,3
+org.jhotdraw.application.action,UndoAction,0,0,0,7
+org.jhotdraw.application.action,UndoAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.application,DefaultApplicationModel,0,0,0,18
+org.jhotdraw.application,MyMnemonicText,0,0,0,7
+org.jhotdraw.application,OSXPaletteHandler,0,0,0,9
+org.jhotdraw.application,OSXPaletteHandler.new ActionListener() {...},0,0,0,2
+org.jhotdraw.application,OSXPaletteHandler.new WindowFocusListener() {...},0,0,0,3
+org.jhotdraw.app,OSXPaletteHandler,0,8,0,9
+org.jhotdraw.app,OSXPaletteHandler.new ActionListener() {...},0,2,0,2
+org.jhotdraw.app,OSXPaletteHandler.new WindowFocusListener() {...},0,3,0,3
+org.jhotdraw.beans,AbstractBean,6,6,6,9
+org.jhotdraw.draw,AbstractAttributedCompositeFigure,0,0,0,25
+org.jhotdraw.draw,AbstractAttributedDecoratedFigure,10,10,10,15
+org.jhotdraw.draw,AbstractAttributedFigure,15,17,15,23
+org.jhotdraw.draw,AbstractCompositeFigure,32,32,32,53
+org.jhotdraw.draw,AbstractCompositeFigure.ChildHandler,3,3,3,5
+org.jhotdraw.draw,AbstractConnectionHandle,4,4,4,18
+org.jhotdraw.draw,AbstractConnector,11,11,11,21
+org.jhotdraw.draw,AbstractDrawing,25,25,25,30
+org.jhotdraw.draw,AbstractFigure,37,38,38,55
+org.jhotdraw.draw,AbstractHandle,25,25,25,37
+org.jhotdraw.draw,AbstractLayouter,0,0,0,2
+org.jhotdraw.draw,AbstractLineDecoration,0,0,0,11
+org.jhotdraw.draw,AbstractLocator,1,1,1,2
+org.jhotdraw.draw,AbstractTool,29,29,29,40
+org.jhotdraw.draw.action,AbstractEditorAction,0,0,0,8
+org.jhotdraw.draw.action,AbstractEditorAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,AbstractSelectedAction,6,6,6,8
+org.jhotdraw.draw.action,AbstractSelectedAction.EventHandler,3,3,3,3
+org.jhotdraw.draw.action,AbstractSelectedAction.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.draw.action,AbstractViewAction,3,3,3,9
+org.jhotdraw.draw.action,AbstractViewAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,AbstractViewAction.new PropertyChangeListener() {...},1,1,1,2
+org.jhotdraw.draw.action,AlignAction,4,4,4,4
+org.jhotdraw.draw.action,AlignAction.East,2,2,2,3
+org.jhotdraw.draw.action,AlignAction.Horizontal,2,2,2,3
+org.jhotdraw.draw.action,AlignAction.North,2,2,2,3
+org.jhotdraw.draw.action,AlignAction.South,2,2,2,3
+org.jhotdraw.draw.action,AlignAction.Vertical,2,2,2,3
+org.jhotdraw.draw.action,AlignAction.West,2,2,2,3
+org.jhotdraw.draw.action,ApplyAttributesAction,0,0,0,5
+org.jhotdraw.draw.action,AttributeAction,0,0,0,8
+org.jhotdraw.draw.action,AttributeAction.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw.action,AttributeToggler,0,0,0,5
+org.jhotdraw.draw.action,AttributeToggler.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw.action,ButtonFactory,9,9,9,49
+org.jhotdraw.draw.action,ButtonFactory.new Comparator() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.new FigureSelectionListener() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.new ItemListener() {...},2,2,2,2
+org.jhotdraw.draw.action,ButtonFactory.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.draw.action,ButtonFactory.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.draw.action,ButtonFactory.new ToolListener() {...},4,4,4,4
+org.jhotdraw.draw.action,ButtonFactory.new ZoomAction() {...},2,2,2,2
+org.jhotdraw.draw.action,ButtonFactory.new ZoomEditorAction() {...},0,0,0,2
+org.jhotdraw.draw.action,ButtonFactory.ToolButtonListener,2,2,2,2
+org.jhotdraw.draw.action,ColorIcon,0,0,0,4
+org.jhotdraw.draw.action,Colors,0,0,0,2
+org.jhotdraw.draw.action,DefaultAttributeAction,0,0,0,11
+org.jhotdraw.draw.action,DefaultAttributeAction.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.draw.action,DrawingEditorProxy,3,3,3,19
+org.jhotdraw.draw.action,DrawingEditorProxy.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.draw.action,EditorColorChooserAction,0,0,0,9
+org.jhotdraw.draw.action,EditorColorIcon,0,0,0,3
+org.jhotdraw.draw.action,GenericListener,0,0,0,7
+org.jhotdraw.draw.action,GenericListener.DefaultInvoker,0,0,0,7
+org.jhotdraw.draw.action,GenericListener.new GenericListener.DefaultInvoker() {...},0,0,0,2
+org.jhotdraw.draw.action,GroupAction,4,4,4,7
+org.jhotdraw.draw.action,GroupAction.new CompositeEdit() {...},0,0,0,4
+org.jhotdraw.draw.action,ImageBevelBorder,0,0,0,6
+org.jhotdraw.draw.action,IncludeSqlStatementAction,1,3,3,3
+org.jhotdraw.draw.action,LineDecorationIcon,0,0,0,4
+org.jhotdraw.draw.action,MoveAction,2,2,2,2
+org.jhotdraw.draw.action,MoveAction.East,1,1,1,1
+org.jhotdraw.draw.action,MoveAction.North,1,1,1,1
+org.jhotdraw.draw.action,MoveAction.South,1,1,1,1
+org.jhotdraw.draw.action,MoveAction.West,1,1,1,1
+org.jhotdraw.draw.action,MoveConstrainedAction,2,2,2,2
+org.jhotdraw.draw.action,MoveConstrainedAction.East,1,1,1,1
+org.jhotdraw.draw.action,MoveConstrainedAction.North,1,1,1,1
+org.jhotdraw.draw.action,MoveConstrainedAction.South,1,1,1,1
+org.jhotdraw.draw.action,MoveConstrainedAction.West,1,1,1,1
+org.jhotdraw.draw.action,MoveToBackAction,4,4,4,4
+org.jhotdraw.draw.action,MoveToBackAction.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw.action,MoveToFrontAction,4,4,4,4
+org.jhotdraw.draw.action,MoveToFrontAction.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw.action,PaletteMenuItemUI,0,0,0,4
+org.jhotdraw.draw.action,PickAttributesAction,0,0,0,5
+org.jhotdraw.draw.action,SelectAttributeTypeAction,3,3,3,3
+org.jhotdraw.draw.action,SelectionColorChooserAction,0,0,0,6
+org.jhotdraw.draw.action,SelectionColorIcon,0,0,0,3
+org.jhotdraw.draw.action,SelectSameAction,3,3,3,3
+org.jhotdraw.draw.action,StrokeIcon,0,0,0,4
+org.jhotdraw.draw.action,ToggleGridAction,0,0,0,6
+org.jhotdraw.draw.action,UngroupAction,4,4,4,7
+org.jhotdraw.draw.action,UngroupAction.new CompositeEdit() {...},0,0,0,3
+org.jhotdraw.draw.action,VerticalGridLayout,5,5,5,21
+org.jhotdraw.draw.action,ZoomAction,2,2,2,3
+org.jhotdraw.draw.action,ZoomAction.new Runnable() {...},2,2,2,2
+org.jhotdraw.draw.action,ZoomEditorAction,0,0,0,3
+org.jhotdraw.draw,ArrowTip,0,0,0,7
+org.jhotdraw.draw,AtributoChaveFigure,8,8,12,12
+org.jhotdraw.draw,AtributoChaveFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,AtributoChaveParcialFigure,10,8,12,12
+org.jhotdraw.draw,AtributoChaveParcialFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,AtributoDerivadoFigure,9,10,10,10
+org.jhotdraw.draw,AtributoDerivadoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,AtributoFigure,12,12,12,12
+org.jhotdraw.draw,AtributoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,AtributoMultivaloradoFigure,8,8,12,12
+org.jhotdraw.draw,AtributoMultivaloradoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,AttributeChangeEdit,0,0,0,4
+org.jhotdraw.draw,AttributeKey,9,9,9,20
+org.jhotdraw.draw,AttributeKey.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,AttributeKeys,9,9,9,10
+org.jhotdraw.draw,AttributeKeys.Orientation,2,2,2,4
+org.jhotdraw.draw,AttributeKeys.StrokePlacement,3,3,3,4
+org.jhotdraw.draw,AttributeKeys.StrokeType,3,3,3,4
+org.jhotdraw.draw,AttributeKeys.Underfill,3,3,3,4
+org.jhotdraw.draw,AttributeKeys.WindingRule,2,2,2,4
+org.jhotdraw.draw,BezierControlPointHandle,0,0,0,16
+org.jhotdraw.draw,BezierFigure,33,32,33,57
+org.jhotdraw.draw,BezierFigure.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,BezierLabelLocator,3,3,3,8
+org.jhotdraw.draw,BezierNodeEdit,1,1,1,6
+org.jhotdraw.draw,BezierNodeHandle,14,16,14,18
+org.jhotdraw.draw,BezierNodeHandle.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,BezierOutlineHandle,6,6,6,9
+org.jhotdraw.draw,BezierPointLocator,0,0,0,5
+org.jhotdraw.draw,BezierScaleHandle,0,0,0,10
+org.jhotdraw.draw,BezierTool,0,0,0,17
+org.jhotdraw.draw,BezierTool.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,BidirectionalConnectionTool,0,0,0,36
+org.jhotdraw.draw,BorderRectangleFigure,0,0,0,3
+org.jhotdraw.draw,BoundsOutlineHandle,5,5,5,8
+org.jhotdraw.draw,ChopBezierConnector,1,1,1,3
+org.jhotdraw.draw,ChopDiamondConnector,0,0,0,3
+org.jhotdraw.draw,ChopEllipseConnector,0,0,0,5
+org.jhotdraw.draw,ChopRectangleConnector,5,5,5,5
+org.jhotdraw.draw,ChopRoundRectangleConnector,0,0,0,3
+org.jhotdraw.draw,ChopTriangleConnector,0,0,0,3
+org.jhotdraw.draw,CircleFigure,10,10,10,14
+org.jhotdraw.draw,CloseHandle,0,0,0,7
+org.jhotdraw.draw,CompositeFigure,0,0,0,1
+org.jhotdraw.draw,CompositeTransformEdit,0,0,0,10
+org.jhotdraw.draw,ConnectionEndHandle,3,3,3,8
+org.jhotdraw.draw,ConnectionStartHandle,3,3,3,8
+org.jhotdraw.draw,ConnectionTool,14,13,14,17
+org.jhotdraw.draw,ConnectionTool.new AbstractUndoableEdit() {...},1,1,1,4
+org.jhotdraw.draw,ConnectorHandle,0,0,0,17
+org.jhotdraw.draw,ConnectorHandle.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,CreationTool,9,9,9,16
+org.jhotdraw.draw,CreationTool.new AbstractUndoableEdit() {...},1,1,2,4
+org.jhotdraw.draw,DefaultDrawing,22,21,22,25
+org.jhotdraw.draw,DefaultDrawingEditor,13,14,13,20
+org.jhotdraw.draw,DefaultDrawingEditor.new FocusListener() {...},3,3,3,3
+org.jhotdraw.draw,DefaultDrawing.FigureHandler,4,3,4,5
+org.jhotdraw.draw,DefaultDrawingView,55,58,56,65
+org.jhotdraw.draw,DefaultDrawingViewBeanInfo,0,0,0,13
+org.jhotdraw.draw,DefaultDrawingView.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw,DefaultDrawingView.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw,DefaultDrawingView.new DrawingListener() {...},2,2,2,4
+org.jhotdraw.draw,DefaultDrawingView.new FigureAdapter() {...},1,1,1,2
+org.jhotdraw.draw,DefaultDrawingView.new FocusListener() {...},3,3,3,3
+org.jhotdraw.draw,DefaultDrawingViewTransferHandler,5,5,5,9
+org.jhotdraw.draw,DefaultDrawingViewTransferHandler.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw,DefaultDrawingViewTransferHandler.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.draw,DefaultDrawingViewTransferHandler.new AbstractUndoableEdit() {...},2,2,2,4
+org.jhotdraw.draw,DefaultDrawingViewTransferHandler.new DrawingListener() {...},2,2,2,4
+org.jhotdraw.draw,DelegationSelectionTool,8,9,8,12
+org.jhotdraw.draw,DelegationSelectionTool.new ActionListener() {...},1,1,1,2
+org.jhotdraw.draw,DiamondFigure,12,12,12,15
+org.jhotdraw.draw,Direction,3,3,3,4
+org.jhotdraw.draw,DisjuncaoFigure,6,6,6,6
+org.jhotdraw.draw,DOMStorableInputOutputFormat,9,9,9,14
+org.jhotdraw.draw,DoubleLineConnectionGeneralizacaoFigure,3,3,3,3
+org.jhotdraw.draw,DragTracker,4,4,4,5
+org.jhotdraw.draw,DrawingEvent,5,5,5,6
+org.jhotdraw.draw,DrawingPageable,1,2,6,6
+org.jhotdraw.draw,DrawingPageable.new Printable() {...},0,0,2,2
+org.jhotdraw.draw,ElbowLiner,0,0,0,7
+org.jhotdraw.draw,EllipseFigure,11,11,11,15
+org.jhotdraw.draw,EntidadeFigure,7,7,7,8
+org.jhotdraw.draw,EntidadeFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,EntidadeFracaFigure,7,7,7,7
+org.jhotdraw.draw,EntidadeFracaFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,EntidadeRelacionamentoFigure,7,7,7,7
+org.jhotdraw.draw,EntidadeRelacionamentoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,FigureAdapter,7,6,7,8
+org.jhotdraw.draw,FigureEvent,6,6,6,7
+org.jhotdraw.draw,FigureLayerComparator,3,3,3,3
+org.jhotdraw.draw,FigureSelectionEvent,2,2,2,4
+org.jhotdraw.draw,FloatingTextArea,6,6,6,8
+org.jhotdraw.draw,FloatingTextField,8,8,8,11
+org.jhotdraw.draw,FontSizeHandle,4,6,3,9
+org.jhotdraw.draw,FontSizeHandle.new AbstractUndoableEdit() {...},0,1,0,4
+org.jhotdraw.draw,FontSizeLocator,2,2,2,3
+org.jhotdraw.draw,GeneralizacaoLineConnectionFigure,2,2,2,3
+org.jhotdraw.draw,GeneralPathTip,0,0,0,4
+org.jhotdraw.draw,GeometryEdit,1,1,1,4
+org.jhotdraw.draw,GraphicalCompositeFigure,0,0,0,29
+org.jhotdraw.draw,GraphicalCompositeFigure.PresentationFigureHandler,0,0,0,5
+org.jhotdraw.draw,GridConstrainer,6,6,6,9
+org.jhotdraw.draw,GroupFigure,2,2,2,3
+org.jhotdraw.draw,HandleEvent,3,3,3,3
+org.jhotdraw.draw,HandleMulticaster,4,4,4,10
+org.jhotdraw.draw,HandleTracker,6,6,6,14
+org.jhotdraw.draw,HorizontalLayouter,0,0,0,3
+org.jhotdraw.draw,ImageFigure,2,2,2,26
+org.jhotdraw.draw,ImageInputFormat,3,2,2,10
+org.jhotdraw.draw,ImageOutputFormat,5,5,5,14
+org.jhotdraw.draw,ImageTool,0,0,0,4
+org.jhotdraw.draw,ImageTool.new Worker() {...},0,0,0,3
+org.jhotdraw.draw,LabeledDoubleLineConnectionMuitosFigure,1,1,1,1
+org.jhotdraw.draw,LabeledDoubleLineConnectionUmFigure,1,1,1,1
+org.jhotdraw.draw,LabeledLineConnectionFigure,24,24,24,35
+org.jhotdraw.draw,LabeledLineConnectionFigure.ChildHandler,3,3,3,5
+org.jhotdraw.draw,LabeledLineConnectionMuitosFigure,1,1,1,1
+org.jhotdraw.draw,LabeledLineConnectionUmFigure,1,1,1,1
+org.jhotdraw.draw,LabelFigure,0,0,0,13
+org.jhotdraw.draw,LineConnectionFigure,35,35,35,38
+org.jhotdraw.draw,LineConnectionFigure.ConnectionHandler,3,3,3,3
+org.jhotdraw.draw,LineConnectionFigure.new AbstractUndoableEdit() {...},1,1,1,3
+org.jhotdraw.draw,LineConnectionGeneralizacaoFigure,3,3,3,3
+org.jhotdraw.draw,LineFigure,1,1,1,4
+org.jhotdraw.draw,LineFigure.new AbstractUndoableEdit() {...},0,0,0,3
+org.jhotdraw.draw,ListFigure,0,0,0,2
+org.jhotdraw.draw,LocatorConnector,0,0,0,7
+org.jhotdraw.draw,LocatorHandle,3,3,3,4
+org.jhotdraw.draw,LocatorLayouter,4,4,4,5
+org.jhotdraw.draw,ModelValidation,2,2,2,2
+org.jhotdraw.draw,MoveHandle,5,2,2,14
+org.jhotdraw.draw,NullHandle,0,0,0,7
+org.jhotdraw.draw,Options,2,2,2,3
+org.jhotdraw.draw,QuadTreeDrawing,19,18,19,25
+org.jhotdraw.draw,QuadTreeDrawing.FigureHandler,4,4,4,5
+org.jhotdraw.draw,RectangleDiamondFigure,0,0,0,12
+org.jhotdraw.draw,RectangleFigure,12,12,12,13
+org.jhotdraw.draw,RelacionamentoFigure,6,7,7,7
+org.jhotdraw.draw,RelacionamentoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,RelacionamentoFracoFigure,7,7,7,7
+org.jhotdraw.draw,RelacionamentoFracoFigure.new FigureAdapter() {...},3,3,3,3
+org.jhotdraw.draw,RelativeDecoratorLocator,0,0,0,13
+org.jhotdraw.draw,RelativeLocator,18,18,18,24
+org.jhotdraw.draw,ResizeHandleKit,12,12,12,13
+org.jhotdraw.draw,ResizeHandleKit.EastHandle,1,3,3,3
+org.jhotdraw.draw,ResizeHandleKit.NorthEastHandle,1,1,1,3
+org.jhotdraw.draw,ResizeHandleKit.NorthHandle,1,2,1,3
+org.jhotdraw.draw,ResizeHandleKit.NorthWestHandle,1,1,1,3
+org.jhotdraw.draw,ResizeHandleKit.ResizeHandle,6,6,6,8
+org.jhotdraw.draw,ResizeHandleKit.SouthEastHandle,1,1,2,3
+org.jhotdraw.draw,ResizeHandleKit.SouthHandle,3,1,3,3
+org.jhotdraw.draw,ResizeHandleKit.SouthWestHandle,1,1,1,3
+org.jhotdraw.draw,ResizeHandleKit.WestHandle,2,1,1,3
+org.jhotdraw.draw,RestoreDataEdit,0,0,0,6
+org.jhotdraw.draw,RotateHandle,0,0,0,11
+org.jhotdraw.draw,RoundRectangleFigure,0,0,0,20
+org.jhotdraw.draw,RoundRectangleRadiusHandle,0,0,0,8
+org.jhotdraw.draw,SelectAreaTracker,8,8,8,8
+org.jhotdraw.draw,SelectionTool,21,21,21,21
+org.jhotdraw.draw,SetBoundsEdit,0,0,0,6
+org.jhotdraw.draw,SlantedLiner,0,0,0,7
+org.jhotdraw.draw,SobreposicaoFigure,6,6,6,6
+org.jhotdraw.draw,StickyRectangleConnector,0,0,0,12
+org.jhotdraw.draw,TerraFigureList,0,0,0,10
+org.jhotdraw.draw,TerraFigureList.new FigureSelectionListener() {...},0,0,0,2
+org.jhotdraw.draw,TerraFigureList.new KeyAdapter() {...},0,0,0,2
+org.jhotdraw.draw,TerraFigureList.new ListSelectionListener() {...},0,0,0,2
+org.jhotdraw.draw,TerraFigureTree,14,12,14,14
+org.jhotdraw.draw,TerraFigureTree.new FigureSelectionListener() {...},2,2,2,2
+org.jhotdraw.draw,TerraFigureTree.new KeyAdapter() {...},2,2,2,2
+org.jhotdraw.draw,TerraFigureTree.new TreeSelectionListener() {...},2,2,2,2
+org.jhotdraw.draw,TerraFigureTree.TerraTreeCellRenderer,3,3,3,3
+org.jhotdraw.draw,TerraResizeEventFunctions,4,4,4,5
+org.jhotdraw.draw,TextAreaFigure,31,31,32,37
+org.jhotdraw.draw,TextAreaTool,8,8,8,11
+org.jhotdraw.draw,TextFigure,32,32,32,37
+org.jhotdraw.draw,TextInputFormat,4,2,2,10
+org.jhotdraw.draw,TextItalicoFigure,3,3,3,4
+org.jhotdraw.draw,TextNegritoFigure,2,2,2,2
+org.jhotdraw.draw,TextOverflowHandle,4,4,4,8
+org.jhotdraw.draw,TextTool,7,8,8,11
+org.jhotdraw.draw,ToolEvent,3,3,3,4
+org.jhotdraw.draw,TransformEdit,5,5,5,8
+org.jhotdraw.draw,TransformHandleKit,11,11,11,13
+org.jhotdraw.draw,TransformHandleKit.EastHandle,3,3,3,3
+org.jhotdraw.draw,TransformHandleKit.NorthEastHandle,1,2,2,3
+org.jhotdraw.draw,TransformHandleKit.NorthHandle,3,1,3,3
+org.jhotdraw.draw,TransformHandleKit.NorthWestHandle,2,2,2,3
+org.jhotdraw.draw,TransformHandleKit.SouthEastHandle,2,2,2,3
+org.jhotdraw.draw,TransformHandleKit.SouthHandle,2,2,3,3
+org.jhotdraw.draw,TransformHandleKit.SouthWestHandle,1,1,2,3
+org.jhotdraw.draw,TransformHandleKit.TransformHandle,6,6,7,8
+org.jhotdraw.draw,TransformHandleKit.WestHandle,3,2,2,3
+org.jhotdraw.draw,TriangleFigure,0,0,0,19
+org.jhotdraw.draw,TriangleRotationHandler,0,0,0,8
+org.jhotdraw.draw,UniaoFigure,6,6,6,6
+org.jhotdraw.draw,VerticalLayouter,0,0,0,3
+org.jhotdraw.enums,AttributeTypeEnum,7,7,7,8
+org.jhotdraw.geom,Bezier,0,0,0,31
+org.jhotdraw.geom,BezierPath,20,20,20,42
+org.jhotdraw.geom,BezierPathIterator,7,7,7,8
+org.jhotdraw.geom,BezierPath.Node,11,12,11,18
+org.jhotdraw.geom,Dimension2DDouble,1,1,1,11
+org.jhotdraw.geom,DoubleStroke,4,4,4,6
+org.jhotdraw.geom,Geom,9,9,9,41
+org.jhotdraw.geom,GrowStroke,0,0,0,2
+org.jhotdraw.geom,Insets2D,2,2,2,11
+org.jhotdraw.geom,Insets2D.Double,6,6,6,7
+org.jhotdraw.geom,Insets2D.Float,0,0,0,8
+org.jhotdraw.geom,QuadTree,6,6,6,9
+org.jhotdraw.geom,QuadTree.QuadNode,6,7,7,9
+org.jhotdraw.geom,Shapes,1,1,1,2
+org.jhotdraw.gui,Arrangeable.Arrangement,0,0,0,4
+org.jhotdraw.gui,AttributeFieldEventHandler,0,0,0,19
+org.jhotdraw.gui.datatransfer,CompositeTransferable,5,5,5,6
+org.jhotdraw.gui.datatransfer,ImageTransferable,2,4,4,4
+org.jhotdraw.gui.datatransfer,InputStreamTransferable,5,5,5,5
+org.jhotdraw.gui.event,SheetEvent,5,5,5,9
+org.jhotdraw.gui,JDoubleAttributeField,0,0,0,20
+org.jhotdraw.gui,JDoubleAttributeFieldBeanInfo,0,0,0,13
+org.jhotdraw.gui,JDoubleAttributeField.new ActionListener() {...},0,0,0,2
+org.jhotdraw.gui,JDoubleAttributeField.new DocumentListener() {...},0,0,0,4
+org.jhotdraw.gui,JDoubleAttributeSlider,0,0,0,15
+org.jhotdraw.gui,JDoubleAttributeSliderBeanInfo,0,0,0,13
+org.jhotdraw.gui,JDoubleAttributeSlider.ChangeHandler,0,0,0,2
+org.jhotdraw.gui,JDoubleAttributeSlider.EditorEventHandler,0,0,0,3
+org.jhotdraw.gui,JDoubleAttributeSlider.new AbstractUndoableEdit() {...},0,0,0,4
+org.jhotdraw.gui,JDoubleAttributeSlider.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.gui,JPopupButton,8,7,7,17
+org.jhotdraw.gui,JPopupButton.ActionPropertyHandler,1,1,1,2
+org.jhotdraw.gui,JPopupButtonBeanInfo,0,0,0,13
+org.jhotdraw.gui,JPopupButton.FormListener,5,5,5,6
+org.jhotdraw.gui,JSheet,25,25,25,43
+org.jhotdraw.gui,JSheet.new ActionListener() {...},0,2,0,2
+org.jhotdraw.gui,JSheet.new ActionListener() {...},0,0,0,2
+org.jhotdraw.gui,JSheet.new ActionListener() {...},2,0,2,2
+org.jhotdraw.gui,JSheet.new ComponentAdapter() {...},2,2,2,2
+org.jhotdraw.gui,JSheet.new ComponentAdapter() {...},1,1,1,2
+org.jhotdraw.gui,JSheet.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.gui,JSheet.new WindowAdapter() {...},1,1,1,2
+org.jhotdraw.gui,JSheet.new WindowAdapter() {...},1,2,1,4
+org.jhotdraw.gui,JStringAttributeArea,0,0,0,12
+org.jhotdraw.gui,JStringAttributeAreaBeanInfo,0,0,0,13
+org.jhotdraw.gui,JStringAttributeArea.EditorEventHandler,0,0,0,3
+org.jhotdraw.gui,JStringAttributeArea.new DocumentListener() {...},0,0,0,4
+org.jhotdraw.gui,JStringAttributeArea.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.gui,JStringAttributeField,0,0,0,12
+org.jhotdraw.gui,JStringAttributeFieldBeanInfo,0,0,0,13
+org.jhotdraw.gui,JStringAttributeField.EditorEventHandler,0,0,0,3
+org.jhotdraw.gui,JStringAttributeField.new ActionListener() {...},0,0,0,2
+org.jhotdraw.gui,JStringAttributeField.new DocumentListener() {...},0,0,0,4
+org.jhotdraw.gui,JStringAttributeField.new PropertyChangeListener() {...},0,0,0,2
+org.jhotdraw.gui,MDIDesktopManager,0,0,0,7
+org.jhotdraw.gui,MDIDesktopPane,0,0,0,12
+org.jhotdraw.gui,PlacardScrollPaneLayout,2,2,2,2
+org.jhotdraw.gui,PlacardScrollPaneLayout.UIResource,0,0,0,1
+org.jhotdraw.gui,Worker,4,4,4,5
+org.jhotdraw.gui,Worker.new Runnable() {...},2,2,2,2
+org.jhotdraw.io,Base64,0,0,0,18
+org.jhotdraw.io,Base64.InputStream,0,0,0,4
+org.jhotdraw.io,Base64.OutputStream,0,0,0,8
+org.jhotdraw.io,ExtensionFileFilter,2,1,2,6
+org.jhotdraw.io,StreamPosTokenizer,0,0,0,29
+org.jhotdraw.samples.draw,DrawApplet,0,0,0,13
+org.jhotdraw.samples.draw,DrawApplet.new Runnable() {...},0,0,0,2
+org.jhotdraw.samples.draw,DrawApplet.new Worker() {...},0,0,0,3
+org.jhotdraw.samples.draw,DrawApplicationModel,5,6,5,6
+org.jhotdraw.samples.draw,DrawFigureFactory,2,2,2,2
+org.jhotdraw.samples.draw,DrawingPanel,0,0,0,8
+org.jhotdraw.samples.draw,DrawingPanelBeanInfo,0,0,0,13
+org.jhotdraw.samples.draw,DrawLiveConnectApplet,0,0,0,1
+org.jhotdraw.samples.draw,DrawProject,15,15,15,17
+org.jhotdraw.samples.draw,DrawProject.new PropertyChangeListener() {...},2,2,2,2
+org.jhotdraw.samples.draw,DrawProject.new Runnable() {...},2,2,2,2
+org.jhotdraw.samples.draw,Main,1,1,1,2
+org.jhotdraw.samples.draw,TerraProject,3,3,3,3
+org.jhotdraw.undo,CompositeEdit,2,2,5,11
+org.jhotdraw.undo,NonUndoableEdit,0,0,0,3
+org.jhotdraw.undo,UndoRedoManager,12,12,12,21
+org.jhotdraw.undo,UndoRedoManager.new AbstractUndoableEdit() {...},1,1,1,3
+org.jhotdraw.undo,UndoRedoManager.RedoAction,1,1,1,2
+org.jhotdraw.undo,UndoRedoManager.UndoAction,1,1,1,2
+org.jhotdraw.util,LocaleUtil,1,1,1,3
+org.jhotdraw.util,Methods,1,6,1,23
+org.jhotdraw.util.prefs,PreferencesUtil,2,2,2,6
+org.jhotdraw.util.prefs,PreferencesUtil.new ComponentAdapter() {...},3,2,3,3
+org.jhotdraw.util.prefs,PreferencesUtil.new ComponentAdapter() {...},0,3,0,2
+org.jhotdraw.util.prefs,PreferencesUtil.new ComponentAdapter() {...},0,0,0,3
+org.jhotdraw.util.prefs,ToolBarPrefsHandler,8,0,8,9
+org.jhotdraw.util,ResourceBundleUtil,15,16,15,25
+org.jhotdraw.util,ReversedList,3,3,3,3
+org.jhotdraw.xml.css,CSSParser,0,0,0,7
+org.jhotdraw.xml.css,CSSRule,0,0,0,9
+org.jhotdraw.xml.css,CSSRule.SelectorType,0,0,0,4
+org.jhotdraw.xml.css,StyleManager,0,0,0,4
+org.jhotdraw.xml,DefaultDOMFactory,9,9,9,11
+org.jhotdraw.xml,JavaxDOMInput,0,0,0,20
+org.jhotdraw.xml,JavaxDOMOutput,0,0,0,22
+org.jhotdraw.xml,NanoXMLDOMInput,17,17,17,18
+org.jhotdraw.xml,NanoXMLDOMOutput,14,14,14,22
+org.jhotdraw.xml,XMLTransferable,0,0,0,5
