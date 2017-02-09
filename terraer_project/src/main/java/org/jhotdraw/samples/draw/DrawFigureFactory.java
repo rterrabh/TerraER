@@ -26,14 +26,14 @@ import org.jhotdraw.draw.ChopBezierConnector;
 import org.jhotdraw.draw.ChopDiamondConnector;
 import org.jhotdraw.draw.ChopEllipseConnector;
 import org.jhotdraw.draw.ChopRectangleConnector;
-import org.jhotdraw.draw.ChopRoundRectangleConnector;
-import org.jhotdraw.draw.ChopTriangleConnector;
+//import org.jhotdraw.draw.ChopRoundRectangleConnector; @beforeCleanUp:removed_Obede
+//import org.jhotdraw.draw.ChopTriangleConnector; @beforeCleanUp:removed_Obede 
 import org.jhotdraw.draw.CircleFigure;
 import org.jhotdraw.draw.DefaultDrawing;
 import org.jhotdraw.draw.DiamondFigure;
 import org.jhotdraw.draw.DisjuncaoFigure;
 import org.jhotdraw.draw.DoubleLineConnectionGeneralizacaoFigure;
-import org.jhotdraw.draw.ElbowLiner;
+//import org.jhotdraw.draw.ElbowLiner; @beforeCleanUp:removed_Obede
 import org.jhotdraw.draw.EllipseFigure;
 import org.jhotdraw.draw.EntidadeFigure;
 import org.jhotdraw.draw.EntidadeFracaFigure;
@@ -53,13 +53,13 @@ import org.jhotdraw.draw.QuadTreeDrawing;
 import org.jhotdraw.draw.RectangleFigure;
 import org.jhotdraw.draw.RelacionamentoFigure;
 import org.jhotdraw.draw.RelacionamentoFracoFigure;
-import org.jhotdraw.draw.RoundRectangleFigure;
+//import org.jhotdraw.draw.RoundRectangleFigure; @beforeCleanUp:removed_Obede
 import org.jhotdraw.draw.SobreposicaoFigure;
 import org.jhotdraw.draw.TextAreaFigure;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextNegritoFigure;
-import org.jhotdraw.draw.TriangleFigure;
+//import org.jhotdraw.draw.TriangleFigure; @beforeCleanUp:removed_Obede
 import org.jhotdraw.draw.UniaoFigure;
 import org.jhotdraw.xml.DefaultDOMFactory;
 /**
@@ -73,10 +73,10 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { DefaultDrawing.class, "drawing" },
         { QuadTreeDrawing.class, "drawing" },
         { DiamondFigure.class, "diamond" },
-        { TriangleFigure.class, "triangle" },
+        //{ TriangleFigure.class, "triangle" }, @beforeCleanUp:removed_Obede
         { BezierFigure.class, "bezier" },
         { RectangleFigure.class, "r" },
-        { RoundRectangleFigure.class, "rr" },
+        //{ RoundRectangleFigure.class, "rr" }, @beforeCleanUp:removed_Obede
         { LineFigure.class, "l" },
         { BezierFigure.class, "b" },
         { EllipseFigure.class, "e" },
@@ -116,12 +116,12 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { ArrowTip.class, "arrowTip" },
         { ChopRectangleConnector.class, "rConnector" },
         { ChopEllipseConnector.class, "ellipseConnector" },
-        { ChopRoundRectangleConnector.class, "rrConnector" },
-        { ChopTriangleConnector.class, "triangleConnector" },
+        //{ ChopRoundRectangleConnector.class, "rrConnector" }, @beforeCleanUp:removed_Obede
+        //{ ChopTriangleConnector.class, "triangleConnector" }, @beforeCleanUp:removed_Obede
         { ChopDiamondConnector.class, "diamondConnector" },
         { ChopBezierConnector.class, "bezierConnector" },
         
-        { ElbowLiner.class, "elbowLiner" },
+        //{ ElbowLiner.class, "elbowLiner" }, @beforeCleanUp:removed_Obede
     };
     private final static Object[][] enumTagArray = {
         { AttributeKeys.StrokePlacement.class, "strokePlacement" },
