@@ -14,7 +14,7 @@
 
 package org.jhotdraw.samples.draw;
 
-import org.jhotdraw.draw.ArrowTip;
+//import org.jhotdraw.draw.ArrowTip; @beforeCleanUp:removed_Obede
 import org.jhotdraw.draw.AtributoChaveFigure;
 import org.jhotdraw.draw.AtributoChaveParcialFigure;
 import org.jhotdraw.draw.AtributoDerivadoFigure;
@@ -113,7 +113,7 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { DoubleLineConnectionGeneralizacaoFigure.class, "llabelDoubleGeneralizacao"},
 
         
-        { ArrowTip.class, "arrowTip" },
+        //{ ArrowTip.class, "arrowTip" }, @beforeCleanUp:removed_Obede
         { ChopRectangleConnector.class, "rConnector" },
         { ChopEllipseConnector.class, "ellipseConnector" },
         //{ ChopRoundRectangleConnector.class, "rrConnector" }, @beforeCleanUp:removed_Obede
