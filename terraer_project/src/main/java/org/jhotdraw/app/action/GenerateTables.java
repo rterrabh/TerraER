@@ -2,13 +2,13 @@ package org.jhotdraw.app.action;
 
 import java.util.ArrayList;
 
-import org.jhotdraw.draw.AtributoChaveFigure;
-import org.jhotdraw.draw.AtributoChaveParcialFigure;
-import org.jhotdraw.draw.AtributoFigure;
 import org.jhotdraw.draw.ConnectionFigure;
-import org.jhotdraw.draw.EntidadeFigure;
-import org.jhotdraw.draw.EntidadeFracaFigure;
 import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
 
 public class GenerateTables {
 	private String ddlBuffer;
@@ -19,29 +19,29 @@ public class GenerateTables {
 			mycontent = "CREATE TABLE " + i.toString().toUpperCase().replaceAll("\\s+", "_") + "(\n";
 			ddlBuffer += mycontent;
 			for (Figure j: connection) {
-				if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigure)i))){
+				if (((ConnectionFigure)j).getStartFigure().equals(((EntidadeFigureChen)i))){
 					for (Figure k: attribute) {
-						if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigure)k))) {
-							mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)j).getEndFigure().equals(((AtributoFigureChen)k))) {
+							mycontent = k.toString() + " " + (((AtributoFigureChen)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;                                
 						}
 					}
 					for (Figure l: keyAttribute) {
-						if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigure)l))) {
-							mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)j).getEndFigure().equals(((AtributoChaveFigureChen)l))) {
+							mycontent = l.toString() + " " + ((AtributoChaveFigureChen)l).getAttributeType() + " " + (((AtributoChaveFigureChen)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}            			           			
-				} else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigure)i))){
+				} else if (((ConnectionFigure)j).getEndFigure().equals(((EntidadeFigureChen)i))){
 					for (Figure k: attribute) {
-						if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigure)k))) {
-							mycontent = k.toString() + " " + (((AtributoFigure)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)j).getStartFigure().equals(((AtributoFigureChen)k))) {
+							mycontent = k.toString() + " " + (((AtributoFigureChen)k).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}
 					for (Figure l: keyAttribute) {
-						if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigure)l))) {
-							mycontent = l.toString() + " " + ((AtributoChaveFigure)l).getAttributeType() + " " + (((AtributoChaveFigure)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)j).getStartFigure().equals(((AtributoChaveFigureChen)l))) {
+							mycontent = l.toString() + " " + ((AtributoChaveFigureChen)l).getAttributeType() + " " + (((AtributoChaveFigureChen)l).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}            			            			
@@ -55,29 +55,29 @@ public class GenerateTables {
 			mycontent = "CREATE TABLE " + a.toString().toUpperCase().replaceAll("\\s+", "_") + "(\n";
 			ddlBuffer += mycontent;
 			for (Figure b: connection) {
-				if (((ConnectionFigure)b).getStartFigure().equals(((EntidadeFracaFigure)a))){
+				if (((ConnectionFigure)b).getStartFigure().equals(((EntidadeFracaFigureChen)a))){
 					for (Figure c: attribute) {
-						if (((ConnectionFigure)b).getEndFigure().equals(((AtributoFigure)c))) {
-							mycontent = c.toString() + " " + (((AtributoFigure)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)b).getEndFigure().equals(((AtributoFigureChen)c))) {
+							mycontent = c.toString() + " " + (((AtributoFigureChen)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;                                
 						}
 					}
 					for (Figure d: partialKeyAttribute) {
-						if (((ConnectionFigure)b).getEndFigure().equals(((AtributoChaveParcialFigure)d))) {
-							mycontent = d.toString() + " " + ((AtributoChaveParcialFigure)d).getAttributeType() + " " + (((AtributoChaveParcialFigure)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)b).getEndFigure().equals(((AtributoChaveParcialFigureChen)d))) {
+							mycontent = d.toString() + " " + ((AtributoChaveParcialFigureChen)d).getAttributeType() + " " + (((AtributoChaveParcialFigureChen)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}
-				} else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigure)a))){
+				} else if (((ConnectionFigure)b).getEndFigure().equals(((EntidadeFracaFigureChen)a))){
 					for (Figure c: attribute) {
-						if (((ConnectionFigure)b).getStartFigure().equals(((AtributoFigure)c))) {
-							mycontent = c.toString() + " " + (((AtributoFigure)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)b).getStartFigure().equals(((AtributoFigureChen)c))) {
+							mycontent = c.toString() + " " + (((AtributoFigureChen)c).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}
 					for (Figure d: partialKeyAttribute) {
-						if (((ConnectionFigure)b).getStartFigure().equals(((AtributoChaveParcialFigure)d))) {
-							mycontent = d.toString() + " " + ((AtributoChaveParcialFigure)d).getAttributeType() + " " + (((AtributoChaveParcialFigure)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
+						if (((ConnectionFigure)b).getStartFigure().equals(((AtributoChaveParcialFigureChen)d))) {
+							mycontent = d.toString() + " " + ((AtributoChaveParcialFigureChen)d).getAttributeType() + " " + (((AtributoChaveParcialFigureChen)d).isNullable() != true ? "NOT NULL" : "") + ",\n";
 							ddlBuffer += mycontent;
 						}
 					}

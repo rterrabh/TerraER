@@ -25,37 +25,38 @@ import org.jhotdraw.app.Application;
 import org.jhotdraw.app.DefaultApplicationModel;
 import org.jhotdraw.app.Project;
 import org.jhotdraw.draw.AbstractAttributedFigure;
-import org.jhotdraw.draw.AtributoChaveFigure;
-import org.jhotdraw.draw.AtributoChaveParcialFigure;
-import org.jhotdraw.draw.AtributoDerivadoFigure;
-import org.jhotdraw.draw.AtributoFigure;
-import org.jhotdraw.draw.AtributoMultivaloradoFigure;
 import org.jhotdraw.draw.ConnectionTool;
 import org.jhotdraw.draw.CreationTool;
 import org.jhotdraw.draw.DefaultDrawingEditor;
-import org.jhotdraw.draw.DisjuncaoFigure;
-import org.jhotdraw.draw.DoubleLineConnectionGeneralizacaoFigure;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.EntidadeFigure;
-import org.jhotdraw.draw.EntidadeFracaFigure;
-import org.jhotdraw.draw.EntidadeRelacionamentoFigure;
-import org.jhotdraw.draw.GeneralizacaoLineConnectionFigure;
-import org.jhotdraw.draw.LabeledDoubleLineConnectionMuitosFigure;
-import org.jhotdraw.draw.LabeledDoubleLineConnectionUmFigure;
-import org.jhotdraw.draw.LabeledLineConnectionMuitosFigure;
-import org.jhotdraw.draw.LabeledLineConnectionUmFigure;
 import org.jhotdraw.draw.LineConnectionFigure;
-import org.jhotdraw.draw.LineConnectionGeneralizacaoFigure;
-import org.jhotdraw.draw.RelacionamentoFigure;
-import org.jhotdraw.draw.RelacionamentoFracoFigure;
-import org.jhotdraw.draw.SobreposicaoFigure;
 import org.jhotdraw.draw.TextAreaFigure;
 import org.jhotdraw.draw.TextAreaTool;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextTool;
-import org.jhotdraw.draw.UniaoFigure;
 import org.jhotdraw.draw.action.ButtonFactory;
+import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.ConnectionAtributoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.EntidadeRelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalMuitosFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalUmFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialMuitosFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialUmFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFracoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigure;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
  * DrawApplicationModel.
@@ -137,42 +138,40 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         AbstractAttributedFigure af;
         CreationTool ct;
         ConnectionTool cnt;
-//        ConnectionFigure lc;
         
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFigure().init()), "createEntidade", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFracaFigure().init()), "createEntidadeFraca", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFigureChen().init()), "createEntidade", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFracaFigureChen().init()), "createEntidadeFraca", labels);
         tb.addSeparator();
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFigure().init()), "createRelacionamento", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFracoFigure().init()), "createRelacionamentoFraco", labels); 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeRelacionamentoFigure().init()), "createEntidadeRelacionamento", labels);
+
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFigureChen().init()), "createRelacionamento", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFracoFigureChen().init()), "createRelacionamentoFraco", labels); 
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeRelacionamentoFigureChen().init()), "createEntidadeRelacionamento", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new TextItalicoFigure(labels.getString("createPapel"))), "createPapel", labels);
-        //ButtonFactory.addToolTo(tb, editor, new CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
+        tb.addSeparator();
         
+        //ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure()), "createElbowConnectionAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionAtributoFigureChen()), "createElbowConnectionAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigureChen().init()), "createAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveFigureChen().init()), "createAtributoChave", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveParcialFigureChen().init()), "createAtributoChaveParcial", labels); 
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoDerivadoFigureChen().init()), "createAtributoDerivado", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoMultivaloradoFigureChen().init()), "createAtributoMultivalorado", labels);
         tb.addSeparator();
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure()), "createElbowConnectionAtributo", labels);
-//        lc =  cnt.getPrototype();
-//        lc.setLiner(new ElbowLiner());
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigure().init()), "createAtributo", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveFigure().init()), "createAtributoChave", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveParcialFigure().init()), "createAtributoChaveParcial", labels); 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoDerivadoFigure().init()), "createAtributoDerivado", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoMultivaloradoFigure().init()), "createAtributoMultivalorado", labels);
-        tb.addSeparator();
-
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionUmFigure() ), "createElbowUmConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionMuitosFigure()), "createElbowMuitosConnection", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionUmFigure()), "createElbowDoubleUmConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionMuitosFigure()), "createElbowDoubleMuitosConnection", labels);
-        tb.addSeparator();
-
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new DisjuncaoFigure().init()), "createDisjuncao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new SobreposicaoFigure().init()), "createSobreposicao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new UniaoFigure().init()), "createUniao", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoLineConnectionFigure()), "createGeneralizacaoConnection", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionGeneralizacaoFigure() ), "createElbowConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new DoubleLineConnectionGeneralizacaoFigure()), "createElbowDoubleConnection", labels);
         
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionParcialUmFigureChen() ), "createElbowUmConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionParcialMuitosFigureChen()), "createElbowMuitosConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionTotalUmFigureChen()), "createElbowDoubleUmConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionTotalMuitosFigureChen()), "createElbowDoubleMuitosConnection", labels);
         tb.addSeparator();
+        
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceDisjuncaoFigureChen().init()), "createDisjuncao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceSobreposicaoFigure().init()), "createSobreposicao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceUniaoFigure().init()), "createUniao", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionParcialFigureChen()), "createGeneralizacaoConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionLineFigureChen() ), "createElbowConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionTotalFigureChen()), "createElbowDoubleConnection", labels);
+        tb.addSeparator();
+        
         ButtonFactory.addToolTo(tb, editor, new TextTool(new TextFigure()), "createText", labels);
         ButtonFactory.addToolTo(tb, editor, new TextAreaTool(new TextAreaFigure()), "createTextArea", labels);
     }

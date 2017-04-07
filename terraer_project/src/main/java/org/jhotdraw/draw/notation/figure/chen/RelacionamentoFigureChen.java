@@ -1,7 +1,7 @@
 /*
- * @(#)RectangleFigure.java  2.3  2006-12-23
+ * @(#)DiamondFigure.java  1.1  2007-05-12
  *
- * Copyright (c) 1996-2006 by the original authors of JHotDraw
+ * Copyright (c) 1996-2007 by the original authors of JHotDraw
  * and all its contributors ("JHotDraw.org")
  * All rights reserved.
  *
@@ -13,51 +13,52 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.DiamondFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureAdapter;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TerraResizeEventFunctions;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
 /**
- * RectangleFigure.
+ * A diamond with vertices at the midpoints of its enclosing rectangle.
+ *
  *
  * @author Werner Randelshofer
- * @version 2.3 2006-12-23 Made rectangle protected. 
- * <br>2.2 2006-03-23 Take stroke size into account in method contains.
- * <br>2.1 2006-03-22 Method getFigureDrawBounds added.
- * <br>2.0 2006-01-14 Changed to support double precison coordinates.
- * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
+ * @version 1.1 2007-05-12 Removed convenience getters and setters for 
+ * IS_QUADRATIC attribute. 
+ * <br>1.0 2006-03-27 Created.
  */
-public class EntidadeRelacionamentoFigure extends GroupFigure {
+public class RelacionamentoFigureChen extends GroupFigure {
 
-	private TextFigure tf;
-	private RectangleFigure rec;
-	private DiamondFigure df;
+    private TextFigure tf;
+    private DiamondFigure df;
 	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
 	
-    public EntidadeRelacionamentoFigure(){
+	public RelacionamentoFigureChen(){
     	super();
     }
     
-    public EntidadeRelacionamentoFigure init(){
-    	rec=new RectangleFigure();
-    	
-    	
+    public RelacionamentoFigureChen init(){
     	df=new DiamondFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-    	tf=new TextFigure(labels.getString("createEntidadeRelacionamento")+Integer.toString(counter++));
-    	
-    	this.add(rec);
+    	tf=new TextFigure(labels.getString("createRelacionamento")+Integer.toString(counter++));
     	this.add(df);
     	this.add(tf);
-    	this.EventFunctions=new TerraResizeEventFunctions(this,rec,df,tf);
+    	this.EventFunctions=new TerraResizeEventFunctions(this,df,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
 			public void figureAttributeChanged(FigureEvent e){
@@ -68,22 +69,20 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
 			public void figureChanged(FigureEvent e) {
 				EventFunctions.figureSizeChanged();
 			}
-    	});    	
+    	});
     	return this;
 	}
-    
+
     @Override
 	public String getToolTipText(Double p) {
 		return this.toString();
 	}
-
+    
     public AbstractCompositeFigure clone() {
-    	EntidadeRelacionamentoFigure f = (EntidadeRelacionamentoFigure) super.clone();
-    	f.init();
+    	RelacionamentoFigureChen f = new RelacionamentoFigureChen().init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());
-		f.rec.setBounds(this.rec.getBounds());
 		f.df.setBounds(this.df.getBounds());
 		f.changed();
 		
@@ -93,7 +92,7 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
 	public String toString(){
 		return tf.getText();
 	}
-    
+	
     public void read(DOMInput in) throws IOException {
         super.read(in);
         
@@ -102,13 +101,10 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
             if(f instanceof TextFigure){
                 tf=(TextFigure)f;
             }
-            else if(f instanceof RectangleFigure){
-                rec=(RectangleFigure)f;
-            }
             else if(f instanceof DiamondFigure){
                 df=(DiamondFigure)f;
             }
         }
-    }
-	
+    }	
+    
 }

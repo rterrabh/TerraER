@@ -12,8 +12,14 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.BezierLabelLocator;
+import org.jhotdraw.draw.LabeledLineConnectionFigure;
+import org.jhotdraw.draw.LocatorLayouter;
+import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -35,17 +41,19 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds. <br>
  *          1.0 23. Januar 2006 Created.
  */
-public class LabeledLineConnectionMuitosFigure extends
+public class ConnectionTotalUmFigureChen extends
 		LabeledLineConnectionFigure {
 
-	public LabeledLineConnectionMuitosFigure() {
+	public ConnectionTotalUmFigureChen() {
 		super();
 		
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-		this.title=labels.getString("createElbowMuitosConnection");
+		this.title=labels.getString("createElbowDoubleUmConnection");
+		this.setAttribute(AttributeKeys.STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
+    	this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
     	this.setLayouter(new LocatorLayouter());
-        TextFigure tf = new TextFigure("N");
+        TextFigure tf = new TextFigure("1");
         tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
         tf.setFontSize(16);
         tf.setEditable(false);

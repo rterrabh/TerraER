@@ -13,11 +13,20 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.DiamondFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureAdapter;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TerraResizeEventFunctions;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
@@ -31,18 +40,18 @@ import org.jhotdraw.xml.DOMInput;
  * IS_QUADRATIC attribute. 
  * <br>1.0 2006-03-27 Created.
  */
-public class RelacionamentoFracoFigure extends GroupFigure {
+public class RelacionamentoFracoFigureChen extends GroupFigure {
 
     private TextFigure tf;
     private DiamondFigure df;
 	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
 	
-	public RelacionamentoFracoFigure(){
+	public RelacionamentoFracoFigureChen(){
     	super();
     }
     
-    public RelacionamentoFracoFigure init(){
+    public RelacionamentoFracoFigureChen init(){
     	df=new DiamondFigure();
     	df.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
 		df.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
@@ -73,7 +82,7 @@ public class RelacionamentoFracoFigure extends GroupFigure {
 	}
     
     public AbstractCompositeFigure clone() {
-    	RelacionamentoFracoFigure f = new RelacionamentoFracoFigure().init();
+    	RelacionamentoFracoFigureChen f = new RelacionamentoFracoFigureChen().init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());

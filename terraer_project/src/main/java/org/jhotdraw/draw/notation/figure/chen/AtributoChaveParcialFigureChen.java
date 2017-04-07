@@ -12,11 +12,20 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.EllipseFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureAdapter;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TerraResizeEventFunctions;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -34,25 +43,29 @@ import org.jhotdraw.xml.DOMOutput;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class AtributoFigure extends GroupFigure implements AttributeTypeElement {
-    
+public class AtributoChaveParcialFigureChen extends GroupFigure implements AttributeTypeElement {
+
 	private TextFigure tf;
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-	private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
-	private boolean nullable;
-    
-	public AtributoFigure(){
+    private AttributeTypeEnum attributeType = AttributeTypeEnum.INTEGER;
+    private boolean nullable;
+	
+	public AtributoChaveParcialFigureChen(){
     	super();
     }
     
-    public AtributoFigure init(){
+    public AtributoChaveParcialFigureChen init(){
     	ef=new EllipseFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-    	tf=new TextFigure(labels.getString("createAtributo")+Integer.toString(counter++));
+    	tf=new TextFigure(labels.getString("createAtributoChaveParcial")+Integer.toString(counter++));
+    	//tf.setAttribute(tf.getAttributeKey("strokeDashes"), new double[] { 3.0 });
+		//tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+    	tf.setAttribute(AttributeKeys.STROKE_DASHES, new double[] { 3.0 });
+		tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
     	this.add(ef);
     	this.add(tf);
     	this.EventFunctions=new TerraResizeEventFunctions(this,ef,tf);
@@ -74,9 +87,9 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
 	public String getToolTipText(Double p) {
 		return this.toString();
 	}
-    
+
     public AbstractCompositeFigure clone() {
-    	AtributoFigure f = new AtributoFigure().init();
+    	AtributoChaveParcialFigureChen f = new AtributoChaveParcialFigureChen().init();
     	
     	f.willChange();
 		f.ef.setBounds(this.ef.getBounds());
@@ -87,32 +100,32 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
     }
 	
 	public String toString(){
-		return tf.getText().replaceAll("\\s+", "_") + ( this.attributeType != null ? " " + this.getAttributeType() : "");
+		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
-    public void read(DOMInput in) throws IOException {
-        super.read(in);
-        
-        this.nullable = in.getAttribute("nullable", false);
-        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
-        
-        java.util.Collection<Figure> lst=getDecomposition();
-        for( Figure f : lst){
-            if(f instanceof TextFigure){
-                tf=(TextFigure)f;
-            }
-            else if(f instanceof EllipseFigure){
-                ef=(EllipseFigure)f;
-            }
-        }
-    }
-    
-    @Override
-	public void write(DOMOutput out) throws IOException {
-		super.write(out);
-		out.addAttribute("nullable", this.nullable);
-		out.addAttribute("attributeType", this.attributeType.getSqlType());
-	}
+	 public void read(DOMInput in) throws IOException {
+	        super.read(in);
+	        
+	        this.nullable = in.getAttribute("nullable", false);
+	        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+	        
+	        java.util.Collection<Figure> lst=getDecomposition();
+	        for( Figure f : lst){
+	            if(f instanceof TextFigure){
+	                tf=(TextFigure)f;
+	            }
+	            else if(f instanceof EllipseFigure){
+	                ef=(EllipseFigure)f;
+	            }
+	        }
+	    }
+	    
+	    @Override
+		public void write(DOMOutput out) throws IOException {
+			super.write(out);
+			out.addAttribute("nullable", this.nullable);
+			out.addAttribute("attributeType", this.attributeType.getSqlType());
+		}
 
 	public AttributeTypeEnum getAttributeType() {
 		return attributeType;
@@ -120,7 +133,7 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
 
 	public void setAttributeType(AttributeTypeEnum attributeType) {
 		this.attributeType = attributeType;
-	}	
+	}
 	
 	@Override
 	public boolean isNullable() {
@@ -131,5 +144,5 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
 	public void setNullable(boolean nullable) {
 		this.nullable = nullable;
 	}
-	
+    
 }

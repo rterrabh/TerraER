@@ -13,13 +13,21 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
 
-import org.jhotdraw.draw.AttributeKeys.StrokeType;
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.DiamondFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureAdapter;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.RectangleFigure;
+import org.jhotdraw.draw.TerraResizeEventFunctions;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
@@ -33,28 +41,32 @@ import org.jhotdraw.xml.DOMInput;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class EntidadeFracaFigure extends GroupFigure {
-	
-    private TextFigure tf;
-    private RectangleFigure rec;
-    private static int counter = 0;
+public class EntidadeRelacionamentoFigureChen extends GroupFigure {
+
+	private TextFigure tf;
+	private RectangleFigure rec;
+	private DiamondFigure df;
+	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
 	
-    public EntidadeFracaFigure(){
+    public EntidadeRelacionamentoFigureChen(){
     	super();
     }
     
-    public EntidadeFracaFigure init(){
+    public EntidadeRelacionamentoFigureChen init(){
     	rec=new RectangleFigure();
-    	rec.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
-		rec.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
-		
+    	
+    	
+    	df=new DiamondFigure();
+    	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-    	tf=new TextFigure(labels.getString("createEntidadeFraca").toUpperCase()+Integer.toString(counter++));
+    	tf=new TextFigure(labels.getString("createEntidadeRelacionamento")+Integer.toString(counter++));
+    	
     	this.add(rec);
+    	this.add(df);
     	this.add(tf);
-    	this.EventFunctions=new TerraResizeEventFunctions(this,rec,tf);
+    	this.EventFunctions=new TerraResizeEventFunctions(this,rec,df,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
 			public void figureAttributeChanged(FigureEvent e){
@@ -73,14 +85,15 @@ public class EntidadeFracaFigure extends GroupFigure {
 	public String getToolTipText(Double p) {
 		return this.toString();
 	}
-    
+
     public AbstractCompositeFigure clone() {
-    	EntidadeFracaFigure f = (EntidadeFracaFigure) super.clone();
+    	EntidadeRelacionamentoFigureChen f = (EntidadeRelacionamentoFigureChen) super.clone();
     	f.init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());
 		f.rec.setBounds(this.rec.getBounds());
+		f.df.setBounds(this.df.getBounds());
 		f.changed();
 		
     	return f;
@@ -89,7 +102,7 @@ public class EntidadeFracaFigure extends GroupFigure {
 	public String toString(){
 		return tf.getText();
 	}
-	
+    
     public void read(DOMInput in) throws IOException {
         super.read(in);
         
@@ -101,8 +114,10 @@ public class EntidadeFracaFigure extends GroupFigure {
             else if(f instanceof RectangleFigure){
                 rec=(RectangleFigure)f;
             }
+            else if(f instanceof DiamondFigure){
+                df=(DiamondFigure)f;
+            }
         }
     }
 	
-    
 }

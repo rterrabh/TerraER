@@ -12,10 +12,16 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.io.IOException;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.BezierLabelLocator;
+import org.jhotdraw.draw.LabeledLineConnectionFigure;
+import org.jhotdraw.draw.LocatorLayouter;
+import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -39,17 +45,19 @@ import org.jhotdraw.xml.DOMOutput;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds. <br>
  *          1.0 23. Januar 2006 Created.
  */
-public class LineConnectionGeneralizacaoFigure extends
-	LabeledLineConnectionFigure {
-	
-	public LineConnectionGeneralizacaoFigure() {
+public class GeneralizacaoConnectionTotalFigureChen extends
+		LabeledLineConnectionFigure {
+
+	public GeneralizacaoConnectionTotalFigureChen() {
 		super();
 		
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-		this.title=labels.getString("createElbowConnection");
+		this.title=labels.getString("createElbowDoubleConnection");
+		this.setAttribute(AttributeKeys.STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
+    	this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
     	this.setLayouter(new LocatorLayouter());
-    	TextFigure tf = new TextFigure(labels.getString("createElbowConnection.initial"));
+    	TextFigure tf = new TextFigure(labels.getString("createElbowDoubleConnection.initial"));
         tf.setAttribute(AttributeKeys.FONT_ITALIC,Boolean.TRUE);
         tf.setFontSize(12);
         tf.setEditable(true);
@@ -68,9 +76,7 @@ public class LineConnectionGeneralizacaoFigure extends
 	@Override
 	public void read(DOMInput in) throws IOException {
 		super.read(in);
-		((TextFigure)this.getChild(0)).setText(in.getAttribute("labelGeneralizacaoText", "característica"));
+		((TextFigure)this.getChild(0)).setText(in.getAttribute("labelGeneralizacaoText", "caracterï¿½stica"));
 	}
-	
-	
-	
+
 }

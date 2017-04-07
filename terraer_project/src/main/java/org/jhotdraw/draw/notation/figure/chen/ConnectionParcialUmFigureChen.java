@@ -12,8 +12,13 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.BezierLabelLocator;
+import org.jhotdraw.draw.LabeledLineConnectionFigure;
+import org.jhotdraw.draw.LocatorLayouter;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -35,11 +40,11 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds. <br>
  *          1.0 23. Januar 2006 Created.
  */
-public class LabeledLineConnectionUmFigure extends
+public class ConnectionParcialUmFigureChen extends
 		LabeledLineConnectionFigure {
 	
 
-	public LabeledLineConnectionUmFigure() {
+	public ConnectionParcialUmFigureChen() {
 		super();
 		
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");

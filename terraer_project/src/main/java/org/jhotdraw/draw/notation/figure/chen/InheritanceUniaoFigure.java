@@ -13,11 +13,16 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.CircleFigure;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TextNegritoFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -30,7 +35,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class UniaoFigure extends GroupFigure {
+public class InheritanceUniaoFigure extends GroupFigure {
 
 	private static int counter = 0;
     private String title; 
@@ -39,16 +44,17 @@ public class UniaoFigure extends GroupFigure {
 	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
 
-    public UniaoFigure(){
+    public InheritanceUniaoFigure(){
     	super();
     }
     
-    public UniaoFigure init(){
+    public InheritanceUniaoFigure init(){
     	cf = new CircleFigure();
     	cf.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
     	
     	tf = new TextNegritoFigure(labels.getString("createUniao.letra"));
-    	tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+    	//tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+    	tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
 		tf.setFontSize(16);
 		tf.setEditable(false);
 		
@@ -64,7 +70,7 @@ public class UniaoFigure extends GroupFigure {
 	}
     
 	public AbstractCompositeFigure clone() {
-		UniaoFigure f = (UniaoFigure) super.clone();
+		InheritanceUniaoFigure f = (InheritanceUniaoFigure) super.clone();
 		f.init();
 
 		f.willChange();

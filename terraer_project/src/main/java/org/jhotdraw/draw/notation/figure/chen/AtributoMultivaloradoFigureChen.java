@@ -12,11 +12,22 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
+import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.EllipseFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.FigureAdapter;
+import org.jhotdraw.draw.FigureEvent;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TerraResizeEventFunctions;
+import org.jhotdraw.draw.TextFigure;
+import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
@@ -34,31 +45,29 @@ import org.jhotdraw.xml.DOMOutput;
  *          2.0 2006-01-14 Changed to support double precison coordinates. <br>
  *          1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class AtributoChaveFigure extends GroupFigure implements AttributeTypeElement {
-
+public class AtributoMultivaloradoFigureChen extends GroupFigure implements AttributeTypeElement {
 	private TextFigure tf;
 	private EllipseFigure ef;
 	private static int counter = 0;
 	private TerraResizeEventFunctions EventFunctions;
-	private AttributeTypeEnum attributeType = AttributeTypeEnum.INTEGER;
+	private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
 	private boolean nullable;
 
-	public AtributoChaveFigure() {
+	public AtributoMultivaloradoFigureChen() {
 		super();
 	}
 
-	public AtributoChaveFigure init() {
+	public AtributoMultivaloradoFigureChen init() {
 		ef = new EllipseFigure();
+		ef.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+		ef.setAttribute(AttributeKeys.STROKE_TYPE, StrokeType.DOUBLE);
+		ef.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
 
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-		tf = new TextFigure(labels.getString("createAtributoChave") + Integer.toString(counter++));
-		tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
-		tf.setAttribute(AttributeKeys.FONT_UNDERLINE, Boolean.TRUE);
-
+		tf = new TextFigure(labels.getString("createAtributoMultivalorado") + Integer.toString(counter++));
 		this.add(ef);
 		this.add(tf);
-
 		this.EventFunctions = new TerraResizeEventFunctions(this, ef, tf);
 		this.tf.addFigureListener(new FigureAdapter() {
 			@Override
@@ -80,7 +89,7 @@ public class AtributoChaveFigure extends GroupFigure implements AttributeTypeEle
 	}
 
 	public AbstractCompositeFigure clone() {
-		AtributoChaveFigure f = new AtributoChaveFigure().init();
+		AtributoMultivaloradoFigureChen f = new AtributoMultivaloradoFigureChen().init();
 
 		f.willChange();
 		f.ef.setBounds(this.ef.getBounds());

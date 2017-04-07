@@ -17,9 +17,9 @@ package org.jhotdraw.draw.action;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import org.jhotdraw.draw.AtributoDerivadoFigure;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
 /**
  * SelectSameAction.
  *
@@ -45,8 +45,8 @@ public class IncludeSqlStatementAction extends AbstractSelectedAction {
     	DrawingView v = this.getView();
     	if (v.getSelectedFigures() != null &&
     		v.getSelectedFigures().size() == 1 &&
-    		v.getSelectedFigures().toArray()[0] instanceof AtributoDerivadoFigure){
-    		AtributoDerivadoFigure att = (AtributoDerivadoFigure) v.getSelectedFigures().iterator().next();
+    		v.getSelectedFigures().toArray()[0] instanceof AtributoDerivadoFigureChen){
+    		AtributoDerivadoFigureChen att = (AtributoDerivadoFigureChen) v.getSelectedFigures().iterator().next();
     		String sql = JOptionPane.showInputDialog("SQL:",att.getSql());
     		att.setSql(sql);
     	}

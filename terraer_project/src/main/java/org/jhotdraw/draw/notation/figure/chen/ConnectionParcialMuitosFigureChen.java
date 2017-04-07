@@ -12,10 +12,14 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.BezierLabelLocator;
+import org.jhotdraw.draw.LabeledLineConnectionFigure;
+import org.jhotdraw.draw.LocatorLayouter;
+import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
-
 
 /**
  * A LineConnection with labels.
@@ -36,17 +40,15 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds. <br>
  *          1.0 23. Januar 2006 Created.
  */
-public class LabeledDoubleLineConnectionMuitosFigure extends
+public class ConnectionParcialMuitosFigureChen extends
 		LabeledLineConnectionFigure {
 
-	public LabeledDoubleLineConnectionMuitosFigure() {
+	public ConnectionParcialMuitosFigureChen() {
 		super();
 		
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-		this.title=labels.getString("createElbowDoubleMuitosConnection");
-		this.setAttribute(AttributeKeys.STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
-    	this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
+		this.title=labels.getString("createElbowMuitosConnection");
     	this.setLayouter(new LocatorLayouter());
         TextFigure tf = new TextFigure("N");
         tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
@@ -56,6 +58,5 @@ public class LabeledDoubleLineConnectionMuitosFigure extends
         //this.setLiner(new ElbowLiner());
         this.add(tf);
 	}
-
 
 }

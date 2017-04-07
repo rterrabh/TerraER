@@ -13,11 +13,16 @@
  */
 
 
-package org.jhotdraw.draw;
+package org.jhotdraw.draw.notation.figure.chen;
 
 import java.awt.Color;
 import java.awt.geom.Point2D.Double;
 
+import org.jhotdraw.draw.AbstractCompositeFigure;
+import org.jhotdraw.draw.AttributeKeys;
+import org.jhotdraw.draw.CircleFigure;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.TextNegritoFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -30,7 +35,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class DisjuncaoFigure extends GroupFigure {
+public class InheritanceDisjuncaoFigureChen extends GroupFigure {
 
     private static int counter = 0;
     private String title; 
@@ -38,16 +43,17 @@ public class DisjuncaoFigure extends GroupFigure {
     private TextNegritoFigure tf;
     ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-	public DisjuncaoFigure() {
+	public InheritanceDisjuncaoFigureChen() {
 		super();
 	}
 	
-	public DisjuncaoFigure init(){
+	public InheritanceDisjuncaoFigureChen init(){
 		cf = new CircleFigure();
 		cf.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
 		
 		tf = new TextNegritoFigure("d");
-		tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+		//tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
+		tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
 		tf.setFontSize(16);
 		tf.setEditable(false);
 		
@@ -66,7 +72,7 @@ public class DisjuncaoFigure extends GroupFigure {
 	}
 	
 	public AbstractCompositeFigure clone() {
-		DisjuncaoFigure f = (DisjuncaoFigure) super.clone();
+		InheritanceDisjuncaoFigureChen f = (InheritanceDisjuncaoFigureChen) super.clone();
 		f.init();
 
 		f.willChange();
