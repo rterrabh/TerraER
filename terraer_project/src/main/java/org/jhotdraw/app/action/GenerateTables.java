@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import org.jhotdraw.draw.ConnectionFigure;
 import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
 
 public class GenerateTables {
 	private String ddlBuffer;

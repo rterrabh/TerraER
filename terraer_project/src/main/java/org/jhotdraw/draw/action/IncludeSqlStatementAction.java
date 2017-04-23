@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
 /**
  * SelectSameAction.
  *

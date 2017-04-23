@@ -86,7 +86,7 @@ import org.jhotdraw.draw.LineDecoration;
 import org.jhotdraw.draw.Tool;
 import org.jhotdraw.draw.ToolEvent;
 import org.jhotdraw.draw.ToolListener;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.gui.JPopupButton;
 import org.jhotdraw.util.ResourceBundleUtil;

@@ -29,43 +29,36 @@ import org.jhotdraw.draw.ConnectionTool;
 import org.jhotdraw.draw.CreationTool;
 import org.jhotdraw.draw.DefaultDrawingEditor;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.LineConnectionFigure;
+
 import org.jhotdraw.draw.TextAreaFigure;
 import org.jhotdraw.draw.TextAreaTool;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextTool;
 import org.jhotdraw.draw.action.ButtonFactory;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoMultivaloradoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionAtributoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeRelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalUmFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialUmFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFracoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigure;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigure;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionAtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
 import org.jhotdraw.util.ResourceBundleUtil;
-/**
- * DrawApplicationModel.
- * 
- * 
- * 
- * @author Werner Randelshofer.
- * @version 1.0 June 10, 2006 Created.
- */
+
 public class DrawApplicationModel extends DefaultApplicationModel {
     /**
      * This editor is shared by all projects.
@@ -149,7 +142,6 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new TextItalicoFigure(labels.getString("createPapel"))), "createPapel", labels);
         tb.addSeparator();
         
-        //ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure()), "createElbowConnectionAtributo", labels);
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionAtributoFigureChen()), "createElbowConnectionAtributo", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigureChen().init()), "createAtributo", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveFigureChen().init()), "createAtributoChave", labels);
@@ -165,8 +157,8 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         tb.addSeparator();
         
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceDisjuncaoFigureChen().init()), "createDisjuncao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceSobreposicaoFigure().init()), "createSobreposicao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceUniaoFigure().init()), "createUniao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceSobreposicaoFigureChen().init()), "createSobreposicao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new InheritanceUniaoFigureChen().init()), "createUniao", labels);
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionParcialFigureChen()), "createGeneralizacaoConnection", labels);
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionLineFigureChen() ), "createElbowConnection", labels);        
         ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoConnectionTotalFigureChen()), "createElbowDoubleConnection", labels);

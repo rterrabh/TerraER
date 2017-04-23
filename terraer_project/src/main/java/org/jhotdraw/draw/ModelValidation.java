@@ -2,26 +2,26 @@ package org.jhotdraw.draw;
 
 import java.awt.Color;
 
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoMultivaloradoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeRelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalUmFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialUmFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFracoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigure;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigure;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
 
 public class ModelValidation{
 	
@@ -292,21 +292,21 @@ public class ModelValidation{
 		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Union
 				!(conn.getStartFigure() instanceof EntidadeFigureChen &&
-						conn.getEndFigure() instanceof InheritanceUniaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceUniaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFigureChen &&
-						conn.getStartFigure() instanceof InheritanceUniaoFigure) &&
+						conn.getStartFigure() instanceof InheritanceUniaoFigureChen) &&
 		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigureChen &&
@@ -316,21 +316,21 @@ public class ModelValidation{
 		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Union
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getEndFigure() instanceof InheritanceUniaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceUniaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getStartFigure() instanceof InheritanceUniaoFigure)&&
+						conn.getStartFigure() instanceof InheritanceUniaoFigureChen)&&
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure)&&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen)&&
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Union
 				!(conn.getStartFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getEndFigure() instanceof InheritanceUniaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceUniaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getStartFigure() instanceof InheritanceUniaoFigure)&&
+						conn.getStartFigure() instanceof InheritanceUniaoFigureChen)&&
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeFracaFigureChen &&
@@ -352,9 +352,9 @@ public class ModelValidation{
 		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 		//Connection in Disjunction, Overlap or Union
 		//Entity <---> Union
 				/*
@@ -366,9 +366,9 @@ public class ModelValidation{
 		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeRelacionamentoFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 		//Connection in Disjunction, Overlap or Union
 		//Entity Relationship <---> Disjunction
 				!(conn.getStartFigure() instanceof EntidadeRelacionamentoFigureChen &&
@@ -386,9 +386,9 @@ public class ModelValidation{
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Overlap
 				!(conn.getStartFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getEndFigure() instanceof InheritanceSobreposicaoFigure) &&
+						conn.getEndFigure() instanceof InheritanceSobreposicaoFigureChen) &&
 				!(conn.getEndFigure() instanceof EntidadeFracaFigureChen &&
-						conn.getStartFigure() instanceof InheritanceSobreposicaoFigure)&&
+						conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen)&&
 		//Connection in Disjunction, Overlap or Union
 		//Weak Entity <---> Union
 				/*
@@ -415,11 +415,11 @@ public class ModelValidation{
 					conn.getEndFigure() instanceof EntidadeFigureChen) &&
 		//Generalization Connection
 		//Overlap ---> Entity
-				!(conn.getStartFigure() instanceof InheritanceSobreposicaoFigure &&
+				!(conn.getStartFigure() instanceof InheritanceSobreposicaoFigureChen &&
 					conn.getEndFigure() instanceof EntidadeFigureChen) &&
 		//Generalization Connection
 		//Union ---> Entity
-				!(conn.getStartFigure() instanceof InheritanceUniaoFigure &&
+				!(conn.getStartFigure() instanceof InheritanceUniaoFigureChen &&
 					conn.getEndFigure() instanceof EntidadeFigureChen) &&
 		//Generalization Connection
 		//Entity ---> Entity (right according to book 2nd version of book "Database Design Using Entity-Relationship Diagrams")

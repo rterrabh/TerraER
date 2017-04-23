@@ -64,6 +64,7 @@ import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.ToggleVisibleAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.app.action.ValidateModelAction;
+import org.jhotdraw.draw.notation.finalversion.NotationSelectAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.util.ReversedList;
 import org.jhotdraw.util.prefs.PreferencesUtil;
@@ -153,7 +154,8 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(CloseAction.ID, new CloseAction(this));
         m.putAction(PrintAction.ID, new PrintAction(this));
         m.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
-        m.putAction(GenerateDDLAction.ID, new GenerateDDLAction(this));        
+        m.putAction(GenerateDDLAction.ID, new GenerateDDLAction(this));
+        m.putAction(NotationSelectAction.ID, new NotationSelectAction(this));    
         
         m.putAction(UndoAction.ID, new UndoAction(this));
         m.putAction(RedoAction.ID, new RedoAction(this));

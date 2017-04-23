@@ -479,7 +479,7 @@ public abstract class AbstractCompositeFigure
         return (cachedBounds == null) ? new Rectangle2D.Double(0, 0, -1, -1) : (Rectangle2D.Double) cachedBounds.clone();
     }
     public void draw(Graphics2D g) {
-        Rectangle2D clipBounds = g.getClipBounds();
+    	Rectangle2D clipBounds = g.getClipBounds();
         if (clipBounds != null) {
             for (Figure child : children) {
                 if (child.isVisible() && child.getDrawingArea().intersects(clipBounds)) {

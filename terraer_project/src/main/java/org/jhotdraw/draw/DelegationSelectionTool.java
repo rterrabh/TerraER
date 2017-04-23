@@ -38,7 +38,7 @@ import javax.swing.JRadioButtonMenuItem;
 import org.jhotdraw.app.action.Actions;
 import org.jhotdraw.draw.action.IncludeSqlStatementAction;
 import org.jhotdraw.draw.action.SelectAttributeTypeAction;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**

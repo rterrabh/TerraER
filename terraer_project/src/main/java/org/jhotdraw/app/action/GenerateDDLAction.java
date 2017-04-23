@@ -33,25 +33,25 @@ import javax.swing.JTextArea;
 
 import org.jhotdraw.app.Application;
 import org.jhotdraw.draw.*;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoMultivaloradoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeRelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionTotalUmFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialMuitosFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.ConnectionParcialUmFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFracoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigure;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
 import org.jhotdraw.samples.draw.DrawProject;
 import org.jhotdraw.util.ResourceBundleUtil;
 
@@ -142,7 +142,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
             	entityRelationship.add(f);
             } else if (f.getClass().equals(InheritanceDisjuncaoFigureChen.class)) {
 				genspecDisjoint.add(f);
-			} else if (f.getClass().equals(InheritanceSobreposicaoFigure.class)) {
+			} else if (f.getClass().equals(InheritanceSobreposicaoFigureChen.class)) {
 				genspecOverlap.add(f);
 			} else if (f.getClass().equals(GeneralizacaoConnectionLineFigureChen.class)) {
 				singleLineGenSpecConn.add(f);
