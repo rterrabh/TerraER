@@ -45,7 +45,7 @@ import org.jhotdraw.util.ReversedList;
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
 public class DefaultDrawing
-        extends AbstractDrawing {
+        extends AbstractDrawing implements UndoableEditListener {
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     private boolean needsSorting = false;
     private FigureHandler figureHandler;
@@ -66,11 +66,13 @@ public class DefaultDrawing
     public void basicAdd(int index, Figure figure) {
         figures.add(index, figure);
         figure.addFigureListener(figureHandler);
+        figure.addUndoableEditListener(this);//obede:undo
         invalidateSortOrder();
     }
     public void basicRemove(Figure figure) {
         figures.remove(figure);
         figure.removeFigureListener(figureHandler);
+        figure.removeUndoableEditListener(this);//obede:undo
         invalidateSortOrder();
     }
     
@@ -232,6 +234,14 @@ public class DefaultDrawing
             invalidateSortOrder();
             fireAreaInvalidated(figure.getDrawingArea());
         }
+    }
+    
+    /**
+     * We propagate all edit events from our figures to 
+     * undoable edit listeners, which have registered with us.
+     */
+    public void undoableEditHappened(UndoableEditEvent e) {//obede:undo
+        fireUndoableEditHappened(e.getEdit());
     }
     
     public boolean contains(Figure f) {

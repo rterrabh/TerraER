@@ -44,14 +44,14 @@ public abstract class AbstractProjectAction extends AbstractAction {
     
     private PropertyChangeListener applicationListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName() == "currentProject") { // Strings get interned
+        	if (evt.getPropertyName() == "currentProject") { // Strings get interned
                 updateProject((Project) evt.getOldValue(), (Project) evt.getNewValue());
             }
         }
     };
     private PropertyChangeListener projectListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent evt) {
-            String name = evt.getPropertyName();
+        	String name = evt.getPropertyName();
             if (name == "enabled") { // Strings get interned
                 updateEnabled((Boolean) evt.getOldValue(), (Boolean) evt.getNewValue());
             } else if (name == propertyName) {
@@ -130,7 +130,7 @@ public abstract class AbstractProjectAction extends AbstractAction {
      */
     protected void updateEnabled(boolean oldValue, boolean newValue) {
        // System.out.println("AbstractProjectAction updateEnabled"+oldValue+","+newValue);
-        firePropertyChange("enabled", oldValue, newValue);
+    	firePropertyChange("enabled", oldValue, newValue);
     }
     
     public Application getApplication() {
