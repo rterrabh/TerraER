@@ -1,19 +1,5 @@
-/*
- * @(#)DiamondFigure.java  1.1  2007-05-12
- *
- * Copyright (c) 1996-2007 by the original authors of JHotDraw
- * and all its contributors ("JHotDraw.org")
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * JHotDraw.org ("Confidential Information"). You shall not disclose
- * such Confidential Information and shall use it only in accordance
- * with the terms of the license agreement you entered into with
- * JHotDraw.org.
- */
 
-
-package org.jhotdraw.draw.notation.figure.chen;
+package org.jhotdraw.draw.notation.finalversion;
 
 import java.awt.geom.Point2D.Double;
 
@@ -25,40 +11,41 @@ import org.jhotdraw.draw.Figure;
 import org.jhotdraw.draw.FigureAdapter;
 import org.jhotdraw.draw.FigureEvent;
 import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.draw.RectangleFigure;
 import org.jhotdraw.draw.TerraResizeEventFunctions;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
-/**
- * A diamond with vertices at the midpoints of its enclosing rectangle.
- *
- *
- * @author Werner Randelshofer
- * @version 1.1 2007-05-12 Removed convenience getters and setters for 
- * IS_QUADRATIC attribute. 
- * <br>1.0 2006-03-27 Created.
- */
-public class RelacionamentoFigureChen extends GroupFigure {
+public class EntidadeRelacionamentoFigureChen extends GroupFigure implements IChangeNotationListern {
 
-    private TextFigure tf;
-    private DiamondFigure df;
+	private TextFigure tf;
+	private RectangleFigure rec;
+	private DiamondFigure df;
 	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-	
-	public RelacionamentoFigureChen(){
+    private String currentNotation;
+    
+    public EntidadeRelacionamentoFigureChen(){
     	super();
+    	currentNotation = NotationSelectAction.SelectChenAction.ID;
+		NotationSelectAction.addListern(this);
     }
     
-    public RelacionamentoFigureChen init(){
+    public EntidadeRelacionamentoFigureChen init(){
+    	rec=new RectangleFigure();    	
+    	
     	df=new DiamondFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-    	tf=new TextFigure(labels.getString("createRelacionamento")+Integer.toString(counter++));
+    	tf=new TextFigure(labels.getString("createEntidadeRelacionamento")+Integer.toString(counter++));
+    	
+    	this.add(rec);
     	this.add(df);
     	this.add(tf);
-    	this.EventFunctions=new TerraResizeEventFunctions(this,df,tf);
+    	
+    	this.EventFunctions=new TerraResizeEventFunctions(this,rec,df,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
 			public void figureAttributeChanged(FigureEvent e){
@@ -69,30 +56,32 @@ public class RelacionamentoFigureChen extends GroupFigure {
 			public void figureChanged(FigureEvent e) {
 				EventFunctions.figureSizeChanged();
 			}
-    	});
+    	});    	
     	return this;
 	}
-
+    
     @Override
 	public String getToolTipText(Double p) {
 		return this.toString();
 	}
-    
+
     public AbstractCompositeFigure clone() {
-    	RelacionamentoFigureChen f = new RelacionamentoFigureChen().init();
+    	EntidadeRelacionamentoFigureChen f = (EntidadeRelacionamentoFigureChen) super.clone();
+    	f.init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());
+		f.rec.setBounds(this.rec.getBounds());
 		f.df.setBounds(this.df.getBounds());
 		f.changed();
-		
+		NotationSelectAction.addListern(f);
     	return f;
     }
 	
 	public String toString(){
 		return tf.getText();
 	}
-	
+    
     public void read(DOMInput in) throws IOException {
         super.read(in);
         
@@ -101,10 +90,28 @@ public class RelacionamentoFigureChen extends GroupFigure {
             if(f instanceof TextFigure){
                 tf=(TextFigure)f;
             }
+            else if(f instanceof RectangleFigure){
+                rec=(RectangleFigure)f;
+            }
             else if(f instanceof DiamondFigure){
                 df=(DiamondFigure)f;
             }
         }
-    }	
+    }
     
+    @Override
+	public void notifyChange(String notation) {
+		currentNotation = notation;
+		rec.setVisible(true);
+		tf.setVisible(true);
+		df.setVisible(true);
+		//if (this.currentNotation.equals(NotationSelectAction.SelectChenAction.ID)) {
+		//} else if (this.currentNotation.equals(NotationSelectAction.SelectCrossFootAction.ID)) {
+		if (this.currentNotation.equals(NotationSelectAction.SelectIDEF1XAction.ID)) {
+			rec.setVisible(false);
+			tf.setVisible(false);
+			df.setVisible(false);				
+		}
+	}
+	
 }

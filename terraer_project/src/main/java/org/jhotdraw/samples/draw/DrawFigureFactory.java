@@ -41,21 +41,26 @@ import org.jhotdraw.draw.TextNegritoFigure;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
+import org.jhotdraw.draw.notation.ListFigure;
 import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
 import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
 import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
 import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.ConnectionAtributoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
 import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
 import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
 import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
 import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen.EntidadeFigureIDEF1X;
 import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen.EntidadeFracaFigureIDEF1X;
 import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
+import org.jhotdraw.geom.Insets2D;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
 import org.jhotdraw.xml.DefaultDOMFactory;
@@ -85,6 +90,8 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { GroupFigure.class, "g" },
         { RelacionamentoFigureChen.class, "rel" },
         { EntidadeFigureChen.class, "ent" },
+        { EntidadeFigureIDEF1X.class, "entIDEF1X" },
+        { EntidadeFracaFigureIDEF1X.class, "entFracaIDEF1X" },
         { EntidadeRelacionamentoFigureChen.class, "entrel" },
         { RelacionamentoFracoFigureChen.class, "relfraco" },
 
@@ -100,6 +107,7 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { InheritanceUniaoFigureChen.class, "uniao"},
         { CircleFigure.class, "circ"},
         { LineConnectionFigure.class, "lcf"},
+        { ConnectionAtributoFigureChen.class, "lcfAttribute"},
         { LabeledLineConnectionFigure.class, "llabel"},
         { ConnectionParcialUmFigureChen.class, "llabelUm"},
         { ConnectionParcialMuitosFigureChen.class, "llabelMuitos"},
@@ -108,7 +116,7 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { GeneralizacaoConnectionParcialFigureChen.class, "generalizacaoLine"},
         { GeneralizacaoConnectionLineFigureChen.class, "llabelGeneralizacao"},
         { GeneralizacaoConnectionTotalFigureChen.class, "llabelDoubleGeneralizacao"},
-
+        { ListFigure.class, "list" },
         
         //{ ArrowTip.class, "arrowTip" }, @beforeCleanUp:removed_Obede
         { ChopRectangleConnector.class, "rConnector" },

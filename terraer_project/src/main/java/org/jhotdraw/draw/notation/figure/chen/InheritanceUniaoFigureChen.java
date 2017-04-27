@@ -35,7 +35,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * <br>2.0 2006-01-14 Changed to support double precison coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class InheritanceSobreposicaoFigure extends GroupFigure {
+public class InheritanceUniaoFigureChen extends GroupFigure {
 
 	private static int counter = 0;
     private String title; 
@@ -44,21 +44,21 @@ public class InheritanceSobreposicaoFigure extends GroupFigure {
 	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
 
-    public InheritanceSobreposicaoFigure(){
+    public InheritanceUniaoFigureChen(){
     	super();
     }
     
-    public InheritanceSobreposicaoFigure init(){
+    public InheritanceUniaoFigureChen init(){
     	cf = new CircleFigure();
     	cf.setAttribute(AttributeKeys.FILL_COLOR, new Color(245, 242, 224));
     	
-    	tf = new TextNegritoFigure(labels.getString("createSobreposicao.letra"));
+    	tf = new TextNegritoFigure(labels.getString("createUniao.letra"));
     	//tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
     	tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
 		tf.setFontSize(16);
 		tf.setEditable(false);
 		
-    	title=labels.getString("createSobreposicao")+Integer.toString(counter++);
+    	title=labels.getString("createUniao")+Integer.toString(counter++);
 		this.add(cf);
     	this.add(tf);
     	return this;
@@ -70,7 +70,7 @@ public class InheritanceSobreposicaoFigure extends GroupFigure {
 	}
     
 	public AbstractCompositeFigure clone() {
-		InheritanceSobreposicaoFigure f = (InheritanceSobreposicaoFigure) super.clone();
+		InheritanceUniaoFigureChen f = (InheritanceUniaoFigureChen) super.clone();
 		f.init();
 
 		f.willChange();

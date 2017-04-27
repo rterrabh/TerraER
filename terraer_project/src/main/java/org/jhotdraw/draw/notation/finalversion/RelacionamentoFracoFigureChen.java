@@ -1,19 +1,4 @@
-/*
- * @(#)DiamondFigure.java  1.1  2007-05-12
- *
- * Copyright (c) 1996-2007 by the original authors of JHotDraw
- * and all its contributors ("JHotDraw.org")
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * JHotDraw.org ("Confidential Information"). You shall not disclose
- * such Confidential Information and shall use it only in accordance
- * with the terms of the license agreement you entered into with
- * JHotDraw.org.
- */
-
-
-package org.jhotdraw.draw.notation.figure.chen;
+package org.jhotdraw.draw.notation.finalversion;
 
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
@@ -31,24 +16,19 @@ import org.jhotdraw.draw.AttributeKeys.StrokeType;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
-/**
- * A diamond with vertices at the midpoints of its enclosing rectangle.
- *
- *
- * @author Werner Randelshofer
- * @version 1.1 2007-05-12 Removed convenience getters and setters for 
- * IS_QUADRATIC attribute. 
- * <br>1.0 2006-03-27 Created.
- */
-public class RelacionamentoFracoFigureChen extends GroupFigure {
+public class RelacionamentoFracoFigureChen extends GroupFigure implements IChangeNotationListern {
 
     private TextFigure tf;
+    private TextFigure tf_idef1x;
     private DiamondFigure df;
 	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
+    private String currentNotation;
 	
 	public RelacionamentoFracoFigureChen(){
     	super();
+    	currentNotation = NotationSelectAction.SelectChenAction.ID;
+		NotationSelectAction.addListern(this);
     }
     
     public RelacionamentoFracoFigureChen init(){
@@ -59,8 +39,11 @@ public class RelacionamentoFracoFigureChen extends GroupFigure {
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     	tf=new TextFigure(labels.getString("createRelacionamentoFraco")+Integer.toString(counter++));
+    	tf_idef1x=new TextFigure(tf.getText());
+    	tf_idef1x.setVisible(false);
     	this.add(df);
     	this.add(tf);
+    	this.add(tf_idef1x);
     	this.EventFunctions=new TerraResizeEventFunctions(this,df,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
@@ -108,6 +91,23 @@ public class RelacionamentoFracoFigureChen extends GroupFigure {
                 df=(DiamondFigure)f;
             }
         }
-    }	
+    }
+
+	@Override
+	public void notifyChange(String notation) {
+		currentNotation = notation;
+		df.setVisible(false);
+		tf.setVisible(false);
+		tf_idef1x.setVisible(false);
+		if (this.currentNotation.equals(NotationSelectAction.SelectChenAction.ID)) {
+			df.setVisible(true);
+			tf.setVisible(true);
+		} else if (this.currentNotation.equals(NotationSelectAction.SelectCrossFootAction.ID)) {
+			df.setVisible(true);
+			tf.setVisible(true);
+		} else if (this.currentNotation.equals(NotationSelectAction.SelectIDEF1XAction.ID)) {
+			tf_idef1x.setVisible(true);
+		}
+	}	
     
 }

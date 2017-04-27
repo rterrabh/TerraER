@@ -1,18 +1,5 @@
-/*
- * @(#)EllipseFigure.java  2.4  2006-12-23
- *
- * Copyright (c) 1996-2006 by the original authors of JHotDraw
- * and all its contributors ("JHotDraw.org")
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of
- * JHotDraw.org ("Confidential Information"). You shall not disclose
- * such Confidential Information and shall use it only in accordance
- * with the terms of the license agreement you entered into with
- * JHotDraw.org.
- */
 
-package org.jhotdraw.draw.notation.figure.chen;
+package org.jhotdraw.draw.notation.finalversion;
 
 import java.awt.Color;
 import java.awt.geom.Point2D.Double;
@@ -31,26 +18,18 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
 
-/**
- * EllipseFigure.
- *
- * @author Werner Randelshofer
- * @version 2.4 2006-12-12 Made ellipse protected.
- * <br>2.3 2006-06-17 Added method chop(Point2D.Double).
- * <br>2.2 2006-05-19 Support for stroke placement added.
- * <br>2.1 2006-03-22 Method getFigureDrawBounds added.
- * <br>2.0 2006-01-14 Changed to support double precison coordinates.
- * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
- */
-public class AtributoDerivadoFigureChen extends GroupFigure {
+public class AtributoDerivadoFigureChen extends GroupFigure implements IChangeNotationListern {
 	private TextFigure tf;
 	private EllipseFigure ef;
     private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
     private String sql;
+    private String currentNotation;
 
 	public AtributoDerivadoFigureChen(){
     	super();
+    	currentNotation = NotationSelectAction.SelectChenAction.ID;
+		NotationSelectAction.addListern(this);
     }
     
     public AtributoDerivadoFigureChen init(){
@@ -125,5 +104,18 @@ public class AtributoDerivadoFigureChen extends GroupFigure {
 	
 	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	@Override
+	public void notifyChange(String notation) {
+		currentNotation = notation;
+		if (this.currentNotation.equals(NotationSelectAction.SelectChenAction.ID)) {
+			this.setVisible(true);
+		} else if (this.currentNotation.equals(NotationSelectAction.SelectCrossFootAction.ID)) {
+			this.setVisible(false);
+		} else if (this.currentNotation.equals(NotationSelectAction.SelectIDEF1XAction.ID)) {
+			this.setVisible(false);
+		}
+		
 	}
 }
