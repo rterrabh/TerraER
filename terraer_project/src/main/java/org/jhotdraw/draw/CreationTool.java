@@ -28,19 +28,21 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.jhotdraw.draw.AttributeKeys.StrokeType;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.GraphicalCompositeFigure;
+import org.jhotdraw.draw.notation.ListFigure;
 import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.EntidadeRelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.RelacionamentoFracoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigure;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigure;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
+import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
+import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
+import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -201,7 +203,7 @@ public class CreationTool extends AbstractTool {
 		}
 		if (createdFigure != null) {
 			if (createdFigure instanceof CompositeFigure) {
-				((CompositeFigure) createdFigure).layout();
+				((CompositeFigure) createdFigure).layout();//obede
 			}
 			createdFigure = null;
 		}
@@ -242,7 +244,7 @@ public class CreationTool extends AbstractTool {
 						&& Math.abs(anchor.y - evt.getY()) < minimalSizeTreshold.height) {
 					createdFigure.willChange();
 
-					if (createdFigure.getClass().equals(EntidadeRelacionamentoFigureChen.class)) {
+					if (createdFigure.getClass().equals(EntidadeRelacionamentoFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -267,9 +269,9 @@ public class CreationTool extends AbstractTool {
 								f.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 13)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
-							}
+											}
 						}
-					} else if (createdFigure.getClass().equals(EntidadeFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(EntidadeFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -292,9 +294,39 @@ public class CreationTool extends AbstractTool {
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
 
+							} else if (f.getClass().equals(org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen.EntidadeFigureIDEF1X.class)){
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 40))));
+								
+								GraphicalCompositeFigure g = (GraphicalCompositeFigure) f;
+								g.getPresentationFigure().setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
+								boolean isFirst = true;
+								for(Figure fig : g.getChildren()){
+									if (fig.getClass().equals(TextFigure.class)){
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
+										fig.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 10)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 90),
+														anchor.y + (int) Math.max(bounds.height, 30))));
+
+									} else if (fig.getClass().equals(ListFigure.class) && isFirst) {
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+										((GraphicalCompositeFigure) fig).getPresentationFigure().setBounds(
+												constrainPoint(new Point(anchor.x, anchor.y+20)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+														anchor.y + (int) Math.max(bounds.height, 60))));
+										isFirst = false; 
+									}else if (fig.getClass().equals(ListFigure.class)) {
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+										((GraphicalCompositeFigure) fig).getPresentationFigure().setBounds(
+												constrainPoint(new Point(anchor.x, anchor.y+60)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+														anchor.y + (int) Math.max(bounds.height, 100))));
+									}
+								}
 							}
 						}
-					} else if (createdFigure.getClass().equals(EntidadeFracaFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(EntidadeFracaFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -318,9 +350,39 @@ public class CreationTool extends AbstractTool {
 								f.setBounds(constrainPoint(new Point(anchor.x + 4, anchor.y + 13)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
+							} else if (f.getClass().equals(org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen.EntidadeFigureIDEF1X.class)){
+								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 40))));
+								GraphicalCompositeFigure g = (GraphicalCompositeFigure) f;
+								g.getPresentationFigure().setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
+								boolean isFirst = true;
+								for(Figure fig : g.getChildren()){
+									if (fig.getClass().equals(TextFigure.class)){
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(235, 255, 232));
+										fig.setBounds(constrainPoint(new Point(anchor.x + 10, anchor.y + 10)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 90),
+														anchor.y + (int) Math.max(bounds.height, 30))));
+
+									} else if (fig.getClass().equals(ListFigure.class) && isFirst) {
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+										((GraphicalCompositeFigure) fig).getPresentationFigure().setBounds(
+												constrainPoint(new Point(anchor.x, anchor.y+20)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+														anchor.y + (int) Math.max(bounds.height, 60))));
+										isFirst = false; 
+									}else if (fig.getClass().equals(ListFigure.class)) {
+										fig.setAttribute(AttributeKeys.FILL_COLOR, new Color(255, 235, 235));
+										((GraphicalCompositeFigure) fig).getPresentationFigure().setBounds(
+												constrainPoint(new Point(anchor.x, anchor.y+60)),
+												constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+														anchor.y + (int) Math.max(bounds.height, 100))));
+									}
+								}
 							}
+
 						}
-					} else if (createdFigure.getClass().equals(AtributoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(AtributoFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -344,7 +406,7 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(AtributoDerivadoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(AtributoDerivadoFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -369,7 +431,7 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(AtributoMultivaloradoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(AtributoMultivaloradoFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -397,7 +459,7 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(AtributoChaveFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(AtributoChaveFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -424,7 +486,7 @@ public class CreationTool extends AbstractTool {
 								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 							}
 						}
-					} else if (createdFigure.getClass().equals(AtributoChaveParcialFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(AtributoChaveParcialFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -451,11 +513,12 @@ public class CreationTool extends AbstractTool {
 								tf.setAttribute(tf.getAttributeKey("fontBold"), Boolean.TRUE);
 							}
 						}
-					} else if (createdFigure.getClass().equals(RelacionamentoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(RelacionamentoFigureChen.class)) {//obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 										anchor.y + (int) Math.max(bounds.height, 40))));
+						boolean isFirstText = true;
 						for (Figure f : gf.getChildren()) {
 							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
@@ -469,17 +532,23 @@ public class CreationTool extends AbstractTool {
 								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
-							} else if (f.getClass().equals(TextFigure.class)) {
+							} else if (f.getClass().equals(TextFigure.class) && isFirstText) {
 								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y + 13)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
-							}
+								isFirstText = false;
+							} else if (f.getClass().equals(TextFigure.class)) {
+								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y+26)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 40))));
+							} 
 						}
-					} else if (createdFigure.getClass().equals(RelacionamentoFracoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(RelacionamentoFracoFigureChen.class)) { //obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 										anchor.y + (int) Math.max(bounds.height, 40))));
+						boolean isFirstText = true;
 						for (Figure f : gf.getChildren()) {
 							f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 									constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 97),
@@ -495,13 +564,18 @@ public class CreationTool extends AbstractTool {
 								f.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
-							} else if (f.getClass().equals(TextFigure.class)) {
+							} else if (f.getClass().equals(TextFigure.class) && isFirstText) {
 								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y + 13)),
 										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
 												anchor.y + (int) Math.max(bounds.height, 20))));
-							}
+								isFirstText = false;
+							} else if (f.getClass().equals(TextFigure.class)) {
+								f.setBounds(constrainPoint(new Point(anchor.x + 15, anchor.y+26)),
+										constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 80),
+												anchor.y + (int) Math.max(bounds.height, 40))));
+							} 
 						}
-					} else if (createdFigure.getClass().equals(InheritanceDisjuncaoFigureChen.class)) {
+					} else if (createdFigure.getClass().equals(InheritanceDisjuncaoFigureChen.class)) { //obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
@@ -522,7 +596,7 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(InheritanceUniaoFigure.class)) {
+					} else if (createdFigure.getClass().equals(InheritanceUniaoFigureChen.class)) { //obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
@@ -543,7 +617,7 @@ public class CreationTool extends AbstractTool {
 												anchor.y + (int) Math.max(bounds.height, 20))));
 							}
 						}
-					} else if (createdFigure.getClass().equals(InheritanceSobreposicaoFigure.class)) {
+					} else if (createdFigure.getClass().equals(InheritanceSobreposicaoFigureChen.class)) { //obede
 						GroupFigure gf = (GroupFigure) createdFigure;
 						gf.setBounds(constrainPoint(new Point(anchor.x, anchor.y)),
 								constrainPoint(new Point(anchor.x + (int) Math.max(bounds.width, 20),
