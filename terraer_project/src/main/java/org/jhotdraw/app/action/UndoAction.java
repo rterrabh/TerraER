@@ -43,7 +43,6 @@ public class UndoAction extends AbstractProjectAction {
             if (name == AbstractAction.NAME) {
                 putValue(AbstractAction.NAME, evt.getNewValue());
             } else if (name == "enabled") {
-            	System.out.println("chamada update");
                 updateEnabledState();
             }
         }
@@ -61,8 +60,7 @@ public class UndoAction extends AbstractProjectAction {
         if (realRedoAction != null) {
             isEnabled = realRedoAction.isEnabled();
         }
-        System.out.println("updata state");
-        setEnabled(isEnabled);
+        setEnabled(isEnabled);        
     }
     
     @Override protected void updateProject(Project oldValue, Project newValue) {
@@ -79,7 +77,7 @@ public class UndoAction extends AbstractProjectAction {
     @Override protected void installProjectListeners(Project p) {
     	super.installProjectListeners(p);
         if (p.getAction("undo") != null) {
-        p.getAction("undo").addPropertyChangeListener(redoActionPropertyListener);
+        	p.getAction("undo").addPropertyChangeListener(redoActionPropertyListener);
         }
     }
     /**

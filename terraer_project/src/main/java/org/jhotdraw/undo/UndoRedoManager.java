@@ -261,7 +261,7 @@ public class UndoRedoManager extends UndoManager {//javax.swing.undo.UndoManager
     throws CannotUndoException {
         undoOrRedoInProgress = true;
         try {
-            super.undo();
+        	super.undo();
         } finally {
             undoOrRedoInProgress = false;
             updateActions();

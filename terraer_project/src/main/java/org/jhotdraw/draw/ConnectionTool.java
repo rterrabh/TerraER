@@ -39,6 +39,7 @@ import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
 import org.jhotdraw.draw.notation.finalversion.IConnectionNotationFigure;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.geom.BezierPath.Node;
+import org.jhotdraw.undo.CompositeEdit;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -196,7 +197,7 @@ public class ConnectionTool extends AbstractTool {
      * hits a connection split a segment or join two segments.
      */
     public void mousePressed(MouseEvent evt) {
-        super.mousePressed(evt);
+    	super.mousePressed(evt);
         getView().clearSelection();
         
         Point2D.Double startPoint = viewToDrawing(anchor);
@@ -249,95 +250,7 @@ public class ConnectionTool extends AbstractTool {
         }
     }
     
-	public void unaryRelationshipHandle() {
-		for (Figure f : getDrawing().getFigures()) {
-			if (f.equals(createdFigure) || !(f instanceof LabeledLineConnectionFigure))
-				continue;
-			/*
-			 * if ( f instanceof LabeledDoubleLineConnectionMuitosFigure || f
-			 * instanceof LabeledDoubleLineConnectionUmFigure || f instanceof
-			 * LabeledLineConnectionMuitosFigure || f instanceof
-			 * LabeledLineConnectionUmFigure ){
-			 * 
-			 * }
-			 */
-			if (!((createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getStartFigure())
-					&& createdFigure.getEndFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure()))
-					|| (createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure())
-							&& createdFigure.getEndFigure()
-									.equals(((LabeledLineConnectionFigure) f).getStartFigure()))))
-				continue;
-
-			Point2D.Double start = createdFigure.getStartPoint();
-			Point2D.Double end = createdFigure.getEndPoint();
-			Point2D.Double variacao = new Point2D.Double(end.x - start.x, end.y - start.y);
-
-			Point2D.Double pontoCorte1 = new Point2D.Double(start.x + variacao.x / 3, start.y + variacao.y / 3);
-			Point2D.Double pontoCorte2 = new Point2D.Double(start.x + 2 * variacao.x / 3, start.y + 2 * variacao.y / 3);
-			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte1,
-					(float) (5f / this.getView().getScaleFactor()));
-			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte2,
-					(float) (5f / this.getView().getScaleFactor()));
-
-			double dir = Math.atan2(pontoCorte1.y - pontoCorte2.y, pontoCorte1.x - pontoCorte2.x);
-			double quartoCirculo = Math.PI / 2;
-			Point2D.Double n1 = new Point2D.Double(start.x + 70 * Math.cos(dir + quartoCirculo),
-					start.y + 70 * Math.sin(dir + quartoCirculo));
-			Point2D.Double n2 = new Point2D.Double(end.x + 70 * Math.cos(dir + quartoCirculo),
-					end.y + 70 * Math.sin(dir + quartoCirculo));
-
-			BezierPath.Node nodoPonto1 = ((BezierFigure) createdFigure).getNode(pontoCorte1);
-			BezierPath.Node nodoPonto2 = ((BezierFigure) createdFigure).getNode(pontoCorte2);
-			if (nodoPonto1 != null)
-				nodoPonto1.moveTo(n1);
-
-			if (nodoPonto2 != null)
-				nodoPonto2.moveTo(n2);
-		}
-
-	}
 	
-	public void drawNotationElements(){
-		if (!(createdFigure instanceof LabeledLineConnectionFigure)) return;
-		System.out.println("AAAA");
-		/*
-		if (((LabeledLineConnectionFigure)createdFigure).getEndFigure().equals(EntidadeFigureChen.class) || 
-				((LabeledLineConnectionFigure)createdFigure).getEndFigure().equals(EntidadeFracaFigureChen.class)){
-			((LabeledLineConnectionFigure)createdFigure).reverseConnection();
-		}
-		*/
-		
-		Point2D.Double start = createdFigure.getStartPoint();
-		Point2D.Double end = createdFigure.getEndPoint();		
-		Point2D.Double var = new Point2D.Double(end.getX() - start.getX(), end.getY() - start.getY());
-		double direcao = Math.atan2(var.getY(), var.getX());
-		double tam = Math.sqrt(Math.pow(var.getX(), 2) + Math.pow(var.getY(), 2));
-		double ang = Math.PI / 2;
-		if (createdFigure.getClass().equals(ConnectionParcialUmFigureChen.class) || 
-				createdFigure.getClass().equals(ConnectionTotalUmFigureChen.class)){
-			Point2D.Double p1 = new Point2D.Double(start.getX() + (tam/10)* Math.cos(direcao + ang),
-					start.getY() + (tam/10)* Math.sin(direcao + ang));
-			Point2D.Double p2 = new Point2D.Double(start.getX() + (tam/10)* Math.cos(direcao - ang),
-					start.getY() + (tam/10)* Math.sin(direcao - ang));
-			((LineFigure)((IConnectionNotationFigure)createdFigure).getCardinalidadeFigure()).setStartPoint(p1);
-			((LineFigure)((IConnectionNotationFigure)createdFigure).getCardinalidadeFigure()).setEndPoint(p1);		
-		}
-		
-		if (createdFigure.getClass().equals(ConnectionTotalMuitosFigureChen.class) || 
-				createdFigure.getClass().equals(ConnectionTotalUmFigureChen.class)){
-			Point2D.Double p1 = new Point2D.Double(start.getX() + (tam/5)* Math.cos(direcao + ang),
-					start.getY() + (tam/5)* Math.sin(direcao + ang));
-			Point2D.Double p2 = new Point2D.Double(start.getX() + (tam/5)* Math.cos(direcao - ang),
-					start.getY() + (tam/5)* Math.sin(direcao - ang));
-			((LineFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setStartPoint(p1);
-			((LineFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setEndPoint(p1);
-		} else {
-			Rectangle2D.Double bounds = new Rectangle2D.Double(start.getX() + (tam/5 * Math.cos(direcao + ang)),  start.getY() + (tam/5 * Math.sin(direcao + ang)), 20, 20);
-			((EllipseFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setBounds(bounds);
-		}
-
-		
-	}
     
     /**
      * Connects the figures if the mouse is released over another
@@ -470,4 +383,94 @@ public class ConnectionTool extends AbstractTool {
     protected void creationFinished(Figure createdFigure) {
         fireToolDone();
     }
+    
+    public void unaryRelationshipHandle() {
+		for (Figure f : getDrawing().getFigures()) {
+			if (f.equals(createdFigure) || !(f instanceof LabeledLineConnectionFigure))
+				continue;
+			/*
+			 * if ( f instanceof LabeledDoubleLineConnectionMuitosFigure || f
+			 * instanceof LabeledDoubleLineConnectionUmFigure || f instanceof
+			 * LabeledLineConnectionMuitosFigure || f instanceof
+			 * LabeledLineConnectionUmFigure ){
+			 * 
+			 * }
+			 */
+			if (!((createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getStartFigure())
+					&& createdFigure.getEndFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure()))
+					|| (createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure())
+							&& createdFigure.getEndFigure()
+									.equals(((LabeledLineConnectionFigure) f).getStartFigure()))))
+				continue;
+
+			Point2D.Double start = createdFigure.getStartPoint();
+			Point2D.Double end = createdFigure.getEndPoint();
+			Point2D.Double variacao = new Point2D.Double(end.x - start.x, end.y - start.y);
+
+			Point2D.Double pontoCorte1 = new Point2D.Double(start.x + variacao.x / 3, start.y + variacao.y / 3);
+			Point2D.Double pontoCorte2 = new Point2D.Double(start.x + 2 * variacao.x / 3, start.y + 2 * variacao.y / 3);
+			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte1,
+					(float) (5f / this.getView().getScaleFactor()));
+			((LineConnectionFigure) this.createdFigure).splitSegment(pontoCorte2,
+					(float) (5f / this.getView().getScaleFactor()));
+
+			double dir = Math.atan2(pontoCorte1.y - pontoCorte2.y, pontoCorte1.x - pontoCorte2.x);
+			double quartoCirculo = Math.PI / 2;
+			Point2D.Double n1 = new Point2D.Double(start.x + 70 * Math.cos(dir + quartoCirculo),
+					start.y + 70 * Math.sin(dir + quartoCirculo));
+			Point2D.Double n2 = new Point2D.Double(end.x + 70 * Math.cos(dir + quartoCirculo),
+					end.y + 70 * Math.sin(dir + quartoCirculo));
+
+			BezierPath.Node nodoPonto1 = ((BezierFigure) createdFigure).getNode(pontoCorte1);
+			BezierPath.Node nodoPonto2 = ((BezierFigure) createdFigure).getNode(pontoCorte2);
+			if (nodoPonto1 != null)
+				nodoPonto1.moveTo(n1);
+
+			if (nodoPonto2 != null)
+				nodoPonto2.moveTo(n2);
+		}
+
+	}
+	
+	public void drawNotationElements(){
+		if (!(createdFigure instanceof LabeledLineConnectionFigure)) return;
+		System.out.println("AAAA");
+		/*
+		if (((LabeledLineConnectionFigure)createdFigure).getEndFigure().equals(EntidadeFigureChen.class) || 
+				((LabeledLineConnectionFigure)createdFigure).getEndFigure().equals(EntidadeFracaFigureChen.class)){
+			((LabeledLineConnectionFigure)createdFigure).reverseConnection();
+		}
+		*/
+		
+		Point2D.Double start = createdFigure.getStartPoint();
+		Point2D.Double end = createdFigure.getEndPoint();		
+		Point2D.Double var = new Point2D.Double(end.getX() - start.getX(), end.getY() - start.getY());
+		double direcao = Math.atan2(var.getY(), var.getX());
+		double tam = Math.sqrt(Math.pow(var.getX(), 2) + Math.pow(var.getY(), 2));
+		double ang = Math.PI / 2;
+		if (createdFigure.getClass().equals(ConnectionParcialUmFigureChen.class) || 
+				createdFigure.getClass().equals(ConnectionTotalUmFigureChen.class)){
+			Point2D.Double p1 = new Point2D.Double(start.getX() + (tam/10)* Math.cos(direcao + ang),
+					start.getY() + (tam/10)* Math.sin(direcao + ang));
+			Point2D.Double p2 = new Point2D.Double(start.getX() + (tam/10)* Math.cos(direcao - ang),
+					start.getY() + (tam/10)* Math.sin(direcao - ang));
+			((LineFigure)((IConnectionNotationFigure)createdFigure).getCardinalidadeFigure()).setStartPoint(p1);
+			((LineFigure)((IConnectionNotationFigure)createdFigure).getCardinalidadeFigure()).setEndPoint(p1);		
+		}
+		
+		if (createdFigure.getClass().equals(ConnectionTotalMuitosFigureChen.class) || 
+				createdFigure.getClass().equals(ConnectionTotalUmFigureChen.class)){
+			Point2D.Double p1 = new Point2D.Double(start.getX() + (tam/5)* Math.cos(direcao + ang),
+					start.getY() + (tam/5)* Math.sin(direcao + ang));
+			Point2D.Double p2 = new Point2D.Double(start.getX() + (tam/5)* Math.cos(direcao - ang),
+					start.getY() + (tam/5)* Math.sin(direcao - ang));
+			((LineFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setStartPoint(p1);
+			((LineFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setEndPoint(p1);
+		} else {
+			Rectangle2D.Double bounds = new Rectangle2D.Double(start.getX() + (tam/5 * Math.cos(direcao + ang)),  start.getY() + (tam/5 * Math.sin(direcao + ang)), 20, 20);
+			((EllipseFigure)((IConnectionNotationFigure)createdFigure).getParticipacaoFigure()).setBounds(bounds);
+		}
+
+		
+	}
 }

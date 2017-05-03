@@ -286,36 +286,43 @@ public abstract class AbstractFigure
             }
         }
     }
-    /*//obede:undo
-     protected void fireUndoableEditHappened(UndoableEdit edit) {
-        UndoableEditEvent event = null;
-        if (listenerList.getListenerCount() > 0) {
-            // Notify all listeners that have registered interest for
-            // Guaranteed to return a non-null array
-            Object[] listeners = listenerList.getListenerList();
-            // Process the listeners last to first, notifying
-            // those that are interested in this event
-            for (int i = listeners.length-2; i>=0; i-=2) {
-                if (event == null)
-                    event = new UndoableEditEvent(this, edit);
-                if (listeners[i] == UndoableEditListener.class) {
-                    ((UndoableEditListener)listeners[i+1]).undoableEditHappened(event);
-                }
-            }
-        }
-    }
-    */
+    
+    /*
+	// obede:undo
+	protected void fireUndoableEditHappened(UndoableEdit edit) {
+		UndoableEditEvent event = null;
+		if (listenerList.getListenerCount() > 0) {
+			// Notify all listeners that have registered interest for
+			// Guaranteed to return a non-null array
+			Object[] listeners = listenerList.getListenerList();
+			// Process the listeners last to first, notifying
+			// those that are interested in this event
+			for (int i = listeners.length - 2; i >= 0; i -= 2) {
+				if (event == null)
+					event = new UndoableEditEvent(this, edit);
+				if (listeners[i] == UndoableEditListener.class) {
+					((UndoableEditListener) listeners[i + 1]).undoableEditHappened(event);
+				}
+			}
+		}
+	}
+	// obede:undo
+	*/
+	
+    
     
     /**
      * Notify all UndoableEditListener of the Drawing, to which this Figure has
      * been added to. If this Figure is not part of a Drawing, the event is
      * lost.
      */
+	
     protected void fireUndoableEditHappened(UndoableEdit edit) {
         if (getDrawing() != null) {
             getDrawing().fireUndoableEditHappened(edit);
         }
     }
+    
     /*
     public Set createHandles() {
         return new HashSet();

@@ -44,7 +44,7 @@ public class EntidadeFigureChen extends GroupFigure implements IChangeNotationLi
     	tf = new TextFigure(labels.getString("createEntidade").toUpperCase()+Integer.toString(counter++));
     	this.add(rec);
     	this.add(tf);
-    	//this.add(ent_idef1x);
+    	this.add(ent_idef1x);
     	this.EventFunctions=new TerraResizeEventFunctions(this,rec,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
@@ -163,6 +163,5 @@ public class EntidadeFigureChen extends GroupFigure implements IChangeNotationLi
 			keys.add(text);
 		}
 	}
-
 
 }
