@@ -26,8 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.undo.AbstractUndoableEdit;
-import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoableEdit;
 
 import org.jhotdraw.beans.AbstractBean;
@@ -88,12 +86,9 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
         addAll(getFigureCount(), figures);
     }
     public final void addAll(int index, Collection<Figure> figures) {
-    	CompositeEdit edit = new CompositeEdit("Figuren hinzuf\u00fcgen"); //obede:undo
-        fireUndoableEditHappened(edit);//obede:undo
         for (Figure f : figures) {
             add(index++, f);
         }
-        fireUndoableEditHappened(edit);//obede:undo
     }
     
     
@@ -113,11 +108,9 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
     
     public void removeAll(Collection<Figure> toBeRemoved) {
         CompositeEdit edit = new CompositeEdit("Figuren entfernen");
-        fireUndoableEditHappened(edit); //obede:undo
         for (Figure f : new ArrayList<Figure>(toBeRemoved)) {
             remove(f);
         }
-        fireUndoableEditHappened(edit);//obede:undo
     }
     public void basicAddAll(int index, Collection<Figure> figures) {
         for (Figure f : figures) {
@@ -144,27 +137,6 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
         figure.addNotify(this);
         fireFigureAdded(figure, index);
         fireAreaInvalidated(figure.getDrawingArea());
-        //obede:undo
-		fireUndoableEditHappened(new AbstractUndoableEdit() {
-			public String getPresentationName() {
-				return "Figur einf\u00fcgen";
-			}
-
-			public void undo() throws CannotUndoException {
-				super.undo();
-				basicRemove(figure);
-				figure.removeNotify(AbstractDrawing.this);
-				fireFigureRemoved(figure, -1);
-			}
-
-			public void redo() throws CannotUndoException {
-				super.redo();
-				basicAdd(index, figure);
-				figure.addNotify(AbstractDrawing.this);
-				fireFigureAdded(figure, -1);
-			}
-		});
-        //obede:undo
         TerraFigureTree.getInstance().add(figure);
     }
     
@@ -185,23 +157,6 @@ public abstract class AbstractDrawing extends AbstractBean implements Drawing {
             basicRemove(figure);
             figure.removeNotify(this);
             fireFigureRemoved(figure, index);
-            //obede:undo
-            fireUndoableEditHappened(new AbstractUndoableEdit() {
-                public String getPresentationName() { return "Figur entfernen"; }
-                public void redo()  throws CannotUndoException {
-                    super.redo();
-                    basicRemove(figure);
-                    figure.removeNotify(AbstractDrawing.this);
-                    fireFigureRemoved(figure, -1);
-                }
-                public void undo()  throws CannotUndoException {
-                    super.undo();
-                    basicAdd(index, figure);
-                    figure.addNotify(AbstractDrawing.this);
-                    fireFigureAdded(figure, -1);
-                }
-            });
-            //obede:undo
             TerraFigureTree.getInstance().remove(figure);
         } else {
             fireAreaInvalidated(figure.getDrawingArea());

@@ -73,6 +73,8 @@ import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.PasteAction;
 import org.jhotdraw.app.action.SelectAllAction;
+//import org.jhotdraw.draw.ArrowTip; @beforeCleanUp:removed_Obede
+import org.jhotdraw.draw.AtributoFigure;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.Constrainer;
@@ -86,7 +88,6 @@ import org.jhotdraw.draw.LineDecoration;
 import org.jhotdraw.draw.Tool;
 import org.jhotdraw.draw.ToolEvent;
 import org.jhotdraw.draw.ToolListener;
-import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
 import org.jhotdraw.geom.DoubleStroke;
 import org.jhotdraw.gui.JPopupButton;
 import org.jhotdraw.util.ResourceBundleUtil;

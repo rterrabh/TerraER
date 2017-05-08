@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import javax.swing.Action;
-import javax.swing.event.UndoableEditListener;
 
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.xml.DOMStorable;
@@ -444,14 +443,4 @@ public interface Figure extends Cloneable, Serializable, DOMStorable {
      * Removes a listener for FigureEvent's.
      */
     public void removeFigureListener(FigureListener l);
-    
-    
-    /**
-     * Adds a listener for UndoableEdit events.
-     */
-    public void addUndoableEditListener(UndoableEditListener l);//obede:undo
-    /**
-     * Removes a listener for UndoableEdit events.
-     */
-    public void removeUndoableEditListener(UndoableEditListener l);//obede:undo
 }

@@ -392,23 +392,6 @@ public class BezierFigure extends AbstractAttributedFigure {
     	@SuppressWarnings("unused")//anotacao inserida por Terra
     	final BezierPath.Node newPoint = new BezierPath.Node(p);
         path.add(index, p);
-        //obede:undo
-        fireUndoableEditHappened(new AbstractUndoableEdit() {
-            public String getPresentationName() { return "Punkt einf\u00fcgen"; }
-            public void undo()  throws CannotUndoException {
-                super.undo();
-                willChange();
-                removeNode(index);                
-                changed();
-            }
-            public void redo()  throws CannotUndoException {
-                super.redo();
-                willChange();
-                addNode(index, newPoint);
-                changed();
-            }
-        });
-        //obede:undo
         invalidate();
     }
     /**
@@ -416,9 +399,6 @@ public class BezierFigure extends AbstractAttributedFigure {
      */
     public void setNode(int index, BezierPath.Node p) {
         path.set(index, p);
-        BezierPath.Node oldValue = path.get(index); //obede:undo
-        BezierPath.Node newValue = new BezierPath.Node(p); //obede:undo
-        fireUndoableEditHappened(new BezierNodeEdit(this, index, oldValue, newValue)); //obede:undo
         invalidate();
     }
     
@@ -514,7 +494,16 @@ public class BezierFigure extends AbstractAttributedFigure {
         return -1;
     }
     
-   
+    public BezierPath.Node getNode(Point2D.Double p) {
+        BezierPath tp = path;
+        for (int i=0; i < tp.size(); i++) {
+            BezierPath.Node p2 = tp.get(i);
+            if (p2.x[0] == p.x && p2.y[0] == p.y) {
+                return p2;
+            }
+        }
+        return null;
+    }
     /**
      * Gets the segment of the polyline that is hit by
      * the given Point2D.Double.
@@ -567,27 +556,7 @@ public class BezierFigure extends AbstractAttributedFigure {
      * Removes the Node at the specified index.
      */
     protected BezierPath.Node removeNode(int index) {
-    	BezierPath.Node p = path.remove(index);
-       //obede:undo
-       final BezierPath.Node oldPoint = new BezierPath.Node(path.get(index));
-		fireUndoableEditHappened(new AbstractUndoableEdit() {
-			public String getPresentationName() {
-				return "Punkt entfernen";
-			}
-			public void undo() throws CannotUndoException {
-				super.undo();
-				willChange();
-				addNode(index, oldPoint);
-				changed();
-			}
-			public void redo() throws CannotUndoException {
-				super.redo();
-				removeNode(index);
-				changed();
-			}
-		});
-       //obede:undo
-		return p;
+       return path.remove(index);
     }
     /**
      * Removes the Point2D.Double at the specified index.
@@ -743,16 +712,5 @@ public class BezierFigure extends AbstractAttributedFigure {
             in.closeElement();
         }
         in.closeElement();
-    }
-    
-    public BezierPath.Node getNode(Point2D.Double p) { //obede
-        BezierPath tp = path;
-        for (int i=0; i < tp.size(); i++) {
-            BezierPath.Node p2 = tp.get(i);
-            if (p2.x[0] == p.x && p2.y[0] == p.y) {
-                return p2;
-            }
-        }
-        return null;
     }
 }

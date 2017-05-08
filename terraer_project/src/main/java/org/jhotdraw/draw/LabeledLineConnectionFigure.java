@@ -239,7 +239,6 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure
     public void basicAdd(int index, Figure figure) {
         children.add(index, figure);
         figure.addFigureListener(childHandler);
-        figure.addUndoableEditListener(childHandler);//obede:undo
         invalidate();
     }
     public boolean remove(final Figure figure) {
@@ -277,7 +276,6 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure
     public Figure basicRemoveChild(int index) {
         Figure figure = children.remove(index);
         figure.removeFigureListener(childHandler);
-        figure.removeUndoableEditListener(childHandler);//obede:undo
         
         return figure;
     }
@@ -375,7 +373,6 @@ public class LabeledLineConnectionFigure extends LineConnectionFigure
             Figure thatChild = (Figure) thisChild.clone();
             that.children.add(thatChild);
             thatChild.addFigureListener(that.childHandler);
-            thatChild.addUndoableEditListener(that.childHandler);//obede:undo
         }
         return that;
     }

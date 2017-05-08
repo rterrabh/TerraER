@@ -10,26 +10,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 public class TerraFigureTree extends JTree {
@@ -162,17 +142,17 @@ public class TerraFigureTree extends JTree {
 
 	protected DefaultMutableTreeNode chooseApropriateNode(Figure f) {
 		DefaultMutableTreeNode ChosenNode = null;
-		if (f instanceof EntidadeFigureChen || f instanceof EntidadeFracaFigureChen) {
+		if (f instanceof EntidadeFigure || f instanceof EntidadeFracaFigure) {
 			ChosenNode = nodEntidades;
-		} else if (f instanceof RelacionamentoFigureChen
-				|| f instanceof RelacionamentoFracoFigureChen
-				|| f instanceof EntidadeRelacionamentoFigureChen) {
+		} else if (f instanceof RelacionamentoFigure
+				|| f instanceof RelacionamentoFracoFigure
+				|| f instanceof EntidadeRelacionamentoFigure) {
 			ChosenNode = nodRelacionamentos;
-		} else if (f instanceof AtributoFigureChen
-				|| f instanceof AtributoChaveFigureChen
-				|| f instanceof AtributoChaveParcialFigureChen
-				|| f instanceof AtributoDerivadoFigureChen
-				|| f instanceof AtributoMultivaloradoFigureChen) {
+		} else if (f instanceof AtributoFigure
+				|| f instanceof AtributoChaveFigure
+				|| f instanceof AtributoChaveParcialFigure
+				|| f instanceof AtributoDerivadoFigure
+				|| f instanceof AtributoMultivaloradoFigure) {
 			ChosenNode = nodAtributos;
 		} else {
 			ChosenNode = nodOutros;
@@ -279,66 +259,66 @@ public class TerraFigureTree extends JTree {
 				}
 				else if (Node.getUserObject() instanceof Figure){ //Node is a Figure Element, need to know which one
 					Figure f = (Figure)Node.getUserObject();
-					if(f instanceof EntidadeFigureChen){
+					if(f instanceof EntidadeFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createEntidade.png"));
 					}
-					else if(f instanceof EntidadeFracaFigureChen){
+					else if(f instanceof EntidadeFracaFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createEntidadeFraca.png"));
 					}
-					else if(f instanceof RelacionamentoFigureChen){
+					else if(f instanceof RelacionamentoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createRelacionamento.png"));
 					}
-					else if(f instanceof RelacionamentoFracoFigureChen){
+					else if(f instanceof RelacionamentoFracoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createRelacionamentoFraco.png"));
 					}
-					else if(f instanceof EntidadeRelacionamentoFigureChen){
+					else if(f instanceof EntidadeRelacionamentoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createEntidadeRelacionamento.png"));
 					}
-					else if(f instanceof AtributoFigureChen){
+					else if(f instanceof AtributoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributo.png"));
 					}
-					else if(f instanceof AtributoChaveFigureChen){
+					else if(f instanceof AtributoChaveFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoChave.png"));
 					}
-					else if(f instanceof AtributoChaveParcialFigureChen){
+					else if(f instanceof AtributoChaveParcialFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoChaveParcial.png"));
 					}
-					else if(f instanceof AtributoDerivadoFigureChen){
+					else if(f instanceof AtributoDerivadoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoDerivado.png"));
 					}
-					else if(f instanceof AtributoMultivaloradoFigureChen){
+					else if(f instanceof AtributoMultivaloradoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createAtributoMultivalorado.png"));
 					}
-					else if(f instanceof GeneralizacaoConnectionLineFigureChen){
+					else if(f instanceof LineConnectionGeneralizacaoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowConnectionSmall.png"));
 					}
-					else if(f instanceof GeneralizacaoConnectionTotalFigureChen){
+					else if(f instanceof DoubleLineConnectionGeneralizacaoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleConnectionSmall.png"));
 					}
-					else if(f instanceof GeneralizacaoConnectionParcialFigureChen){
+					else if(f instanceof GeneralizacaoLineConnectionFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createGeneralizacaoConnectionSmall.png"));
 					}
-					else if(f instanceof ConnectionTotalMuitosFigureChen){
+					else if(f instanceof LabeledDoubleLineConnectionMuitosFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleMuitosConnectionSmall.png"));
 					}
-					else if(f instanceof ConnectionTotalUmFigureChen){
+					else if(f instanceof LabeledDoubleLineConnectionUmFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowDoubleUmConnectionSmall.png"));
 					}
-					else if(f instanceof ConnectionParcialUmFigureChen){
+					else if(f instanceof LabeledLineConnectionUmFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowUmConnectionSmall.png"));
 					}
-					else if(f instanceof ConnectionParcialMuitosFigureChen){
+					else if(f instanceof LabeledLineConnectionMuitosFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowMuitosConnectionSmall.png"));
 					}
-					else if(f instanceof InheritanceSobreposicaoFigureChen){
+					else if(f instanceof SobreposicaoFigure){
 						ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-						Ret=labels.getImageIcon("createSobreposicaoSmall", InheritanceSobreposicaoFigureChen.class);
+						Ret=labels.getImageIcon("createSobreposicaoSmall", SobreposicaoFigure.class);
 					}
-					else if(f instanceof InheritanceUniaoFigureChen){
+					else if(f instanceof UniaoFigure){
 						ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-						Ret=labels.getImageIcon("createUniaoSmall", InheritanceUniaoFigureChen.class);
+						Ret=labels.getImageIcon("createUniaoSmall", UniaoFigure.class);
 					}
-					else if(f instanceof InheritanceDisjuncaoFigureChen){
+					else if(f instanceof DisjuncaoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createDisjuncaoSmall.png"));
 					}
 					else if(f instanceof TextItalicoFigure){

@@ -14,6 +14,12 @@
 
 package org.jhotdraw.samples.draw;
 
+//import org.jhotdraw.draw.ArrowTip; @beforeCleanUp:removed_Obede
+import org.jhotdraw.draw.AtributoChaveFigure;
+import org.jhotdraw.draw.AtributoChaveParcialFigure;
+import org.jhotdraw.draw.AtributoDerivadoFigure;
+import org.jhotdraw.draw.AtributoFigure;
+import org.jhotdraw.draw.AtributoMultivaloradoFigure;
 import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.BezierFigure;
 import org.jhotdraw.draw.ChopBezierConnector;
@@ -25,44 +31,36 @@ import org.jhotdraw.draw.ChopRectangleConnector;
 import org.jhotdraw.draw.CircleFigure;
 import org.jhotdraw.draw.DefaultDrawing;
 import org.jhotdraw.draw.DiamondFigure;
+import org.jhotdraw.draw.DisjuncaoFigure;
+import org.jhotdraw.draw.DoubleLineConnectionGeneralizacaoFigure;
 //import org.jhotdraw.draw.ElbowLiner; @beforeCleanUp:removed_Obede
 import org.jhotdraw.draw.EllipseFigure;
+import org.jhotdraw.draw.EntidadeFigure;
+import org.jhotdraw.draw.EntidadeFracaFigure;
+import org.jhotdraw.draw.EntidadeRelacionamentoFigure;
+import org.jhotdraw.draw.GeneralizacaoLineConnectionFigure;
 import org.jhotdraw.draw.GroupFigure;
 import org.jhotdraw.draw.ImageFigure;
+import org.jhotdraw.draw.LabeledDoubleLineConnectionMuitosFigure;
+import org.jhotdraw.draw.LabeledDoubleLineConnectionUmFigure;
 import org.jhotdraw.draw.LabeledLineConnectionFigure;
+import org.jhotdraw.draw.LabeledLineConnectionMuitosFigure;
+import org.jhotdraw.draw.LabeledLineConnectionUmFigure;
 import org.jhotdraw.draw.LineConnectionFigure;
+import org.jhotdraw.draw.LineConnectionGeneralizacaoFigure;
 import org.jhotdraw.draw.LineFigure;
 import org.jhotdraw.draw.QuadTreeDrawing;
 import org.jhotdraw.draw.RectangleFigure;
+import org.jhotdraw.draw.RelacionamentoFigure;
+import org.jhotdraw.draw.RelacionamentoFracoFigure;
+//import org.jhotdraw.draw.RoundRectangleFigure; @beforeCleanUp:removed_Obede
+import org.jhotdraw.draw.SobreposicaoFigure;
 import org.jhotdraw.draw.TextAreaFigure;
 import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.draw.TextItalicoFigure;
 import org.jhotdraw.draw.TextNegritoFigure;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceDisjuncaoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionTotalFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionParcialFigureChen;
-import org.jhotdraw.draw.notation.ListFigure;
-import org.jhotdraw.draw.notation.figure.chen.GeneralizacaoConnectionLineFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoChaveFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoChaveParcialFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoDerivadoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.AtributoMultivaloradoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionAtributoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionParcialMuitosFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionParcialUmFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionTotalMuitosFigureChen;
-import org.jhotdraw.draw.notation.finalversion.ConnectionTotalUmFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFigureChen.EntidadeFigureIDEF1X;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen;
-import org.jhotdraw.draw.notation.finalversion.EntidadeFracaFigureChen.EntidadeFracaFigureIDEF1X;
-import org.jhotdraw.draw.notation.finalversion.EntidadeRelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.RelacionamentoFigureChen;
-import org.jhotdraw.draw.notation.finalversion.RelacionamentoFracoFigureChen;
-import org.jhotdraw.geom.Insets2D;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceSobreposicaoFigureChen;
-import org.jhotdraw.draw.notation.figure.chen.InheritanceUniaoFigureChen;
+//import org.jhotdraw.draw.TriangleFigure; @beforeCleanUp:removed_Obede
+import org.jhotdraw.draw.UniaoFigure;
 import org.jhotdraw.xml.DefaultDOMFactory;
 /**
  * DrawFigureFactory.
@@ -88,35 +86,32 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { TextAreaFigure.class, "ta" },
         { ImageFigure.class, "image" },
         { GroupFigure.class, "g" },
-        { RelacionamentoFigureChen.class, "rel" },
-        { EntidadeFigureChen.class, "ent" },
-        { EntidadeFigureIDEF1X.class, "entIDEF1X" },
-        { EntidadeFracaFigureIDEF1X.class, "entFracaIDEF1X" },
-        { EntidadeRelacionamentoFigureChen.class, "entrel" },
-        { RelacionamentoFracoFigureChen.class, "relfraco" },
+        { RelacionamentoFigure.class, "rel" },
+        { EntidadeFigure.class, "ent" },
+        { EntidadeRelacionamentoFigure.class, "entrel" },
+        { RelacionamentoFracoFigure.class, "relfraco" },
 
-        { AtributoFigureChen.class, "atr" },
-        { AtributoChaveFigureChen.class, "atrchave" },
-        { EntidadeFracaFigureChen.class,"entfraca"},
-        { AtributoDerivadoFigureChen.class,"atrderivado"},
-        { AtributoMultivaloradoFigureChen.class,"atrmulti"},
-        { AtributoChaveParcialFigureChen.class, "atrchaveparcial"},
+        { AtributoFigure.class, "atr" },
+        { AtributoChaveFigure.class, "atrchave" },
+        { EntidadeFracaFigure.class,"entfraca"},
+        { AtributoDerivadoFigure.class,"atrderivado"},
+        { AtributoMultivaloradoFigure.class,"atrmulti"},
+        { AtributoChaveParcialFigure.class, "atrchaveparcial"},
         
-        { InheritanceSobreposicaoFigureChen.class, "sobreposicao"},
-        { InheritanceDisjuncaoFigureChen.class, "disjuncao"},
-        { InheritanceUniaoFigureChen.class, "uniao"},
+        { SobreposicaoFigure.class, "sobreposicao"},
+        { DisjuncaoFigure.class, "disjuncao"},
+        { UniaoFigure.class, "uniao"},
         { CircleFigure.class, "circ"},
         { LineConnectionFigure.class, "lcf"},
-        { ConnectionAtributoFigureChen.class, "lcfAttribute"},
         { LabeledLineConnectionFigure.class, "llabel"},
-        { ConnectionParcialUmFigureChen.class, "llabelUm"},
-        { ConnectionParcialMuitosFigureChen.class, "llabelMuitos"},
-        { ConnectionTotalUmFigureChen.class, "llabelDoubleUm"},
-        { ConnectionTotalMuitosFigureChen.class, "llabelDoubleMuitos"},
-        { GeneralizacaoConnectionParcialFigureChen.class, "generalizacaoLine"},
-        { GeneralizacaoConnectionLineFigureChen.class, "llabelGeneralizacao"},
-        { GeneralizacaoConnectionTotalFigureChen.class, "llabelDoubleGeneralizacao"},
-        { ListFigure.class, "list" },
+        { LabeledLineConnectionUmFigure.class, "llabelUm"},
+        { LabeledLineConnectionMuitosFigure.class, "llabelMuitos"},
+        { LabeledDoubleLineConnectionUmFigure.class, "llabelDoubleUm"},
+        { LabeledDoubleLineConnectionMuitosFigure.class, "llabelDoubleMuitos"},
+        { GeneralizacaoLineConnectionFigure.class, "generalizacaoLine"},
+        { LineConnectionGeneralizacaoFigure.class, "llabelGeneralizacao"},
+        { DoubleLineConnectionGeneralizacaoFigure.class, "llabelDoubleGeneralizacao"},
+
         
         //{ ArrowTip.class, "arrowTip" }, @beforeCleanUp:removed_Obede
         { ChopRectangleConnector.class, "rConnector" },

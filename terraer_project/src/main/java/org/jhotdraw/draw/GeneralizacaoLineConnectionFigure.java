@@ -12,7 +12,7 @@
  * JHotDraw.org.
  */
 
-package org.jhotdraw.draw.notation.figure.chen;
+package org.jhotdraw.draw;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -20,8 +20,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 
-import org.jhotdraw.draw.DrawingView;
-import org.jhotdraw.draw.LabeledLineConnectionFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -41,10 +39,10 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds.
  * <br>1.0 23. Januar 2006 Created.
  */
-public class GeneralizacaoConnectionParcialFigureChen extends LabeledLineConnectionFigure {
+public class GeneralizacaoLineConnectionFigure extends LabeledLineConnectionFigure {
 	//private Integer indiceNode = null;
 	
-	public GeneralizacaoConnectionParcialFigureChen() {
+	public GeneralizacaoLineConnectionFigure() {
 		super();
 		
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");

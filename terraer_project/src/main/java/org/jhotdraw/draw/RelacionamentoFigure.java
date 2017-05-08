@@ -1,47 +1,55 @@
+/*
+ * @(#)DiamondFigure.java  1.1  2007-05-12
+ *
+ * Copyright (c) 1996-2007 by the original authors of JHotDraw
+ * and all its contributors ("JHotDraw.org")
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * JHotDraw.org ("Confidential Information"). You shall not disclose
+ * such Confidential Information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with
+ * JHotDraw.org.
+ */
 
-package org.jhotdraw.draw.notation.finalversion;
+
+package org.jhotdraw.draw;
 
 import java.awt.geom.Point2D.Double;
 
 import java.io.IOException;
 
-import org.jhotdraw.draw.AbstractCompositeFigure;
-import org.jhotdraw.draw.DiamondFigure;
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.FigureAdapter;
-import org.jhotdraw.draw.FigureEvent;
-import org.jhotdraw.draw.GroupFigure;
-import org.jhotdraw.draw.TerraResizeEventFunctions;
-import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 
-public class RelacionamentoFigureChen extends GroupFigure implements IChangeNotationListern {
+/**
+ * A diamond with vertices at the midpoints of its enclosing rectangle.
+ *
+ *
+ * @author Werner Randelshofer
+ * @version 1.1 2007-05-12 Removed convenience getters and setters for 
+ * IS_QUADRATIC attribute. 
+ * <br>1.0 2006-03-27 Created.
+ */
+public class RelacionamentoFigure extends GroupFigure {
 
     private TextFigure tf;
-    private TextFigure tf_idef1x;
     private DiamondFigure df;
 	private static int counter = 0;
     private TerraResizeEventFunctions EventFunctions;
-    private String currentNotation;
 	
-	public RelacionamentoFigureChen(){
+	public RelacionamentoFigure(){
     	super();
-    	currentNotation = NotationSelectAction.SelectChenAction.ID;
-		NotationSelectAction.addListern(this);
     }
     
-    public RelacionamentoFigureChen init(){
+    public RelacionamentoFigure init(){
     	df=new DiamondFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
     	tf=new TextFigure(labels.getString("createRelacionamento")+Integer.toString(counter++));
-    	tf_idef1x = new TextFigure(tf.getText());
-    	tf_idef1x.setVisible(false);
     	this.add(df);
     	this.add(tf);
-    	this.add(tf_idef1x);
     	this.EventFunctions=new TerraResizeEventFunctions(this,df,tf);
     	this.tf.addFigureListener(new FigureAdapter(){
 			@Override
@@ -63,13 +71,13 @@ public class RelacionamentoFigureChen extends GroupFigure implements IChangeNota
 	}
     
     public AbstractCompositeFigure clone() {
-    	RelacionamentoFigureChen f = new RelacionamentoFigureChen().init();
+    	RelacionamentoFigure f = new RelacionamentoFigure().init();
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());
 		f.df.setBounds(this.df.getBounds());
 		f.changed();
-		NotationSelectAction.addListern(f);
+		
     	return f;
     }
 	
@@ -89,21 +97,6 @@ public class RelacionamentoFigureChen extends GroupFigure implements IChangeNota
                 df=(DiamondFigure)f;
             }
         }
-    }
-
-	@Override
-	public void notifyChange(String notation) {
-		currentNotation = notation;
-		df.setVisible(false);
-		tf.setVisible(true);
-		tf_idef1x.setVisible(false);
-		if (this.currentNotation.equals(NotationSelectAction.SelectChenAction.ID)) {
-			df.setVisible(true);
-		} else if (this.currentNotation.equals(NotationSelectAction.SelectCrossFootAction.ID)) {
-			tf_idef1x.setVisible(true);
-		} else if (this.currentNotation.equals(NotationSelectAction.SelectIDEF1XAction.ID)) {
-			tf_idef1x.setVisible(true);
-		}
-	}	
+    }	
     
 }

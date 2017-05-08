@@ -21,7 +21,6 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
@@ -43,7 +42,6 @@ import org.jhotdraw.app.action.SelectAllAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.beans.AbstractBean;
-import org.jhotdraw.draw.notation.finalversion.NotationSelectAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
  * DefaultApplicationModel.
@@ -206,13 +204,11 @@ public class DefaultApplicationModel
         
         m = new JMenu();
         labels.configureMenu(m, "edit");
-        //obede
-        mi = m.add(getAction(UndoAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(RedoAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        //obede
+        //mi = m.add(getAction(UndoAction.ID));
+        //mi.setIcon(null);
+        //mi = m.add(getAction(RedoAction.ID));
+        //mi.setIcon(null);
+        //m.addSeparator();
         mi = m.add(getAction(CutAction.ID));
         mi.setIcon(null);
         mi = m.add(getAction(CopyAction.ID));
@@ -226,17 +222,6 @@ public class DefaultApplicationModel
         m.addSeparator();
         mi = m.add(getAction(ValidateModelAction.ID));
         mi = m.add(getAction(GenerateDDLAction.ID));
-        //obede
-        JMenu mi2 = new JMenu(getAction(NotationSelectAction.ID));
-        JCheckBoxMenuItem cb1 = new JCheckBoxMenuItem(NotationSelectAction.chenAction);
-        JCheckBoxMenuItem cb2 = new JCheckBoxMenuItem(NotationSelectAction.crossFootAction);
-        JCheckBoxMenuItem cb3 = new JCheckBoxMenuItem(NotationSelectAction.idef1xAction);
-        mi2.add(cb1);
-        mi2.add(cb2);
-        mi2.add(cb3);
-        NotationSelectAction.setSelection(cb1, cb2, cb3);
-        m.add(mi2);
-        //obede
         //mi.setIcon(new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/checkModel.png")));
         mi.setIcon(null);
         m.addSeparator();

@@ -152,7 +152,6 @@ public abstract class AbstractCompositeFigure
     public void basicAdd(int index, Figure figure) {
         children.add(index, figure);
         figure.addFigureListener(childHandler);
-        figure.addUndoableEditListener(childHandler);//obede:undo
     }
     public void basicAddAll(Collection<Figure> newFigures) {
         for (Figure f: newFigures) {
@@ -205,7 +204,6 @@ public abstract class AbstractCompositeFigure
     public Figure basicRemoveChild(int index) {
         Figure figure = children.remove(index);
         figure.removeFigureListener(childHandler);
-        figure.removeUndoableEditListener(childHandler);//obede:undo
         invalidate();
         return figure;
     }
@@ -290,10 +288,6 @@ public abstract class AbstractCompositeFigure
         }
         tx.translate(newBounds.x, newBounds.y);
         transform(tx);
-    }
-    
-    public void undoableEditHappened(UndoableEditEvent e) {//obede:undo
-        fireUndoableEditHappened(e.getEdit());
     }
     
     public java.util.List<Figure> getChildren() {
@@ -485,7 +479,7 @@ public abstract class AbstractCompositeFigure
         return (cachedBounds == null) ? new Rectangle2D.Double(0, 0, -1, -1) : (Rectangle2D.Double) cachedBounds.clone();
     }
     public void draw(Graphics2D g) {
-    	Rectangle2D clipBounds = g.getClipBounds();
+        Rectangle2D clipBounds = g.getClipBounds();
         if (clipBounds != null) {
             for (Figure child : children) {
                 if (child.isVisible() && child.getDrawingArea().intersects(clipBounds)) {
@@ -509,7 +503,6 @@ public abstract class AbstractCompositeFigure
             Figure thatChild = (Figure) thisChild.clone();
             that.children.add(thatChild);
             thatChild.addFigureListener(that.childHandler);
-            thatChild.addUndoableEditListener(that.childHandler);//obede:undo
         }
         return that;
     }

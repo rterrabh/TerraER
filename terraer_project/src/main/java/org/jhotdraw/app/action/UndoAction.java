@@ -39,7 +39,7 @@ public class UndoAction extends AbstractProjectAction {
     
     private PropertyChangeListener redoActionPropertyListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent evt) {
-        	String name = evt.getPropertyName();
+            String name = evt.getPropertyName();
             if (name == AbstractAction.NAME) {
                 putValue(AbstractAction.NAME, evt.getNewValue());
             } else if (name == "enabled") {
@@ -60,7 +60,7 @@ public class UndoAction extends AbstractProjectAction {
         if (realRedoAction != null) {
             isEnabled = realRedoAction.isEnabled();
         }
-        setEnabled(isEnabled);        
+        setEnabled(isEnabled);
     }
     
     @Override protected void updateProject(Project oldValue, Project newValue) {
@@ -72,19 +72,19 @@ public class UndoAction extends AbstractProjectAction {
         }
     }
     /**
-     * Installs listeners on the project object.        		
+     * Installs listeners on the project object.
      */
     @Override protected void installProjectListeners(Project p) {
-    	super.installProjectListeners(p);
+        super.installProjectListeners(p);
         if (p.getAction("undo") != null) {
-        	p.getAction("undo").addPropertyChangeListener(redoActionPropertyListener);
+        p.getAction("undo").addPropertyChangeListener(redoActionPropertyListener);
         }
     }
     /**
      * Installs listeners on the project object.
      */
     @Override protected void uninstallProjectListeners(Project p) {
-    	super.uninstallProjectListeners(p);
+        super.uninstallProjectListeners(p);
         if (p.getAction("undo") != null) {
         p.getAction("undo").removePropertyChangeListener(redoActionPropertyListener);
         }

@@ -41,7 +41,7 @@ import org.jhotdraw.util.ReversedList;
  * <br>2.0 2006-01-14 Changed to support double precision coordinates.
  * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
  */
-public class QuadTreeDrawing extends AbstractDrawing implements UndoableEditListener{//obede:undo
+public class QuadTreeDrawing extends AbstractDrawing {
     private ArrayList<Figure> figures = new ArrayList<Figure>();
     private QuadTree<Figure> quadTree = new QuadTree<Figure>();
     private boolean needsSorting = false;
@@ -65,14 +65,12 @@ public class QuadTreeDrawing extends AbstractDrawing implements UndoableEditList
         figures.add(index, figure);
         quadTree.add(figure, figure.getDrawingArea());
         figure.addFigureListener(figureHandler);
-        figure.addUndoableEditListener(this);//obede:undo
         needsSorting = true;
     }
     public void basicRemove(Figure figure) {
         figures.remove(figure);
         quadTree.remove(figure);
         figure.removeFigureListener(figureHandler);
-        figure.removeUndoableEditListener(this);//obede:undo
         needsSorting = true;
     }
     
@@ -106,6 +104,8 @@ public class QuadTreeDrawing extends AbstractDrawing implements UndoableEditList
             f.draw(g);
         }
     }
+    
+    
     
     public java.util.List<Figure> getFigures(Rectangle2D.Double bounds) {
         return new LinkedList(quadTree.findInside(bounds));
@@ -255,14 +255,6 @@ public class QuadTreeDrawing extends AbstractDrawing implements UndoableEditList
             needsSorting = true;
             fireAreaInvalidated(figure.getDrawingArea());
         }
-    }
-    
-    /**
-     * We propagate all edit events from our figures to
-     * undoable edit listeners, which have registered with us.
-     */
-    public void undoableEditHappened(UndoableEditEvent e) { //obede:undo
-        fireUndoableEditHappened(e.getEdit());
     }
     
     public boolean contains(Figure f) {

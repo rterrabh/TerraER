@@ -1,24 +1,40 @@
-package org.jhotdraw.draw.notation.finalversion;
+/*
+ * @(#)EllipseFigure.java  2.4  2006-12-23
+ *
+ * Copyright (c) 1996-2006 by the original authors of JHotDraw
+ * and all its contributors ("JHotDraw.org")
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * JHotDraw.org ("Confidential Information"). You shall not disclose
+ * such Confidential Information and shall use it only in accordance
+ * with the terms of the license agreement you entered into with
+ * JHotDraw.org.
+ */
+
+package org.jhotdraw.draw;
 
 import java.awt.geom.Point2D.Double;
 import java.io.IOException;
 
-import org.jhotdraw.draw.AbstractCompositeFigure;
-import org.jhotdraw.draw.EllipseFigure;
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.FigureAdapter;
-import org.jhotdraw.draw.FigureEvent;
-import org.jhotdraw.draw.GroupFigure;
-import org.jhotdraw.draw.TerraResizeEventFunctions;
-import org.jhotdraw.draw.TextFigure;
 import org.jhotdraw.enums.AttributeTypeEnum;
 import org.jhotdraw.interfaces.AttributeTypeElement;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
 
-
-public class AtributoFigureChen extends GroupFigure implements AttributeTypeElement, IChangeNotationListern {
+/**
+ * EllipseFigure.
+ *
+ * @author Werner Randelshofer
+ * @version 2.4 2006-12-12 Made ellipse protected.
+ * <br>2.3 2006-06-17 Added method chop(Point2D.Double).
+ * <br>2.2 2006-05-19 Support for stroke placement added.
+ * <br>2.1 2006-03-22 Method getFigureDrawBounds added.
+ * <br>2.0 2006-01-14 Changed to support double precison coordinates.
+ * <br>1.0 2003-12-01 Derived from JHotDraw 5.4b1.
+ */
+public class AtributoFigure extends GroupFigure implements AttributeTypeElement {
     
 	private TextFigure tf;
 	private EllipseFigure ef;
@@ -26,15 +42,12 @@ public class AtributoFigureChen extends GroupFigure implements AttributeTypeElem
     private TerraResizeEventFunctions EventFunctions;
 	private AttributeTypeEnum attributeType = AttributeTypeEnum.TEXT;
 	private boolean nullable;
-	private String currentNotation;
     
-	public AtributoFigureChen(){
+	public AtributoFigure(){
     	super();
-    	currentNotation = NotationSelectAction.SelectChenAction.ID;
-		NotationSelectAction.addListern(this);
     }
-	
-	public AtributoFigureChen init(){
+    
+    public AtributoFigure init(){
     	ef=new EllipseFigure();
     	
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
@@ -63,7 +76,7 @@ public class AtributoFigureChen extends GroupFigure implements AttributeTypeElem
 	}
     
     public AbstractCompositeFigure clone() {
-    	AtributoFigureChen f = new AtributoFigureChen().init();
+    	AtributoFigure f = new AtributoFigure().init();
     	
     	f.willChange();
 		f.ef.setBounds(this.ef.getBounds());
@@ -117,18 +130,6 @@ public class AtributoFigureChen extends GroupFigure implements AttributeTypeElem
 	@Override
 	public void setNullable(boolean nullable) {
 		this.nullable = nullable;
-	}
-
-	@Override
-	public void notifyChange(String notation) {
-		currentNotation = notation;
-		if (this.currentNotation.equals(NotationSelectAction.SelectChenAction.ID)) {
-			this.setVisible(true);
-		} else if (this.currentNotation.equals(NotationSelectAction.SelectCrossFootAction.ID)) {
-			this.setVisible(false);
-		} else if (this.currentNotation.equals(NotationSelectAction.SelectIDEF1XAction.ID)) {
-			this.setVisible(false);
-		}
 	}
 	
 }

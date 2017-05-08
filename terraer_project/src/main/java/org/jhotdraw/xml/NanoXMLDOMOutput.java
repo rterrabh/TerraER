@@ -24,8 +24,6 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Stack;
 
-import org.jhotdraw.geom.Insets2D;
-
 import net.n3.nanoxml.XMLElement;
 import net.n3.nanoxml.XMLWriter;
 /**
@@ -276,8 +274,6 @@ public class NanoXMLDOMOutput implements DOMOutput {
             addAttribute("type", factory.getEnumName(e));
             addText(factory.getEnumValue(e));
             closeElement();
-        } else if (o instanceof Insets2D.Double) {
-        	//obede
         } else {
             throw new IllegalArgumentException("unable to store: "+o+" "+o.getClass());
         }
