@@ -204,11 +204,11 @@ public class DefaultApplicationModel
         
         m = new JMenu();
         labels.configureMenu(m, "edit");
-        //mi = m.add(getAction(UndoAction.ID));
-        //mi.setIcon(null);
-        //mi = m.add(getAction(RedoAction.ID));
-        //mi.setIcon(null);
-        //m.addSeparator();
+        mi = m.add(getAction(UndoAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(RedoAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
         mi = m.add(getAction(CutAction.ID));
         mi.setIcon(null);
         mi = m.add(getAction(CopyAction.ID));
