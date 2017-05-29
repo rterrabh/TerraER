@@ -265,6 +265,7 @@ public class DrawProject extends AbstractProject {
     public void clear() {
         //view.setDrawing(new DefaultDrawing());
     	//TODO: Colocar o mesmo Drawing que existia, porém limpo.
+    	view.getDrawing().clear();
         undo.discardAllEdits();
     }
     

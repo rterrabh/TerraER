@@ -36,9 +36,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.Insets2D;
+import org.jhotdraw.samples.draw.DrawProject;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
 import org.jhotdraw.xml.DOMOutput;
@@ -184,8 +189,28 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
      * This is a convenience method for calling willChange,
      * AttribuTEXT.basicSet, changed.
      */
-    public void setText(String newText) {
-        TEXT.set(this, newText);
+    public void setText(String newText) {    	
+    	String oldValue = TEXT.get(this);
+    	TEXT.set(this, newText);
+    	if (oldValue != null){
+    		final TextFigure tf = this;
+    		getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
+				public String getPresentationName() {
+					return "";
+				}
+
+				public void undo() throws CannotUndoException {
+					super.undo();
+					tf.setAttribute(TEXT, oldValue);
+				}
+
+				public void redo() throws CannotRedoException {
+					super.redo();
+					tf.setAttribute(TEXT, newText);
+				}
+			});
+    	}
+    	
     }
     
     public int getTextColumns() {

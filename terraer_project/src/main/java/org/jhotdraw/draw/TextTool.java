@@ -22,6 +22,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Map;
+
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+
 /**
  * A tool to create new or edit existing figures that implement the TextHolderFigure
  * interface, such as TextFigure. The figure to be created is specified by a
@@ -159,6 +164,23 @@ public class TextTool extends CreationTool implements ActionListener {
                     typingTarget.willChange();
             if (textField.getText().length() > 0) {
                 typingTarget.setText(textField.getText());
+//				final Figure addedFigure = typingTarget;
+//				final Drawing addedDrawing = getDrawing();
+//				getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
+//					public String getPresentationName() {
+//						return "";
+//					}
+//
+//					public void undo() throws CannotUndoException {
+//						super.undo();
+//						addedDrawing.remove(addedFigure);
+//					}
+//
+//					public void redo() throws CannotRedoException {
+//						super.redo();
+//						addedDrawing.add(addedFigure);
+//					}
+//				});
             } else {
                 if (createdFigure != null) {
                     getDrawing().remove((Figure)getAddedFigure());
