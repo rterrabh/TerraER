@@ -61,6 +61,7 @@ public class CopyAllToClipboard extends AbstractAction {
 				component.getTransferHandler().exportToClipboard(component,
 						component.getToolkit().getSystemClipboard(),
 						TransferHandler.COPY);
+				//TODO: Obede, se basear aqui para criar o exportar como imagem.
 			}
 		}
 	}

@@ -196,17 +196,22 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
     		final TextFigure tf = this;
     		getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
 				public String getPresentationName() {
-					return "";
+					return "Renaming";
 				}
 
 				public void undo() throws CannotUndoException {
 					super.undo();
+					willChange();
 					tf.setAttribute(TEXT, oldValue);
+					changed();
+					
 				}
 
 				public void redo() throws CannotRedoException {
 					super.redo();
+					willChange();
 					tf.setAttribute(TEXT, newText);
+					changed();					
 				}
 			});
     	}
