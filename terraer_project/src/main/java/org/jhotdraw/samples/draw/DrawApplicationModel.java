@@ -138,39 +138,38 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         CreationTool ct;
         ConnectionTool cnt;
 //        ConnectionFigure lc;
-        
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFigure().init()), "createEntidade", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFracaFigure().init()), "createEntidadeFraca", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFigure().init(), "createEntidade"), "createEntidade", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeFracaFigure().init(), "createEntidadeFraca"), "createEntidadeFraca", labels);
         tb.addSeparator();
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFigure().init()), "createRelacionamento", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFracoFigure().init()), "createRelacionamentoFraco", labels); 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeRelacionamentoFigure().init()), "createEntidadeRelacionamento", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFigure().init(), "createRelacionamento"), "createRelacionamento", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RelacionamentoFracoFigure().init(), "createRelacionamentoFraco"), "createRelacionamentoFraco", labels); 
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new EntidadeRelacionamentoFigure().init(), "createEntidadeRelacionamento"), "createEntidadeRelacionamento", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new TextItalicoFigure(labels.getString("createPapel"))), "createPapel", labels);
         //ButtonFactory.addToolTo(tb, editor, new CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
         
         tb.addSeparator();
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure()), "createElbowConnectionAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure(), "createElbowConnectionAtributo"), "createElbowConnectionAtributo", labels);
 //        lc =  cnt.getPrototype();
 //        lc.setLiner(new ElbowLiner());
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigure().init()), "createAtributo", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveFigure().init()), "createAtributoChave", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveParcialFigure().init()), "createAtributoChaveParcial", labels); 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoDerivadoFigure().init()), "createAtributoDerivado", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoMultivaloradoFigure().init()), "createAtributoMultivalorado", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigure().init(),"createAtributo" ), "createAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveFigure().init(), "createAtributoChave"), "createAtributoChave", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoChaveParcialFigure().init(), "createAtributoChaveParcial"), "createAtributoChaveParcial", labels); 
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoDerivadoFigure().init(), "createAtributoDerivado"), "createAtributoDerivado", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoMultivaloradoFigure().init(), "createAtributoMultivalorado"), "createAtributoMultivalorado", labels);
         tb.addSeparator();
 
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionUmFigure() ), "createElbowUmConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionMuitosFigure()), "createElbowMuitosConnection", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionUmFigure()), "createElbowDoubleUmConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionMuitosFigure()), "createElbowDoubleMuitosConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionUmFigure(), "createElbowUmConnection" ), "createElbowUmConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledLineConnectionMuitosFigure(), "createElbowMuitosConnection"), "createElbowMuitosConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionUmFigure(), "createElbowDoubleUmConnection"), "createElbowDoubleUmConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LabeledDoubleLineConnectionMuitosFigure(), "createElbowDoubleMuitosConnection") , "createElbowDoubleMuitosConnection", labels);
         tb.addSeparator();
 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new DisjuncaoFigure().init()), "createDisjuncao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new SobreposicaoFigure().init()), "createSobreposicao", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new UniaoFigure().init()), "createUniao", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoLineConnectionFigure()), "createGeneralizacaoConnection", labels);
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionGeneralizacaoFigure() ), "createElbowConnection", labels);        
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new DoubleLineConnectionGeneralizacaoFigure()), "createElbowDoubleConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new DisjuncaoFigure().init(), "createDisjuncao"), "createDisjuncao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new SobreposicaoFigure().init(), "createSobreposicao"), "createSobreposicao", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new UniaoFigure().init(), "createUniao"), "createUniao", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new GeneralizacaoLineConnectionFigure(), "createGeneralizacaoConnection"), "createGeneralizacaoConnection", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionGeneralizacaoFigure(), "createElbowConnection"), "createElbowConnection", labels);        
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new DoubleLineConnectionGeneralizacaoFigure(), "createElbowDoubleConnection"), "createElbowDoubleConnection", labels);
         
         tb.addSeparator();
         ButtonFactory.addToolTo(tb, editor, new TextTool(new TextFigure()), "createText", labels);

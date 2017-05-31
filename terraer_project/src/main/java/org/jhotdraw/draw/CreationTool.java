@@ -127,6 +127,10 @@ public class CreationTool extends AbstractTool {
 	public CreationTool(Figure prototype) {
 		this(prototype, null, null);
 	}
+	
+	public CreationTool(Figure prototype, String name) {
+		this(prototype, null, name);
+	}
 
 	/**
 	 * Creates a new instance with the specified prototype but without an
@@ -164,9 +168,11 @@ public class CreationTool extends AbstractTool {
 	public CreationTool(Figure prototype, Map<AttributeKey, Object> attributes, String name) {
 		this.prototype = prototype;
 		this.prototypeAttributes = attributes;
-		if (name == null) {
-			ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+		if (name == null) {			
 			name = labels.getString("createFigure");
+		} else {
+			name = labels.getString(name + ".desc");
 		}
 		this.presentationName = name;
 	}
