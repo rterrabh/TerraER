@@ -52,6 +52,7 @@ import org.jhotdraw.app.action.DeleteAction;
 import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.ExitAction;
 import org.jhotdraw.app.action.ExportAction;
+import org.jhotdraw.app.action.ExportImageAction;
 import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.LoadAction;
 import org.jhotdraw.app.action.LoadRecentAction;
@@ -163,6 +164,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(DeleteAction.ID, new DeleteAction());
         m.putAction(DuplicateAction.ID, new DuplicateAction());
         m.putAction(SelectAllAction.ID, new SelectAllAction());
+        m.putAction(ExportImageAction.ID, new ExportImageAction(this));
         
     }
     protected void initProjectActions(Project p) {
@@ -344,6 +346,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         if (model.getAction(ExportAction.ID) != null) {
             mi = m.add(model.getAction(ExportAction.ID));
         }
+        m.add(model.getAction(ExportImageAction.ID));
         if (model.getAction(PrintAction.ID) != null) {
             m.addSeparator();
             m.add(model.getAction(PrintAction.ID));

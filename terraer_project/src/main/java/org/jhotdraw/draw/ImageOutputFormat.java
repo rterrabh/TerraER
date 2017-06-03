@@ -200,8 +200,8 @@ public class ImageOutputFormat implements OutputFormat {
         
         return toImage(figures, transform,
                 new Dimension(
-                (int) ((Math.max(0, drawBounds.x)+drawBounds.width) * scaleFactor),
-                (int) ((Math.max(0, drawBounds.y)+drawBounds.height) * scaleFactor)
+                (int) ((Math.max(0, drawBounds.x)+drawBounds.width + 20) * scaleFactor),
+                (int) ((Math.max(0, drawBounds.y)+drawBounds.height + 20) * scaleFactor)
                 )
                 );
     }

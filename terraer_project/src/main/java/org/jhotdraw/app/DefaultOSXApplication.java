@@ -51,6 +51,7 @@ import org.jhotdraw.app.action.DeleteAction;
 import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.ExitAction;
 import org.jhotdraw.app.action.ExportAction;
+import org.jhotdraw.app.action.ExportImageAction;
 import org.jhotdraw.app.action.FocusAction;
 import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.MaximizeAction;
@@ -206,6 +207,7 @@ public class DefaultOSXApplication extends AbstractApplication {
         mo.putAction(OpenAction.ID, new OpenAction(this));
         mo.putAction(ClearRecentFilesAction.ID, new ClearRecentFilesAction(this));
         mo.putAction(SaveAction.ID, new SaveAction(this));
+        mo.putAction(ExportImageAction.ID, new ExportImageAction(this));
         mo.putAction(SaveAsAction.ID, new SaveAsAction(this));
         mo.putAction(PrintAction.ID, new PrintAction(this));
         mo.putAction(CloseAction.ID, new CloseAction(this));
@@ -456,6 +458,7 @@ public class DefaultOSXApplication extends AbstractApplication {
             mi = m.add(model.getAction(ExportAction.ID));
             mi.setIcon(null);
         }
+        m.add(model.getAction(ExportImageAction.ID));
         if (model.getAction(PrintAction.ID) != null) {
             m.addSeparator();
             mi = m.add(model.getAction(PrintAction.ID));

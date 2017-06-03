@@ -211,6 +211,19 @@ public class DrawProject extends AbstractProject {
             outputFormat.write(f, drawing);
     }
     
+    public void writeImage(File f) throws IOException {
+        Drawing drawing = view.getDrawing();
+        ImageOutputFormat outputFormat = (ImageOutputFormat) drawing.getOutputFormats().get(1);
+        outputFormat.write(f, drawing);
+    }
+    
+    public JFileChooser createSaveImageChooser() {
+    	ExtensionFileFilter ff = (ExtensionFileFilter) view.getDrawing().getOutputFormats().get(1).getFileFilter();
+        JFileChooser c = super.createSaveChooser();
+        c.addChoosableFileFilter(ff);
+        return c;
+    }
+    
     /**
      * Reads the project from the specified file.
      */
