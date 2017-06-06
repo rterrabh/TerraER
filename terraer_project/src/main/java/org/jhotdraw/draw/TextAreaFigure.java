@@ -41,6 +41,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+
 import org.jhotdraw.geom.Insets2D;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.xml.DOMInput;
@@ -327,9 +331,36 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
     /**
      * Sets the text shown by the text figure.
      */
-    public void setText(String newText) {
-        TEXT.set(this, newText);
-    }
+	public void setText(String newText) {
+		// TEXT.set(this, newText);
+		String oldText = TEXT.get(this);
+		TEXT.set(this, newText);
+		if (oldText != null) {
+			final TextAreaFigure tf = this;
+			final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
+					.getString("renamingText");
+			getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
+				public String getPresentationName() {
+					return presentationName;
+				}
+
+				public void undo() throws CannotUndoException {
+					super.undo();
+					willChange();
+					tf.setAttribute(TEXT, oldText);
+					changed();
+				}
+
+				public void redo() throws CannotRedoException {
+					super.redo();
+					willChange();
+					tf.setAttribute(TEXT, newText);
+					changed();
+				}
+			});
+
+		}
+	}
     
     public int getTextColumns() {
         return (getText() == null) ? 4 : Math.max(getText().length(), 4);

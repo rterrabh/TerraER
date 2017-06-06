@@ -144,43 +144,26 @@ public class TextTool extends CreationTool implements ActionListener {
                 );
     }
     
-    public void mouseReleased(MouseEvent evt) {
-        /*
-        if (createdFigure != null) {
-            Rectangle bounds = createdFigure.getBounds();
-            if (bounds.width == 0 && bounds.height == 0) {
-                getDrawing().remove(createdFigure);
-            } else {
-                getView().addToSelection(createdFigure);
-            }
-            createdFigure = null;
-            getDrawing().fireUndoableEditHappened(creationEdit);
-            fireToolDone();
-        }*/
-    }
+//    public void mouseReleased(MouseEvent evt) {
+//        /*
+//        if (createdFigure != null) {
+//            Rectangle bounds = createdFigure.getBounds();
+//            if (bounds.width == 0 && bounds.height == 0) {
+//                getDrawing().remove(createdFigure);
+//            } else {
+//                getView().addToSelection(createdFigure);
+//            }
+//            createdFigure = null;
+//            getDrawing().fireUndoableEditHappened(creationEdit);
+//            fireToolDone();
+//        }*/
+//    }
     
     protected void endEdit() {
         if (typingTarget != null) {
                     typingTarget.willChange();
             if (textField.getText().length() > 0) {
                 typingTarget.setText(textField.getText());
-//				final Figure addedFigure = typingTarget;
-//				final Drawing addedDrawing = getDrawing();
-//				getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
-//					public String getPresentationName() {
-//						return "";
-//					}
-//
-//					public void undo() throws CannotUndoException {
-//						super.undo();
-//						addedDrawing.remove(addedFigure);
-//					}
-//
-//					public void redo() throws CannotRedoException {
-//						super.redo();
-//						addedDrawing.add(addedFigure);
-//					}
-//				});
             } else {
                 if (createdFigure != null) {
                     getDrawing().remove((Figure)getAddedFigure());
