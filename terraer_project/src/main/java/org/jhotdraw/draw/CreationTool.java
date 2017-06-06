@@ -209,7 +209,9 @@ public class CreationTool extends AbstractTool {
 		anchor.y = evt.getY();
 		createdFigure.setBounds(p, p);
 		getDrawing().add(createdFigure);
-		this.mouseReleased(evt);
+		if (!(createdFigure instanceof TextFigure) && !(createdFigure instanceof TextAreaFigure)){
+			this.mouseReleased(evt);
+		}
 	}
 
 	public void mouseDragged(MouseEvent evt) {

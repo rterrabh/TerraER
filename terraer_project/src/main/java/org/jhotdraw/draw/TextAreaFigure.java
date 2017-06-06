@@ -332,10 +332,9 @@ public class TextAreaFigure extends AbstractAttributedDecoratedFigure implements
      * Sets the text shown by the text figure.
      */
 	public void setText(String newText) {
-		// TEXT.set(this, newText);
 		String oldText = TEXT.get(this);
 		TEXT.set(this, newText);
-		if (oldText != null) {
+		if (oldText != null && !(oldText.equals(newText))) {
 			final TextAreaFigure tf = this;
 			final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
 					.getString("renamingText");

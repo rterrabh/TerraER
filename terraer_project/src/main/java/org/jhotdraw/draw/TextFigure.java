@@ -192,7 +192,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
     public void setText(String newText) {    	
     	String oldValue = TEXT.get(this);
     	TEXT.set(this, newText);
-    	if (oldValue != null){
+    	if (oldValue != null && !(oldValue.equals(newText))){
     		final TextFigure tf = this;
     		final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
 					.getString("renamingText");
@@ -206,14 +206,15 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
 					willChange();
 					tf.setAttribute(TEXT, oldValue);
 					changed();
-					
+					TerraFigureTree.getInstance().refresh(tf);
 				}
 
 				public void redo() throws CannotRedoException {
 					super.redo();
 					willChange();
 					tf.setAttribute(TEXT, newText);
-					changed();					
+					changed();
+					TerraFigureTree.getInstance().refresh(tf);
 				}
 			});
     	}
