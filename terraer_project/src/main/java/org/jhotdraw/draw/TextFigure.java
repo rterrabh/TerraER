@@ -194,9 +194,11 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
     	TEXT.set(this, newText);
     	if (oldValue != null){
     		final TextFigure tf = this;
+    		final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
+					.getString("renamingText");
     		getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
 				public String getPresentationName() {
-					return "Renaming";
+					return presentationName;
 				}
 
 				public void undo() throws CannotUndoException {
