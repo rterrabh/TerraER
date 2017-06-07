@@ -110,6 +110,18 @@ public class EntidadeRelacionamentoFigure extends GroupFigure {
                 df=(DiamondFigure)f;
             }
         }
+        this.EventFunctions=new TerraResizeEventFunctions(this,rec,df,tf);
+    	this.tf.addFigureListener(new FigureAdapter(){
+			@Override
+			public void figureAttributeChanged(FigureEvent e){
+				EventFunctions.figureTextChanged(e);
+			}
+			
+			@Override
+			public void figureChanged(FigureEvent e) {
+				EventFunctions.figureSizeChanged();
+			}
+    	}); 
     }
 	
 }

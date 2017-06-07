@@ -93,29 +93,40 @@ public class AtributoChaveParcialFigure extends GroupFigure implements Attribute
 		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
-	 public void read(DOMInput in) throws IOException {
-	        super.read(in);
-	        
-	        this.nullable = in.getAttribute("nullable", false);
-	        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
-	        
-	        java.util.Collection<Figure> lst=getDecomposition();
-	        for( Figure f : lst){
-	            if(f instanceof TextFigure){
-	                tf=(TextFigure)f;
-	            }
-	            else if(f instanceof EllipseFigure){
-	                ef=(EllipseFigure)f;
-	            }
-	        }
-	    }
-	    
-	    @Override
-		public void write(DOMOutput out) throws IOException {
-			super.write(out);
-			out.addAttribute("nullable", this.nullable);
-			out.addAttribute("attributeType", this.attributeType.getSqlType());
+	public void read(DOMInput in) throws IOException {
+		super.read(in);
+
+		this.nullable = in.getAttribute("nullable", false);
+		this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+
+		java.util.Collection<Figure> lst = getDecomposition();
+		for (Figure f : lst) {
+			if (f instanceof TextFigure) {
+				tf = (TextFigure) f;
+			} else if (f instanceof EllipseFigure) {
+				ef = (EllipseFigure) f;
+			}
 		}
+		this.EventFunctions = new TerraResizeEventFunctions(this, ef, tf);
+		this.tf.addFigureListener(new FigureAdapter() {
+			@Override
+			public void figureAttributeChanged(FigureEvent e) {
+				EventFunctions.figureTextChanged(e);
+			}
+
+			@Override
+			public void figureChanged(FigureEvent e) {
+				EventFunctions.figureSizeChanged();
+			}
+		});
+	}
+
+	@Override
+	public void write(DOMOutput out) throws IOException {
+		super.write(out);
+		out.addAttribute("nullable", this.nullable);
+		out.addAttribute("attributeType", this.attributeType.getSqlType());
+	}
 
 	public AttributeTypeEnum getAttributeType() {
 		return attributeType;

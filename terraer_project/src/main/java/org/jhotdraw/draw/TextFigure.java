@@ -189,11 +189,15 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
      * This is a convenience method for calling willChange,
      * AttribuTEXT.basicSet, changed.
      */
-    public void setText(String newText) {    	
-    	String oldValue = TEXT.get(this);
+    public void setText(String newText) {
+    	String oldValue = null;
+    	if (TEXT == null){
+    		oldValue = TEXT.get(this);
+    	}
     	TEXT.set(this, newText);
     	if (oldValue != null && !(oldValue.equals(newText))){
     		final TextFigure tf = this;
+    		final String oldText = oldValue;
     		final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
 					.getString("renamingText");
     		getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
@@ -204,7 +208,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
 				public void undo() throws CannotUndoException {
 					super.undo();
 					willChange();
-					tf.setAttribute(TEXT, oldValue);
+					tf.setAttribute(TEXT, oldText);
 					changed();
 					TerraFigureTree.getInstance().refresh(tf);
 				}
