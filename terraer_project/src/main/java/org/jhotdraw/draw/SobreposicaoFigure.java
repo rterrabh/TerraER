@@ -64,8 +64,9 @@ public class SobreposicaoFigure extends GroupFigure {
 	}
     
 	public AbstractCompositeFigure clone() {
-		SobreposicaoFigure f = (SobreposicaoFigure) super.clone();
-		f.init();
+//		SobreposicaoFigure f = (SobreposicaoFigure) super.clone();
+//		f.init();
+		SobreposicaoFigure f = new SobreposicaoFigure().init();
 
 		f.willChange();
 		f.cf.setBounds(this.cf.getBounds());

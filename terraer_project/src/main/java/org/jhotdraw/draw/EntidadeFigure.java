@@ -79,8 +79,10 @@ public class EntidadeFigure extends GroupFigure {
 	}
 
 	public AbstractCompositeFigure clone() {
-    	EntidadeFigure f = (EntidadeFigure) super.clone();
-    	f.init();
+//    	EntidadeFigure f = (EntidadeFigure) super.clone();
+//		f.init();
+		EntidadeFigure f = new EntidadeFigure().init();
+    	
     	
     	f.willChange();
 		f.tf.setBounds(this.tf.getBounds());

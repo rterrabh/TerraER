@@ -64,8 +64,9 @@ public class UniaoFigure extends GroupFigure {
 	}
     
 	public AbstractCompositeFigure clone() {
-		UniaoFigure f = (UniaoFigure) super.clone();
-		f.init();
+//		UniaoFigure f = (UniaoFigure) super.clone();
+//		f.init();
+		UniaoFigure f = new UniaoFigure().init();
 
 		f.willChange();
 		f.cf.setBounds(this.cf.getBounds());

@@ -66,8 +66,9 @@ public class DisjuncaoFigure extends GroupFigure {
 	}
 	
 	public AbstractCompositeFigure clone() {
-		DisjuncaoFigure f = (DisjuncaoFigure) super.clone();
-		f.init();
+//		DisjuncaoFigure f = (DisjuncaoFigure) super.clone();
+//		f.init();
+		DisjuncaoFigure f = new DisjuncaoFigure().init();
 
 		f.willChange();
 		f.cf.setBounds(this.cf.getBounds());
