@@ -70,7 +70,7 @@ public class DoubleLineConnectionGeneralizacaoFigure extends
 	@Override
 	public void read(DOMInput in) throws IOException {
 		super.read(in);
-		((TextFigure)this.getChild(0)).setText(in.getAttribute("labelGeneralizacaoText", "característica"));
+		((TextFigure)this.getChild(0)).setText(in.getAttribute("labelGeneralizacaoText", "caracteristica"));
 	}
 
 }

@@ -195,7 +195,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
     		oldValue = TEXT.get(this);
     	}
     	TEXT.set(this, newText);
-    	if (oldValue != null && !(oldValue.equals(newText))){
+    	if (oldValue != null && !(oldValue.equals(newText)) && getDrawing() != null){
     		final TextFigure tf = this;
     		final String oldText = oldValue;
     		final String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels")
