@@ -191,7 +191,7 @@ public class TextFigure extends AbstractAttributedDecoratedFigure
      */
     public void setText(String newText) {
     	String oldValue = null;
-    	if (TEXT == null){
+    	if (TEXT != null){
     		oldValue = TEXT.get(this);
     	}
     	TEXT.set(this, newText);
