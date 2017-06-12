@@ -230,6 +230,7 @@ public class DrawProject extends AbstractProject {
     public void read(File f) throws IOException {
         try {
             final Drawing drawing = createDrawing();
+            view.getDrawing().clear();
             InputFormat inputFormat = drawing.getInputFormats().get(0);
             inputFormat.read(f, drawing);
             SwingUtilities.invokeAndWait(new Runnable() { public void run() {
