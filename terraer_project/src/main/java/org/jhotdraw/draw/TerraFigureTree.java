@@ -324,7 +324,7 @@ public class TerraFigureTree extends JTree {
 					else if(f instanceof TextItalicoFigure){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createPapelSmall.png"));
 					}
-					else if(f instanceof LineConnectionFigure){
+					else if(f instanceof ConnectionAttribute){
 						Ret=new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/createElbowConnectionAtributoSmall.png"));
 					}
 					

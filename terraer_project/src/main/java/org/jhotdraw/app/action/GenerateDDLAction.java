@@ -95,7 +95,7 @@ public class GenerateDDLAction extends AbstractProjectAction {
                 strongEntity.add(f);                   
             } else if (f.getClass().equals(EntidadeFracaFigure.class)) {
                 weakEntity.add(f);                   
-            } else if (f.getClass().equals(LineConnectionFigure.class)){
+            } else if (f.getClass().equals(ConnectionAttribute.class)){
                 connection.add(f);
             } else if (f.getClass().equals(LabeledLineConnectionUmFigure.class)){
                 singleLineConnectionUm.add(f);

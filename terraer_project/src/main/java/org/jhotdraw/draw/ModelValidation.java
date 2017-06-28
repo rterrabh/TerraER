@@ -121,7 +121,7 @@ public class ModelValidation{
 		}
 
 
-		else if (conn.getClass().equals(LineConnectionFigure.class) ){
+		else if (conn.getClass().equals(ConnectionAttribute.class) ){
 		//Connection 
 		//Entity <---> Attribute
 			if (!(conn.getStartFigure() instanceof EntidadeFigure &&

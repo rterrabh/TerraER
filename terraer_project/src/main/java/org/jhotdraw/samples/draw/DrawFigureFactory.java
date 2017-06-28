@@ -29,6 +29,7 @@ import org.jhotdraw.draw.ChopRectangleConnector;
 //import org.jhotdraw.draw.ChopRoundRectangleConnector; @beforeCleanUp:removed_Obede
 //import org.jhotdraw.draw.ChopTriangleConnector; @beforeCleanUp:removed_Obede 
 import org.jhotdraw.draw.CircleFigure;
+import org.jhotdraw.draw.ConnectionAttribute;
 import org.jhotdraw.draw.DefaultDrawing;
 import org.jhotdraw.draw.DiamondFigure;
 import org.jhotdraw.draw.DisjuncaoFigure;
@@ -102,7 +103,8 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { DisjuncaoFigure.class, "disjuncao"},
         { UniaoFigure.class, "uniao"},
         { CircleFigure.class, "circ"},
-        { LineConnectionFigure.class, "lcf"},
+        //{ LineConnectionFigure.class, "lcf"},
+        { ConnectionAttribute.class, "lcaf"},
         { LabeledLineConnectionFigure.class, "llabel"},
         { LabeledLineConnectionUmFigure.class, "llabelUm"},
         { LabeledLineConnectionMuitosFigure.class, "llabelMuitos"},

@@ -30,6 +30,7 @@ import org.jhotdraw.draw.AtributoChaveParcialFigure;
 import org.jhotdraw.draw.AtributoDerivadoFigure;
 import org.jhotdraw.draw.AtributoFigure;
 import org.jhotdraw.draw.AtributoMultivaloradoFigure;
+import org.jhotdraw.draw.ConnectionAttribute;
 import org.jhotdraw.draw.ConnectionTool;
 import org.jhotdraw.draw.CreationTool;
 import org.jhotdraw.draw.DefaultDrawingEditor;
@@ -148,7 +149,8 @@ public class DrawApplicationModel extends DefaultApplicationModel {
         //ButtonFactory.addToolTo(tb, editor, new CreationTool(new RoundRectangleFigure()), "createRoundRectangle", labels);
         
         tb.addSeparator();
-        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure(), "createElbowConnectionAtributo"), "createElbowConnectionAtributo", labels);
+        //ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new LineConnectionFigure(), "createElbowConnectionAtributo"), "createElbowConnectionAtributo", labels);
+        ButtonFactory.addToolTo(tb, editor, cnt = new ConnectionTool(new ConnectionAttribute(), "createElbowConnectionAtributo"), "createElbowConnectionAtributo", labels);
 //        lc =  cnt.getPrototype();
 //        lc.setLiner(new ElbowLiner());
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new AtributoFigure().init(),"createAtributo" ), "createAtributo", labels);
