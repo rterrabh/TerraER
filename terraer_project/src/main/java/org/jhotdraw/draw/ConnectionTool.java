@@ -250,23 +250,16 @@ public class ConnectionTool extends AbstractTool {
     
 	public void unaryRelationshipHandle() {
 		for (Figure f : getDrawing().getFigures()) {
-			if (f.equals(createdFigure) || !(f instanceof LabeledLineConnectionFigure))
+			if (f.equals(createdFigure) || !(f instanceof LineConnectionFigure))
 				continue;
-			/*
-			 * if ( f instanceof LabeledDoubleLineConnectionMuitosFigure || f
-			 * instanceof LabeledDoubleLineConnectionUmFigure || f instanceof
-			 * LabeledLineConnectionMuitosFigure || f instanceof
-			 * LabeledLineConnectionUmFigure ){
-			 * 
-			 * }
-			 */
-			if (!((createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getStartFigure())
-					&& createdFigure.getEndFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure()))
-					|| (createdFigure.getStartFigure().equals(((LabeledLineConnectionFigure) f).getEndFigure())
+			 
+			if (!((createdFigure.getStartFigure().equals(((LineConnectionFigure) f).getStartFigure())
+					&& createdFigure.getEndFigure().equals(((LineConnectionFigure) f).getEndFigure()))
+					|| (createdFigure.getStartFigure().equals(((LineConnectionFigure) f).getEndFigure())
 							&& createdFigure.getEndFigure()
-									.equals(((LabeledLineConnectionFigure) f).getStartFigure()))))
+									.equals(((LineConnectionFigure) f).getStartFigure()))))
 				continue;
-
+			
 			Point2D.Double start = createdFigure.getStartPoint();
 			Point2D.Double end = createdFigure.getEndPoint();
 			Point2D.Double variacao = new Point2D.Double(end.x - start.x, end.y - start.y);
