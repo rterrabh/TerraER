@@ -63,25 +63,37 @@ public class ConnectionRecommendationAction extends AbstractSelectedAction {
 			LineConnectionFigure line = (LineConnectionFigure) v.getSelectedFigures().iterator().next();
 			if (line.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
 				ModelValidationRules mvr = new ModelValidationRules();
-				desenhar(mvr.getOthersConnections(line), mvr.getOthersFigures(line));
+				desenhar(line, mvr.getOthersConnections(line), mvr.getOthersFigures(line));
 			}
 		}
 	}
 
 	
 
-	public void desenhar(ArrayList<Class> connections, ArrayList<ValidationRule> validRule) {
+	public void desenhar(LineConnectionFigure lcf, ArrayList<Class> connections, ArrayList<ValidationRule> validRule) {
 		
 		JPanel panel = new JPanel();
 		JTextArea ta = new JTextArea();
 		ta.setText("Para que essa ligação seja válida utilize uma das opções abaixo:"); //internacionalizacao
 		ta.setEditable(false);
 		panel.add(ta);
-		for (Class c : connections) {
+		if (connections.size() == 0){
 			ta = new JTextArea();
-			ta.setText(getNameFigure(c));
+			ta.setText("A ligação entre esses dois elementos não possui nenhuma conexão válida"); //internacionalizacao
 			ta.setEditable(false);
 			panel.add(ta);
+		} else {
+			for (Class c : connections) {
+	//			ta = new JTextArea();
+	//			ta.setText(getNameFigure(c));
+	//			ta.setEditable(false);
+	//			panel.add(ta);
+				String name = getNameFigure(c);
+				JButton btn = new JButton(name);
+				InsertNewConnectionAction nca = new InsertNewConnectionAction(lcf, c, this.getDrawing());
+				btn.addActionListener(nca);
+				panel.add(btn);
+			}
 		}
 		ta = new JTextArea();
 		ta.setText("A conexão utilizada é válida entre os seguintes elementos:"); //internacionalizacao
