@@ -68,6 +68,7 @@ import javax.swing.JToolBar;
 import javax.swing.text.StyledEditorKit;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.app.action.ConnectionRecommendationAction;
 import org.jhotdraw.app.action.CopyAction;
 import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DuplicateAction;
@@ -197,6 +198,7 @@ public class ButtonFactory {
 		a.add(new SelectAllAction());
 		a.add(new SelectSameAction(editor));
 		a.add(null); // separator
+		a.add(new ConnectionRecommendationAction(editor));//add
 		a.add(new SelectAttributeTypeAction(editor));
 		a.add(new IncludeSqlStatementAction(editor));
 		return a;
