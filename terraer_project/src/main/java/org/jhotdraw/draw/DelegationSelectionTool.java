@@ -14,6 +14,7 @@
 
 package org.jhotdraw.draw;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -36,6 +37,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.app.action.ConnectionRecommendationAction;
 import org.jhotdraw.draw.action.IncludeSqlStatementAction;
 import org.jhotdraw.draw.action.SelectAttributeTypeAction;
 import org.jhotdraw.interfaces.AttributeTypeElement;
@@ -242,6 +244,18 @@ public class DelegationSelectionTool extends SelectionTool {
         		    	}else{
 //        		    		a.setEnabled(false);
 //        		    		a.putValue(AbstractAction.NAME, labels.getString("editSelectAttributeType"));
+        		    		continue;
+        		    	}
+        	}
+        	
+        	if (a != null && a instanceof ConnectionRecommendationAction){
+                DrawingView v = this.getView(); 
+        		if (v.getSelectedFigures() != null &&
+        		    		v.getSelectedFigures().size() == 1 &&
+        		    		v.getSelectedFigures().toArray()[0] instanceof LineConnectionFigure &&
+        		    		((LineConnectionFigure) v.getSelectedFigures().toArray()[0]).getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)){
+        		    		a.setEnabled(true);
+        		    	}else{
         		    		continue;
         		    	}
         	}

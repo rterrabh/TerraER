@@ -3,9 +3,14 @@ package org.jhotdraw.app.action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+
 import org.jhotdraw.draw.ConnectionAttribute;
 import org.jhotdraw.draw.DoubleLineConnectionGeneralizacaoFigure;
 import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.Figure;
 import org.jhotdraw.draw.GeneralizacaoLineConnectionFigure;
 import org.jhotdraw.draw.LabeledDoubleLineConnectionMuitosFigure;
 import org.jhotdraw.draw.LabeledDoubleLineConnectionUmFigure;
@@ -31,8 +36,27 @@ public class InsertNewConnectionAction implements ActionListener {
 		LineConnectionFigure newConection = createConnection(c);
 		newConection.setStartConnector(lcf.getStartConnector());
 		newConection.setEndConnector(lcf.getEndConnector());
-		draw.add(newConection);
 		draw.remove(lcf);
+		draw.add(newConection);
+		
+		final Figure remFigure = lcf;
+        final Figure addedFigure = newConection;
+		final Drawing addedDrawing = draw;
+		draw.fireUndoableEditHappened(new AbstractUndoableEdit() {
+            public String getPresentationName() {
+                return ConnectionRecommendationAction.ID;
+            }
+            public void undo() throws CannotUndoException {
+                super.undo();
+                addedDrawing.remove(addedFigure);
+                addedDrawing.add(remFigure);
+            }
+            public void redo() throws CannotRedoException {
+                super.redo();
+                addedDrawing.remove(remFigure);
+                addedDrawing.add(addedFigure);
+            }
+        });
 	}
 	
 	public LineConnectionFigure createConnection(Class c){
