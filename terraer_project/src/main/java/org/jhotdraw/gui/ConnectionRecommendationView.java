@@ -63,7 +63,7 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 
 		} else {
 			// mensagem de conexoes que poderiam ser validas
-			int metade = connections.size() / 2;
+			int metade = (connections.size() / 2) - 1;
 			int i = 0;
 			for (Class c : connections) {
 				if (i == metade) {
@@ -93,7 +93,7 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 		panel.add(new JLabel());
 
 		//mensagem ligacoes validas para conexao
-		int metade = validRule.size() / 2;
+		int metade = (validRule.size() / 2) - 1;
 		int i = 0;
 		for (ValidationRule c : validRule) {
 			panel.add(new JLabel(getImageFigure(c.getOrigem())));
@@ -106,10 +106,6 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 			i++;
 		}
 
-		panel.add(new JLabel());
-		panel.add(new JLabel());
-		panel.add(new JLabel());
-		
 		add(panel);
 		pack();
 		setLocationRelativeTo(null);
