@@ -52,27 +52,17 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 
 	public void desenhar(ArrayList<Class> connections, ArrayList<ValidationRule> validRule, LineConnectionFigure lcf,
 			Drawing draw) {
+
 		JPanel panel = new JPanel(new GridLayout(0, 3));
 
-//		panel.add(new JLabel());
-//		JLabel ta = new JLabel();
-//		ta.setText("Ligações válidas"); // internacionalizacao
-//		panel.add(ta);
-//		panel.add(new JLabel());
-
 		if (connections.size() == 0) {
-
-//			panel.add(new JLabel());
-//			ta = new JLabel();
-//			ta.setText("Não há conexão válida"); // internacionalizacao
-//			panel.add(ta);
-//			panel.add(new JLabel());
-
+			// mensagem de vazio
 			panel.add(new JLabel());
 			panel.add(new JLabel());
 			panel.add(new JLabel());
 
 		} else {
+			// mensagem de conexoes que poderiam ser validas
 			int metade = connections.size() / 2;
 			int i = 0;
 			for (Class c : connections) {
@@ -102,12 +92,7 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 		panel.add(new JLabel());
 		panel.add(new JLabel());
 
-//		panel.add(new JLabel());
-//		ta = new JLabel();
-//		ta.setText("Elementos válidos"); // internacionalizacao
-//		panel.add(ta);
-//		panel.add(new JLabel());
-
+		//mensagem ligacoes validas para conexao
 		int metade = validRule.size() / 2;
 		int i = 0;
 		for (ValidationRule c : validRule) {
@@ -124,9 +109,10 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 		panel.add(new JLabel());
 		panel.add(new JLabel());
 		panel.add(new JLabel());
-
+		
 		add(panel);
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
 		this.setTitle(labels.getString(ConnectionRecommendationAction.ID));

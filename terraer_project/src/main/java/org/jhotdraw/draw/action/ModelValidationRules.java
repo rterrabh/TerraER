@@ -29,9 +29,17 @@ import org.jhotdraw.draw.UniaoFigure;
 public class ModelValidationRules {
 
 	private static ArrayList<ValidationRule> rules = null;
+	private static ModelValidationRules INSTANCE = null; 
 
-	public ModelValidationRules() {
+	private ModelValidationRules() {
 		init();
+	}
+	
+	public static ModelValidationRules getInstance(){
+		if (INSTANCE == null){
+			INSTANCE = new ModelValidationRules();
+		}
+		return INSTANCE;
 	}
 	
 	public ArrayList<Class> getOthersConnections(LineConnectionFigure lcf) {

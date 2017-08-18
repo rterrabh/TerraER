@@ -44,6 +44,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.jhotdraw.app.EditableComponent;
+import org.jhotdraw.app.action.ConnectionRecommendationAction;
 import org.jhotdraw.geom.Dimension2DDouble;
 import org.jhotdraw.util.ResourceBundleUtil;
 import org.jhotdraw.util.ReversedList;
@@ -141,6 +142,11 @@ public class DefaultDrawingView
         }
         Figure figure = findFigure(evt.getPoint());
         if (figure != null) {
+        	if (figure instanceof LineConnectionFigure){
+        		if (figure.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
+        			ConnectionRecommendationAction.getInstance(null).actionFromConnection((LineConnectionFigure)figure);
+        		}
+        	}
             return figure.getToolTipText(viewToDrawing(evt.getPoint()));
         }
         return null;

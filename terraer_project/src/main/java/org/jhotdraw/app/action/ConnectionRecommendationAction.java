@@ -18,12 +18,20 @@ import org.jhotdraw.util.ResourceBundleUtil;
 public class ConnectionRecommendationAction extends AbstractSelectedAction {
 
 	public final static String ID = "recomendation";
+	private static ConnectionRecommendationAction INSTANCE = null;
 
-	public ConnectionRecommendationAction(DrawingEditor editor) {
+	private ConnectionRecommendationAction(DrawingEditor editor) {
 		super(editor);
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
 		putValue(AbstractAction.NAME, labels.getString(ID));
 		this.setEnabled(false);
+	}
+	
+	public static ConnectionRecommendationAction getInstance(DrawingEditor editor){
+		if (INSTANCE == null && editor != null){
+			INSTANCE = new ConnectionRecommendationAction(editor);
+		}
+		return INSTANCE;
 	}
 
 	@Override
@@ -33,10 +41,19 @@ public class ConnectionRecommendationAction extends AbstractSelectedAction {
 				&& v.getSelectedFigures().toArray()[0] instanceof LineConnectionFigure) {
 			LineConnectionFigure line = (LineConnectionFigure) v.getSelectedFigures().iterator().next();
 			if (line.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
-				ModelValidationRules mvr = new ModelValidationRules();
+				ModelValidationRules mvr = ModelValidationRules.getInstance();
 				ConnectionRecommendationView view = new ConnectionRecommendationView();
 				view.desenhar(mvr.getOthersConnections(line), mvr.getOthersFigures(line), line, this.getDrawing());
 			}
 		}
 	}
+	
+	public void actionFromConnection(LineConnectionFigure line){
+		if (line.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
+			ModelValidationRules mvr = ModelValidationRules.getInstance();
+			ConnectionRecommendationView view = new ConnectionRecommendationView();
+			view.desenhar(mvr.getOthersConnections(line), mvr.getOthersFigures(line), line, this.getDrawing());
+		}
+	}
+	
 }

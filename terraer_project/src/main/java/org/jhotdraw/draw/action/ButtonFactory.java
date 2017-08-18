@@ -198,7 +198,7 @@ public class ButtonFactory {
 		a.add(new SelectAllAction());
 		a.add(new SelectSameAction(editor));
 		a.add(null); // separator
-		a.add(new ConnectionRecommendationAction(editor));//add
+		a.add(ConnectionRecommendationAction.getInstance(editor));
 		a.add(new SelectAttributeTypeAction(editor));
 		a.add(new IncludeSqlStatementAction(editor));
 		return a;
