@@ -47,10 +47,10 @@ public class ValidateModelAction extends AbstractProjectAction {
     	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
     	
     	if (LineConnectionFigure.validateEnabled){
-    		labels.configureAction(this, ID2);
+    		//labels.configureAction(this, ID2);
     		LineConnectionFigure.validateEnabled = false;
     	}else{
-    		labels.configureAction(this, ID);
+    		//labels.configureAction(this, ID);
     		LineConnectionFigure.validateEnabled = true;
     	}    	
     	
