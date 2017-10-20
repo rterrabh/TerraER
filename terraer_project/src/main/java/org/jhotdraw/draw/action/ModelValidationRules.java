@@ -47,14 +47,12 @@ public class ModelValidationRules {
 		Figure origem = lcf.getStartFigure();
 		Figure destino = lcf.getEndFigure();
 		for (ValidationRule regra : this.rules) {
-			if ((origem.getClass().equals(regra.origem)
-					&& destino.getClass().equals(regra.destino))
-					|| (regra.bidirecional && destino.getClass().equals(regra.origem)
-							&& origem.getClass().equals(regra.destino))) {
+			if((regra.origemContains(origem.getClass()) && regra.destinoContains(destino.getClass())) || 
+					(regra.bidirecional && regra.origemContains(destino.getClass()) && regra.destinoContains(origem.getClass()))){
 				connections.add(regra.conexao);
 			}
 		}
-		return connections; // se vazio ligacao nao pd existir
+		return connections;
 	}
 
 	public ArrayList<ValidationRule> getOthersFigures(LineConnectionFigure lcf) {
@@ -69,193 +67,80 @@ public class ModelValidationRules {
 
 	public void init() {
 		rules = new ArrayList<>();
-
-		rules.add(new ValidationRule(EntidadeFigure.class, ConnectionAttribute.class, AtributoChaveFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoChaveFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, ConnectionAttribute.class,
-				AtributoChaveParcialFigure.class, true));
-
-		rules.add(new ValidationRule(AtributoFigure.class, ConnectionAttribute.class, AtributoFigure.class, true));
-
-		rules.add(
-				new ValidationRule(RelacionamentoFigure.class, ConnectionAttribute.class, AtributoFigure.class, true));
-		rules.add(new ValidationRule(RelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoDerivadoFigure.class, true));
-		rules.add(new ValidationRule(RelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoMultivaloradoFigure.class, true));
-
-		rules.add(new ValidationRule(RelacionamentoFracoFigure.class, ConnectionAttribute.class, AtributoFigure.class,
-				true));
-		rules.add(new ValidationRule(RelacionamentoFracoFigure.class, ConnectionAttribute.class,
-				AtributoDerivadoFigure.class, true));
-		rules.add(new ValidationRule(RelacionamentoFracoFigure.class, ConnectionAttribute.class,
-				AtributoMultivaloradoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFigure.class, ConnectionAttribute.class, AtributoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, ConnectionAttribute.class, AtributoDerivadoFigure.class,
-				true));
-		rules.add(new ValidationRule(EntidadeFigure.class, ConnectionAttribute.class, AtributoMultivaloradoFigure.class,
-				true));
-
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, ConnectionAttribute.class, AtributoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, ConnectionAttribute.class, AtributoDerivadoFigure.class,
-				true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, ConnectionAttribute.class,
-				AtributoMultivaloradoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoDerivadoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, ConnectionAttribute.class,
-				AtributoMultivaloradoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				RelacionamentoFracoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeRelacionamentoFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionUmFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledLineConnectionMuitosFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionUmFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledLineConnectionMuitosFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionUmFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-		rules.add(new ValidationRule(EntidadeFracaFigure.class, LabeledDoubleLineConnectionMuitosFigure.class,
-				EntidadeRelacionamentoFigure.class, true));
-
-		rules.add(new ValidationRule(SobreposicaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				EntidadeFigure.class, true));
-		rules.add(new ValidationRule(SobreposicaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(SobreposicaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(SobreposicaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFigure.class, true));
-		rules.add(new ValidationRule(SobreposicaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(SobreposicaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(DisjuncaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				EntidadeFigure.class, true));
-		rules.add(new ValidationRule(DisjuncaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(DisjuncaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(DisjuncaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFigure.class, true));
-		rules.add(new ValidationRule(DisjuncaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(DisjuncaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(UniaoFigure.class, LineConnectionGeneralizacaoFigure.class, EntidadeFigure.class,
-				true));
-		rules.add(new ValidationRule(UniaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(UniaoFigure.class, LineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(UniaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFigure.class, true));
-		rules.add(new ValidationRule(UniaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				EntidadeFracaFigure.class, true));
-		rules.add(new ValidationRule(UniaoFigure.class, DoubleLineConnectionGeneralizacaoFigure.class,
-				RelacionamentoFracoFigure.class, true));
-
-		rules.add(new ValidationRule(SobreposicaoFigure.class, GeneralizacaoLineConnectionFigure.class,
-				EntidadeFigure.class, false));
-		rules.add(new ValidationRule(DisjuncaoFigure.class, GeneralizacaoLineConnectionFigure.class,
-				EntidadeFigure.class, false));
-		rules.add(new ValidationRule(UniaoFigure.class, GeneralizacaoLineConnectionFigure.class, EntidadeFigure.class,
-				false));
-
-		rules.add(new ValidationRule(EntidadeFigure.class, GeneralizacaoLineConnectionFigure.class,
-				EntidadeFigure.class, true));
+		
+		Class[] destino = {EntidadeFigure.class, EntidadeFracaFigure.class, EntidadeRelacionamentoFigure.class};
+		Class[] origem = {RelacionamentoFigure.class, RelacionamentoFracoFigure.class};
+		rules.add(new ValidationRule (origem, LabeledLineConnectionUmFigure.class, destino, true));
+		rules.add(new ValidationRule (origem, LabeledLineConnectionMuitosFigure.class, destino, true));
+		rules.add(new ValidationRule (origem, LabeledDoubleLineConnectionUmFigure.class, destino, true));
+		rules.add(new ValidationRule (origem, LabeledDoubleLineConnectionMuitosFigure.class, destino, true));
+		
+		Class[] origem2 = {EntidadeFigure.class, EntidadeFracaFigure.class, EntidadeRelacionamentoFigure.class};
+		Class[] destino2 = {UniaoFigure.class, SobreposicaoFigure.class, DisjuncaoFigure.class};
+		rules.add(new ValidationRule (origem2, LineConnectionGeneralizacaoFigure.class, destino2, true));
+		rules.add(new ValidationRule (origem2, DoubleLineConnectionGeneralizacaoFigure.class, destino2, true));
+		
+		Class[] origem3 = {EntidadeFigure.class, EntidadeFracaFigure.class, EntidadeRelacionamentoFigure.class};
+		Class[] destino3 = {AtributoFigure.class, AtributoMultivaloradoFigure.class, AtributoDerivadoFigure.class};
+		rules.add(new ValidationRule (origem3, ConnectionAttribute.class, destino3, true));
+		
+		Class[] origem4 = {RelacionamentoFigure.class, RelacionamentoFracoFigure.class};
+		Class[] destino4 = {AtributoFigure.class, AtributoMultivaloradoFigure.class, AtributoDerivadoFigure.class};
+		rules.add(new ValidationRule (origem4, ConnectionAttribute.class, destino4, true));
+		
+		Class[] origem5 = {AtributoFigure.class};
+		Class[] destino5 = {AtributoFigure.class};
+		rules.add(new ValidationRule (origem5, ConnectionAttribute.class, destino5, true));
+		
+		Class[] destino6 = {UniaoFigure.class, SobreposicaoFigure.class, DisjuncaoFigure.class};
+		Class[] origem6 = {EntidadeFigure.class};
+		rules.add(new ValidationRule (origem6, GeneralizacaoLineConnectionFigure.class, destino6, false));
+		
+		Class[] origem7 = {EntidadeFigure.class};
+		Class[] destino7 = {EntidadeFigure.class};
+		rules.add(new ValidationRule (origem7, GeneralizacaoLineConnectionFigure.class, destino7, true));
+		
+		Class[] origem8 = {EntidadeFigure.class};
+		Class[] destino8 = {EntidadeRelacionamentoFigure.class};
+		rules.add(new ValidationRule (origem8, LabeledLineConnectionUmFigure.class, destino8, true));
+		rules.add(new ValidationRule (origem8, LabeledLineConnectionMuitosFigure.class, destino8, true));
+		rules.add(new ValidationRule (origem8, LabeledDoubleLineConnectionUmFigure.class, destino8, true));
+		rules.add(new ValidationRule (origem8, LabeledDoubleLineConnectionMuitosFigure.class, destino8, true));
+		
+		Class[] origem9 = {EntidadeFracaFigure.class};
+		Class[] destino9 = {EntidadeRelacionamentoFigure.class};
+		rules.add(new ValidationRule (origem9, LabeledLineConnectionUmFigure.class, destino9, true));
+		rules.add(new ValidationRule (origem9, LabeledLineConnectionMuitosFigure.class, destino9, true));
+		rules.add(new ValidationRule (origem9, LabeledDoubleLineConnectionUmFigure.class, destino9, true));
+		rules.add(new ValidationRule (origem9, LabeledDoubleLineConnectionMuitosFigure.class, destino9, true));
+		
+		Class[] destino10 = {EntidadeFigure.class, EntidadeRelacionamentoFigure.class};
+		Class[] origem10 = {AtributoChaveFigure.class};
+		rules.add(new ValidationRule (origem10, ConnectionAttribute.class, destino10, true));
+		
+		Class[] origem12 = {EntidadeFracaFigure.class};
+		Class[] destino12 = {AtributoChaveParcialFigure.class};
+		rules.add(new ValidationRule (origem12, ConnectionAttribute.class, destino12, true));
 	}
 
 	public class ValidationRule {
-		private Class origem;
-		private Class destino;
+		private Class[] origem;
+		private Class[] destino;
 		private Class conexao;
 		private boolean bidirecional;
 
-		public ValidationRule(Class origem, Class conexao, Class destino, boolean bidirecional) {
+		public ValidationRule(Class[] origem, Class conexao, Class[] destino, boolean bidirecional) {
 			this.bidirecional = bidirecional;
 			this.origem = origem;
 			this.destino = destino;
 			this.conexao = conexao;
 		}
 		
-		public Class getOrigem(){
+		public Class[] getOrigem(){
 			return origem;
 		}
 		
-		public Class getDestino(){
+		public Class[] getDestino(){
 			return destino;
 		}
 		
@@ -265,6 +150,24 @@ public class ModelValidationRules {
 		
 		public boolean getBidirecional(){
 			return bidirecional;
+		}
+		
+		public boolean origemContains(Class c){
+			for (Class c2 : origem){
+				if(c2.equals(c)){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public boolean destinoContains(Class c){
+			for (Class c2 : destino){
+				if(c2.equals(c)){
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 

@@ -1,8 +1,14 @@
 package org.jhotdraw.gui;
 
-import java.awt.GridLayout;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -47,63 +53,105 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.setVisible(false);
-		this.dispose();//fechar frame
+		this.dispose();
 	}
 
 	public void desenhar(ArrayList<Class> connections, ArrayList<ValidationRule> validRule, LineConnectionFigure lcf,
 			Drawing draw) {
 
-		JPanel panel = new JPanel(new GridLayout(0, 3));
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints cons;
 
 		if (connections.size() == 0) {
-			// mensagem de vazio
-			panel.add(new JLabel());
-			panel.add(new JLabel());
-			panel.add(new JLabel());
+			cons = new GridBagConstraints();
+			cons.gridwidth = 5;
+			cons.gridx = 1;
+			String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
+					.getString("recomendationConnectionsNo");
+			panel.add(new JLabel(presentationName), cons);
 
 		} else {
-			// mensagem de conexoes que poderiam ser validas
 			int metade = (connections.size() / 2) - 1;
 			int i = 0;
 			for (Class c : connections) {
-				if (i == metade) {
-					panel.add(new JLabel(getImageFigure(lcf.getStartFigure().getClass())));
-				} else {
-					panel.add(new JLabel());
+				if (i == 0) {
+					cons = new GridBagConstraints();
+					cons.gridwidth = 5;
+					cons.gridx = 1;
+					cons.gridy = i;
+					String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
+							.getString("recomendationConnections");
+					panel.add(new JLabel(presentationName), cons);
+				}
+
+				if (i == metade || metade == -1) {
+					cons = new GridBagConstraints();
+					cons.gridx = 1;
+					cons.gridy = i + 1;
+					cons.ipadx = 100;
+					panel.add(new JLabel(getImageFigure(lcf.getStartFigure().getClass())), cons);
 				}
 
 				JButton btn = new JButton(getImageFigure(c));
 				InsertNewConnectionAction nca = new InsertNewConnectionAction(lcf, c, draw);
 				btn.addActionListener(nca);
 				btn.addActionListener(this);
-				panel.add(btn);
+				cons = new GridBagConstraints();
+				cons.gridx = 3;
+				cons.gridy = i + 1;
+				cons.insets = new Insets(5, 5, 5, 5);
+				cons.ipadx = 100;
+				panel.add(btn, cons);
 
-				if (i == metade) {
-					panel.add(new JLabel(getImageFigure(lcf.getEndFigure().getClass())));
-				} else {
-					panel.add(new JLabel());
+				if (i == metade || metade == -1) {
+					cons = new GridBagConstraints();
+					cons.gridx = 5;
+					cons.gridy = i + 1;
+					cons.ipadx = 100;
+					panel.add(new JLabel(getImageFigure(lcf.getEndFigure().getClass())), cons);
 				}
-
 				i++;
 			}
 		}
 
-		panel.add(new JLabel());
-		panel.add(new JLabel());
-		panel.add(new JLabel());
+		int i = connections.size() + 1;
+		int metade = (numRows(validRule) / 2) + i - 1;
 
-		//mensagem ligacoes validas para conexao
-		int metade = (validRule.size() / 2) - 1;
-		int i = 0;
+		cons = new GridBagConstraints();
+		cons.gridwidth = 5;
+		cons.gridx = 1;
+		cons.gridy = i;
+		String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
+				.getString("recomendationElements");
+		panel.add(new JLabel(presentationName), cons);
+
 		for (ValidationRule c : validRule) {
-			panel.add(new JLabel(getImageFigure(c.getOrigem())));
-			if (i == metade) {
-				panel.add(new JLabel(getImageFigure(c.getConexao())));
-			} else {
-				panel.add(new JLabel());
+			for (int j = 0; j < c.getOrigem().length; j++) {
+				cons = new GridBagConstraints();
+				cons.gridx = 1;
+				cons.gridy = i + 1;
+				cons.insets = new Insets(5, 5, 5, 5);
+				cons.ipadx = 100;
+				panel.add(new JLabel(getImageFigure(c.getOrigem()[j])), cons);
+
+				if (i == metade) {
+					cons = new GridBagConstraints();
+					cons.gridx = 3;
+					cons.gridy = i + 1;
+					cons.insets = new Insets(5, 5, 5, 5);
+					cons.ipadx = 100;
+					panel.add(new JLabel(getImageFigure(c.getConexao())), cons);
+				}
+				for (int k = 0; k < c.getDestino().length; k++) {
+					cons = new GridBagConstraints();
+					cons.gridx = 5 + k;
+					cons.gridy = i + 1;
+					cons.insets = new Insets(5, 5, 5, 5);
+					cons.ipadx = 100;
+					panel.add(new JLabel(getImageFigure(c.getDestino()[k])), cons);
+				}
+				i++;
 			}
-			panel.add(new JLabel(getImageFigure(c.getDestino())));
-			i++;
 		}
 
 		add(panel);
@@ -114,6 +162,25 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 		this.setTitle(labels.getString(ConnectionRecommendationAction.ID));
 	}
 
+	private int numRows(ArrayList<ValidationRule> rules) {
+		int sum = 0;
+		for (ValidationRule r : rules) {
+			for (Class c : r.getOrigem()) {
+				sum++;
+			}
+		}
+		return sum;
+	}
+
+	private Image getScaledImage(Image srcImg, int w, int h) {
+		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = resizedImg.createGraphics();
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.dispose();
+		return resizedImg;
+	}
+
 	private String getNameFigure(Class c) {
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 		return labels.getTip(getLabelFigureName(c));
@@ -121,10 +188,11 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 
 	private ImageIcon getImageFigure(Class c) {
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-		return labels.getImageIcon(getLabelFigureName(c), c);
+		// return labels.getImageIcon(getLabelFigureName(c), c);
+		return new ImageIcon(getScaledImage(labels.getImageIconRecommendation(getLabelFigureName(c), c).getImage(), 40, 40));
 	}
-	
-	public String getLabelFigureName(Class c){
+
+	public String getLabelFigureName(Class c) {
 		if (c.equals(EntidadeFigure.class)) {
 			return "createEntidade";
 		} else if (c.equals(EntidadeRelacionamentoFigure.class)) {

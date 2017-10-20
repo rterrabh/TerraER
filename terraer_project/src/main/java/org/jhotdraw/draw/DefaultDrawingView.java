@@ -142,11 +142,12 @@ public class DefaultDrawingView
         }
         Figure figure = findFigure(evt.getPoint());
         if (figure != null) {
-        	if (figure instanceof LineConnectionFigure){
-        		if (figure.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
-        			ConnectionRecommendationAction.getInstance(null).actionFromConnection((LineConnectionFigure)figure);
-        		}
-        	}
+        	//tooltip to recomendation system
+//        	if (figure instanceof LineConnectionFigure){
+//        		if (figure.getAttribute(AttributeKeys.TEXT_COLOR).equals(Color.red)) {
+//        			ConnectionRecommendationAction.getInstance(null).actionFromConnection((LineConnectionFigure)figure);
+//        		}
+//        	}
             return figure.getToolTipText(viewToDrawing(evt.getPoint()));
         }
         return null;
