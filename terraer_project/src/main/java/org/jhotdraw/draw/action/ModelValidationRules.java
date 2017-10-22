@@ -87,18 +87,10 @@ public class ModelValidationRules {
 		Class[] origem4 = {RelacionamentoFigure.class, RelacionamentoFracoFigure.class};
 		Class[] destino4 = {AtributoFigure.class, AtributoMultivaloradoFigure.class, AtributoDerivadoFigure.class};
 		rules.add(new ValidationRule (origem4, ConnectionAttribute.class, destino4, true));
-		
-		Class[] origem5 = {AtributoFigure.class};
-		Class[] destino5 = {AtributoFigure.class};
-		rules.add(new ValidationRule (origem5, ConnectionAttribute.class, destino5, true));
-		
+				
 		Class[] destino6 = {UniaoFigure.class, SobreposicaoFigure.class, DisjuncaoFigure.class};
 		Class[] origem6 = {EntidadeFigure.class};
-		rules.add(new ValidationRule (origem6, GeneralizacaoLineConnectionFigure.class, destino6, false));
-		
-		Class[] origem7 = {EntidadeFigure.class};
-		Class[] destino7 = {EntidadeFigure.class};
-		rules.add(new ValidationRule (origem7, GeneralizacaoLineConnectionFigure.class, destino7, true));
+		rules.add(new ValidationRule (origem6, GeneralizacaoLineConnectionFigure.class, destino6, false));		
 		
 		Class[] origem8 = {EntidadeFigure.class};
 		Class[] destino8 = {EntidadeRelacionamentoFigure.class};
@@ -118,8 +110,16 @@ public class ModelValidationRules {
 		Class[] origem10 = {AtributoChaveFigure.class};
 		rules.add(new ValidationRule (origem10, ConnectionAttribute.class, destino10, true));
 		
-		Class[] origem12 = {EntidadeFracaFigure.class};
-		Class[] destino12 = {AtributoChaveParcialFigure.class};
+		Class[] origem7 = {EntidadeFigure.class};
+		Class[] destino7 = {EntidadeFigure.class};
+		rules.add(new ValidationRule (origem7, GeneralizacaoLineConnectionFigure.class, destino7, true));
+		
+		Class[] origem5 = {AtributoFigure.class};
+		Class[] destino5 = {AtributoFigure.class};
+		rules.add(new ValidationRule (origem5, ConnectionAttribute.class, destino5, true));
+		
+		Class[] destino12 = {EntidadeFracaFigure.class};
+		Class[] origem12 = {AtributoChaveParcialFigure.class};
 		rules.add(new ValidationRule (origem12, ConnectionAttribute.class, destino12, true));
 	}
 

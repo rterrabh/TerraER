@@ -61,34 +61,73 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints cons;
+		cons = new GridBagConstraints();
+
+		cons.gridx = 1;
+		cons.gridy = 0;
+		cons.insets = new Insets(0, 5, 5, 5);
+
+		cons.ipadx = 10;
+		cons.anchor = GridBagConstraints.CENTER;
+		panel.add(new JLabel(), cons);
+		for (int i=2; i<=8; i++){
+			cons = new GridBagConstraints();
+
+			cons.gridx = i;
+			cons.gridy = 0;
+			cons.insets = new Insets(0, 5, 5, 5);
+
+			cons.ipadx = 40;
+			cons.anchor = GridBagConstraints.CENTER;
+			panel.add(new JLabel(), cons);
+		}
+		cons = new GridBagConstraints();
+
+		cons.gridx = 9;
+		cons.gridy = 0;
+		cons.insets = new Insets(0, 5, 5, 5);
+
+		cons.ipadx = 10;
+		cons.anchor = GridBagConstraints.CENTER;
+		panel.add(new JLabel(), cons);
 
 		if (connections.size() == 0) {
 			cons = new GridBagConstraints();
-			cons.gridwidth = 5;
+			cons.gridwidth = 8;
 			cons.gridx = 1;
+			cons.gridy = 1;
+			cons.insets = new Insets(5, 5, 5, 5);
+
+			cons.anchor = GridBagConstraints.CENTER;
 			String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
 					.getString("recomendationConnectionsNo");
-			panel.add(new JLabel(presentationName), cons);
+			JLabel text =new JLabel(presentationName); 
+			panel.add(text, cons);
 
 		} else {
-			int metade = (connections.size() / 2) - 1;
-			int i = 0;
-			for (Class c : connections) {
-				if (i == 0) {
-					cons = new GridBagConstraints();
-					cons.gridwidth = 5;
-					cons.gridx = 1;
-					cons.gridy = i;
-					String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
-							.getString("recomendationConnections");
-					panel.add(new JLabel(presentationName), cons);
-				}
+			int metade = (connections.size() / 2);
+			int i = 1;
+			cons = new GridBagConstraints();
+			cons.gridwidth = 8;
+			cons.gridx = 1;
+			cons.gridy = i;
+			cons.insets = new Insets(5, 5, 5, 5);
 
-				if (i == metade || metade == -1) {
+			cons.anchor = GridBagConstraints.CENTER;
+			String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
+					.getString("recomendationConnections");
+			JLabel text = new JLabel(presentationName);
+			panel.add(text, cons);
+			for (Class c : connections) {
+
+				if (i == metade || metade == -1 || metade == 0) {
 					cons = new GridBagConstraints();
-					cons.gridx = 1;
+
+					cons.gridx = 2;
 					cons.gridy = i + 1;
-					cons.ipadx = 100;
+					cons.insets = new Insets(0, 5, 5, 5);
+
+					cons.anchor = GridBagConstraints.CENTER;
 					panel.add(new JLabel(getImageFigure(lcf.getStartFigure().getClass())), cons);
 				}
 
@@ -97,57 +136,70 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 				btn.addActionListener(nca);
 				btn.addActionListener(this);
 				cons = new GridBagConstraints();
-				cons.gridx = 3;
+
+				cons.gridx = 4;
 				cons.gridy = i + 1;
-				cons.insets = new Insets(5, 5, 5, 5);
-				cons.ipadx = 100;
+				cons.insets = new Insets(0, 5, 5, 5);
+
+				cons.anchor = GridBagConstraints.CENTER;
 				panel.add(btn, cons);
 
-				if (i == metade || metade == -1) {
+				if (i == metade || metade == -1 || metade == 0) {
 					cons = new GridBagConstraints();
-					cons.gridx = 5;
+
+					cons.gridx = 7;
 					cons.gridy = i + 1;
-					cons.ipadx = 100;
+					cons.insets = new Insets(0, 5, 5, 5);
+
+					cons.anchor = GridBagConstraints.CENTER;
 					panel.add(new JLabel(getImageFigure(lcf.getEndFigure().getClass())), cons);
 				}
 				i++;
 			}
 		}
 
-		int i = connections.size() + 1;
+		int i = connections.size() + 2;
 		int metade = (numRows(validRule) / 2) + i - 1;
 
 		cons = new GridBagConstraints();
-		cons.gridwidth = 5;
+		cons.gridwidth = 8;
 		cons.gridx = 1;
 		cons.gridy = i;
+		cons.insets = new Insets(5, 5, 5, 5);
+
+		cons.anchor = GridBagConstraints.CENTER;
 		String presentationName = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels")
 				.getString("recomendationElements");
-		panel.add(new JLabel(presentationName), cons);
+		JLabel text = new JLabel(presentationName);
+		panel.add(text, cons);
 
 		for (ValidationRule c : validRule) {
 			for (int j = 0; j < c.getOrigem().length; j++) {
 				cons = new GridBagConstraints();
-				cons.gridx = 1;
+
+				cons.gridx = 2;
 				cons.gridy = i + 1;
-				cons.insets = new Insets(5, 5, 5, 5);
-				cons.ipadx = 100;
+				cons.insets = new Insets(0, 5, 5, 5);
+
+				cons.anchor = GridBagConstraints.CENTER;
 				panel.add(new JLabel(getImageFigure(c.getOrigem()[j])), cons);
 
 				if (i == metade) {
 					cons = new GridBagConstraints();
-					cons.gridx = 3;
-					cons.gridy = i + 1;
-					cons.insets = new Insets(5, 5, 5, 5);
-					cons.ipadx = 100;
+
+					cons.gridx = 4;
+					cons.gridy = i+1;
+					cons.insets = new Insets(0, 5, 5, 5);
+
+					cons.anchor = GridBagConstraints.CENTER;
 					panel.add(new JLabel(getImageFigure(c.getConexao())), cons);
 				}
 				for (int k = 0; k < c.getDestino().length; k++) {
 					cons = new GridBagConstraints();
-					cons.gridx = 5 + k;
+					cons.gridx = 6 + k;
 					cons.gridy = i + 1;
-					cons.insets = new Insets(5, 5, 5, 5);
-					cons.ipadx = 100;
+					cons.insets = new Insets(0, 5, 5, 5);
+					cons.anchor = GridBagConstraints.CENTER;
 					panel.add(new JLabel(getImageFigure(c.getDestino()[k])), cons);
 				}
 				i++;
