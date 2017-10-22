@@ -188,7 +188,7 @@ public class ConnectionRecommendationView extends JFrame implements ActionListen
 
 	private ImageIcon getImageFigure(Class c) {
 		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
-		// return labels.getImageIcon(getLabelFigureName(c), c);
+		// return labels.getImageIcon(getLabelFigureName(c), c);		
 		return new ImageIcon(getScaledImage(labels.getImageIconRecommendation(getLabelFigureName(c), c).getImage(), 40, 40));
 	}
 
