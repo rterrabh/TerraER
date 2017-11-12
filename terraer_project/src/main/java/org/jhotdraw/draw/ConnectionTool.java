@@ -15,6 +15,7 @@
 package org.jhotdraw.draw;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -377,7 +378,7 @@ public class ConnectionTool extends AbstractTool {
 						connectors.add((LabeledLineInterface)f);
 					}
 				}
-				String s[] = {"N","M","P","R1", "R2", "R3", "R4", "R5", "R6","R7", "R8", "R9"};
+				String s[] = {"N","M","P","Q", "R", "S"};
 				int i = 0;
 				for (LabeledLineInterface c : connectors){
 					((LabeledLineConnectionFigure)c).willChange();
@@ -407,15 +408,19 @@ public class ConnectionTool extends AbstractTool {
 	}
     public void activate(DrawingEditor editor) {
         super.activate(editor);
+        getView().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
     }
     public void deactivate(DrawingEditor editor) {
-        if (createdFigure != null) {
+    	if (createdFigure != null) {
             getDrawing().remove(createdFigure);
             createdFigure = null;
         }
         targetFigure = null;
         startConnector = endConnector = null;
         super.deactivate(editor);
+    	if (getView() != null) {
+			getView().setCursor(Cursor.getDefaultCursor());
+		}
     }
     /**
      * Creates the ConnectionFigure. By default the figure prototype is

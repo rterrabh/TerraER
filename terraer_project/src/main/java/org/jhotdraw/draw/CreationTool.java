@@ -183,8 +183,8 @@ public class CreationTool extends AbstractTool {
 
 	public void activate(DrawingEditor editor) {
 		super.activate(editor);
-		// getView().clearSelection();
-		// getView().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		//getView().clearSelection();
+		getView().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
 	public void deactivate(DrawingEditor editor) {

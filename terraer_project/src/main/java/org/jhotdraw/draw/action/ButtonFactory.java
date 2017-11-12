@@ -182,6 +182,7 @@ public class ButtonFactory {
 		public void itemStateChanged(ItemEvent evt) {
 			if (evt.getStateChange() == ItemEvent.SELECTED) {
 				editor.setTool(tool);
+				editor.getActiveView().clearSelection();
 			}
 		}
 	}
@@ -231,7 +232,7 @@ public class ButtonFactory {
 		JToggleButton t;
 		Tool tool;
 		HashMap<String, Object> attributes;
-
+		
 		ButtonGroup group;
 		if (tb.getClientProperty("toolButtonGroup") instanceof ButtonGroup) {
 			group = (ButtonGroup) tb.getClientProperty("toolButtonGroup");
@@ -255,7 +256,7 @@ public class ButtonFactory {
 				}
 
 				public void toolDone(ToolEvent event) {
-					defaultToolButton.setSelected(true);
+					//defaultToolButton.setSelected(true);
 				}
 
 				public void areaInvalidated(ToolEvent e) {
