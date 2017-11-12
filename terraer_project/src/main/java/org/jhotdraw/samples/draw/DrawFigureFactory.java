@@ -103,7 +103,7 @@ public class DrawFigureFactory extends DefaultDOMFactory {
         { DisjuncaoFigure.class, "disjuncao"},
         { UniaoFigure.class, "uniao"},
         { CircleFigure.class, "circ"},
-        //{ LineConnectionFigure.class, "lcf"},
+        { ConnectionAttribute.class, "lcf"}, //Para continuar funcionando com versões anteriores
         { ConnectionAttribute.class, "lcaf"},
         { LabeledLineConnectionFigure.class, "llabel"},
         { LabeledLineConnectionUmFigure.class, "llabelUm"},
