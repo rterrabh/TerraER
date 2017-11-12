@@ -299,6 +299,7 @@ public class ConnectionTool extends AbstractTool {
             createdFigure.setStartConnector(startConnector);
             createdFigure.setEndConnector(endConnector);
             
+            
             /*if (createdFigure.getClass().equals(LineConnectionFigure.class) ||
             	createdFigure.getClass().equals(LabeledLineConnectionUmFigure.class) ||
             	createdFigure.getClass().equals(LabeledLineConnectionMuitosFigure.class) ||
@@ -313,6 +314,21 @@ public class ConnectionTool extends AbstractTool {
             }*/
             
             unaryRelationshipHandle();
+            
+            /*Coloca sempre o label do lado do relacionamento*/
+            if ((createdFigure.getStartConnector().getOwner() instanceof EntidadeFigure ||
+                    		createdFigure.getStartConnector().getOwner() instanceof EntidadeFracaFigure ||
+                    		createdFigure.getStartConnector().getOwner() instanceof EntidadeRelacionamentoFigure)
+            		&&
+            		(createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFigure ||
+            		createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFracoFigure ||
+            		createdFigure.getEndConnector().getOwner() instanceof EntidadeRelacionamentoFigure)){
+            	Connector aux = createdFigure.getStartConnector();
+            	createdFigure.setStartConnector(createdFigure.getEndConnector());
+            	createdFigure.setEndConnector(aux);
+            }
+            
+            
             createdFigure.updateConnection();
             createdFigure.changed();
             
