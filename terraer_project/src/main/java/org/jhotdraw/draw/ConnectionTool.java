@@ -24,6 +24,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.undo.AbstractUndoableEdit;
@@ -31,7 +33,6 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 
 import org.jhotdraw.geom.BezierPath;
-import org.jhotdraw.geom.BezierPath.Node;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -315,17 +316,13 @@ public class ConnectionTool extends AbstractTool {
             
             unaryRelationshipHandle();
             
+            
             /*Coloca sempre o label do lado do relacionamento*/
-            if ((createdFigure.getStartConnector().getOwner() instanceof EntidadeFigure ||
-                    		createdFigure.getStartConnector().getOwner() instanceof EntidadeFracaFigure ||
-                    		createdFigure.getStartConnector().getOwner() instanceof EntidadeRelacionamentoFigure)
-            		&&
-            		(createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFigure ||
-            		createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFracoFigure ||
-            		createdFigure.getEndConnector().getOwner() instanceof EntidadeRelacionamentoFigure)){
-            	Connector aux = createdFigure.getStartConnector();
-            	createdFigure.setStartConnector(createdFigure.getEndConnector());
-            	createdFigure.setEndConnector(aux);
+            numberInCorrectSideHandle();
+            
+            /* Atualiza os letras N, M, O, P, ... dos relacionamentos N:M*/
+            if (createdFigure instanceof LabeledLineInterface){
+            	updateNumbering();
             }
             
             
@@ -367,6 +364,47 @@ public class ConnectionTool extends AbstractTool {
             fireToolDone();
         }
     }
+
+    /* Atualiza os letras N, M, O, P, ... dos relacionamentos N:M*/
+	private void updateNumbering() {
+		List<LabeledLineInterface> connectors = new LinkedList<>();
+		
+		/*Pelo metodo numberInCorrectSideHandle, o relacionamento é sempre o StartConnector*/
+		List<Figure> figures = ((QuadTreeDrawing)this.getDrawing()).findFigures(createdFigure.getStartConnector().getBounds());
+			if (figures != null && !figures.isEmpty()){
+				for (Figure f : figures){
+					if (f instanceof LabeledLineInterface){
+						connectors.add((LabeledLineInterface)f);
+					}
+				}
+				String s[] = {"N","M","P","R1", "R2", "R3", "R4", "R5", "R6","R7", "R8", "R9"};
+				int i = 0;
+				for (LabeledLineInterface c : connectors){
+					((LabeledLineConnectionFigure)c).willChange();
+					if (i<s.length){
+						((LabeledLineInterface)c).changeText(s[i++]);
+					}else{
+						((LabeledLineInterface)c).changeText("N");
+					}
+					((LabeledLineConnectionFigure)c).changed();
+				}		
+			}		
+	}
+
+	/*Coloca sempre o label do lado do relacionamento*/
+	private void numberInCorrectSideHandle() {
+		if ((createdFigure.getStartConnector().getOwner() instanceof EntidadeFigure ||
+		        		createdFigure.getStartConnector().getOwner() instanceof EntidadeFracaFigure ||
+		        		createdFigure.getStartConnector().getOwner() instanceof EntidadeRelacionamentoFigure)
+				&&
+				(createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFigure ||
+				createdFigure.getEndConnector().getOwner() instanceof RelacionamentoFracoFigure ||
+				createdFigure.getEndConnector().getOwner() instanceof EntidadeRelacionamentoFigure)){
+			Connector aux = createdFigure.getStartConnector();
+			createdFigure.setStartConnector(createdFigure.getEndConnector());
+			createdFigure.setEndConnector(aux);
+		}
+	}
     public void activate(DrawingEditor editor) {
         super.activate(editor);
     }

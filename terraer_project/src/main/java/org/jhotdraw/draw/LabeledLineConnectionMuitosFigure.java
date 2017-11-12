@@ -14,6 +14,11 @@
 
 package org.jhotdraw.draw;
 
+import static org.jhotdraw.draw.AttributeKeys.STROKE_COLOR;
+import static org.jhotdraw.draw.AttributeKeys.TEXT_COLOR;
+
+import java.awt.Color;
+
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -36,8 +41,10 @@ import org.jhotdraw.util.ResourceBundleUtil;
  *          1.0 23. Januar 2006 Created.
  */
 public class LabeledLineConnectionMuitosFigure extends
-		LabeledLineConnectionFigure {
+		LabeledLineConnectionFigure implements LabeledLineInterface {
 
+	private TextFigure tf;
+	
 	public LabeledLineConnectionMuitosFigure() {
 		super();
 		
@@ -45,16 +52,23 @@ public class LabeledLineConnectionMuitosFigure extends
 
 		this.title=labels.getString("createElbowMuitosConnection");
     	this.setLayouter(new LocatorLayouter());
-        TextFigure tf = new TextFigure("N");
-        tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
-        tf.setFontSize(16);
-        tf.setEditable(false);
+        this.tf = new TextFigure("N");
+        this.tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
+        this.tf.setFontSize(16);
+        this.tf.setEditable(false);
         //LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5, -Math.PI / 2, 6));
         //LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5, -Math.PI / 4, 8));
         
         LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0, -Math.PI / 4, 8));
         //this.setLiner(new ElbowLiner());
         this.add(tf);
+	}
+
+	@Override
+	public void changeText(String newText) {
+		tf.willChange();
+		AttributeKeys.TEXT.set(this, newText);
+		tf.changed();
 	}
 
 }

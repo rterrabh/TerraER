@@ -16,7 +16,6 @@ package org.jhotdraw.draw;
 
 import org.jhotdraw.util.ResourceBundleUtil;
 
-
 /**
  * A LineConnection with labels.
  * <p>
@@ -27,8 +26,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * lcf.setLayouter(new LocatorLayouter());
  * TextFigure label = new TextFigure();
  * label.setText(&quot;Hello&quot;);
- * LocatorLayouter.LAYOUT_LOCATOR.set(label, new BezierLabelLocator(0,
- * 		-Math.PI / 4, 8));
+ * LocatorLayouter.LAYOUT_LOCATOR.set(label, new BezierLabelLocator(0, -Math.PI / 4, 8));
  * lcf.add(label);
  * </pre>
  * 
@@ -36,28 +34,38 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @version 1.1 2006-02-14 Do not include labels in logical bounds. <br>
  *          1.0 23. Januar 2006 Created.
  */
-public class LabeledDoubleLineConnectionMuitosFigure extends
-		LabeledLineConnectionFigure {
+public class LabeledDoubleLineConnectionMuitosFigure extends LabeledLineConnectionFigure
+		implements LabeledLineInterface {
+
+	private TextFigure tf;
 
 	public LabeledDoubleLineConnectionMuitosFigure() {
 		super();
-		
-    	ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
 
-		this.title=labels.getString("createElbowDoubleMuitosConnection");
+		ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
+
+		this.title = labels.getString("createElbowDoubleMuitosConnection");
 		this.setAttribute(AttributeKeys.STROKE_TYPE, AttributeKeys.StrokeType.DOUBLE);
-    	this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
-    	this.setLayouter(new LocatorLayouter());
-        TextFigure tf = new TextFigure("N");
-        tf.setAttribute(AttributeKeys.FONT_BOLD,Boolean.TRUE);
-        tf.setFontSize(16);
-        tf.setEditable(false);
-        //LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5, -Math.PI / 2, 6));
-        //LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5, -Math.PI / 4, 8));
-        LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0, -Math.PI / 4, 8));
-        //this.setLiner(new ElbowLiner());
-        this.add(tf);
+		this.setAttribute(AttributeKeys.STROKE_INNER_WIDTH_FACTOR, 3.0);
+		this.setLayouter(new LocatorLayouter());
+		this.tf = new TextFigure("N");
+		this.tf.setAttribute(AttributeKeys.FONT_BOLD, Boolean.TRUE);
+		this.tf.setFontSize(16);
+		this.tf.setEditable(false);
+		// LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5,
+		// -Math.PI / 2, 6));
+		// LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0.5,
+		// -Math.PI / 4, 8));
+		LocatorLayouter.LAYOUT_LOCATOR.set(tf, new BezierLabelLocator(0, -Math.PI / 4, 8));
+		// this.setLiner(new ElbowLiner());
+		this.add(tf);
 	}
 
+	@Override
+	public void changeText(String newText) {
+		tf.willChange();
+		AttributeKeys.TEXT.set(this, newText);
+		tf.changed();
+	}
 
 }

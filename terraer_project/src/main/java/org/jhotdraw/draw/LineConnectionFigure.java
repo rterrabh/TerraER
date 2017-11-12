@@ -169,7 +169,7 @@ public class LineConnectionFigure extends LineFigure
         	TEXT_COLOR.set(this, Color.black);
         	STROKE_COLOR.set(this, Color.black);
         }
-        
+                
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.draw.Labels");
         title=labels.getString("connectionTitle") + this.getStartFigure().getToolTipText(null) + " "
        			+ labels.getString("connectionTitle2") + this.getEndFigure().getToolTipText(null);
