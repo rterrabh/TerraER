@@ -91,6 +91,7 @@ public class AtributoChaveFigure extends GroupFigure implements AttributeTypeEle
 	}
 
 	public String toString() {
+		//return tf.getText().replaceAll("\\s+", "_") + ( this.attributeType != null ? " " + this.getAttributeType() : "");
 		return tf.getText().replaceAll("\\s+", "_");
 	}
 
@@ -98,7 +99,7 @@ public class AtributoChaveFigure extends GroupFigure implements AttributeTypeEle
 		super.read(in);
 
 		this.nullable = in.getAttribute("nullable", false);
-		this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+		this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", AttributeTypeEnum.INTEGER.getSqlType()));
 
 		java.util.Collection<Figure> lst = getDecomposition();
 		for (Figure f : lst) {

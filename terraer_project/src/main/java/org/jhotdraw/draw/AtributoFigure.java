@@ -87,14 +87,15 @@ public class AtributoFigure extends GroupFigure implements AttributeTypeElement 
     }
 	
 	public String toString(){
-		return tf.getText().replaceAll("\\s+", "_") + ( this.attributeType != null ? " " + this.getAttributeType() : "");
+		//return tf.getText().replaceAll("\\s+", "_") + ( this.attributeType != null ? " " + this.getAttributeType() : "");
+		return tf.getText().replaceAll("\\s+", "_");
 	}
 	
     public void read(DOMInput in) throws IOException {
         super.read(in);
         
         this.nullable = in.getAttribute("nullable", false);
-        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", null));
+        this.attributeType = AttributeTypeEnum.getAttributeTypeByString(in.getAttribute("attributeType", AttributeTypeEnum.TEXT.getSqlType()));
         
         java.util.Collection<Figure> lst=getDecomposition();
         for( Figure f : lst){
