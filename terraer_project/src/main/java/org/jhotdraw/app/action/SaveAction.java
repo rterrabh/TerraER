@@ -31,6 +31,7 @@ import org.jhotdraw.gui.Worker;
 import org.jhotdraw.gui.event.SheetEvent;
 import org.jhotdraw.gui.event.SheetListener;
 import org.jhotdraw.io.ExtensionFileFilter;
+import org.jhotdraw.samples.draw.DrawProject;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -61,16 +62,23 @@ public class SaveAction extends AbstractProjectAction {
     
     
     public void actionPerformed(ActionEvent evt) {
-        final Project project = getCurrentProject();
+    	final DrawProject project = (DrawProject)getCurrentProject();
         if (project.isEnabled()) {
             oldFocusOwner = SwingUtilities.getWindowAncestor(project.getComponent()).getFocusOwner();
             project.setEnabled(false);
             
-            File saveToFile;
+            //File saveToFile;
             if (!saveAs && project.getFile() != null) {
                 saveToFile(project, project.getFile());
             } else {
                 JFileChooser fileChooser = project.getSaveChooser();
+                
+                if (project.getFile()!=null && !saveAs){
+                	fileChooser.setSelectedFile(new File(project.getSimpleName()));
+    			}else{
+    				ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+    				fileChooser.setSelectedFile(new File(labels.getString("unnamedFile")));
+    			}
                 
                 JSheet.showSaveSheet(fileChooser, project.getComponent(), new SheetListener() {
                     public void optionSelected(final SheetEvent evt) {

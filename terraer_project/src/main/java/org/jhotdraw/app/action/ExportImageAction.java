@@ -34,9 +34,16 @@ public class ExportImageAction extends AbstractProjectAction {
 		if (project.isEnabled()) {
 			oldFocusOwner = SwingUtilities.getWindowAncestor(project.getComponent()).getFocusOwner();
 			project.setEnabled(false);
-
+			
 			JFileChooser fileChooser = project.createSaveImageChooser();
-
+			
+			if (project.getFile()!=null){
+				fileChooser.setSelectedFile(new File(project.getSimpleName()));
+			}else{
+				ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
+				fileChooser.setSelectedFile(new File(labels.getString("unnamedFile")));
+			}
+			
 			JSheet.showSaveSheet(fileChooser, project.getComponent(), new SheetListener() {
 				public void optionSelected(final SheetEvent evt) {
 					if (evt.getOption() == JFileChooser.APPROVE_OPTION) {

@@ -32,12 +32,12 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
 
 import org.jhotdraw.app.AbstractProject;
 import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.draw.DOMStorableInputOutputFormat;
-import org.jhotdraw.draw.DefaultDrawing;
 import org.jhotdraw.draw.DefaultDrawingEditor;
 import org.jhotdraw.draw.Drawing;
 import org.jhotdraw.draw.DrawingEditor;
@@ -140,8 +140,12 @@ public class DrawProject extends AbstractProject {
         LinkedList<InputFormat> inputFormats = new LinkedList<InputFormat>();
         inputFormats.add(ioFormat);
         inputFormats.add(new ImageInputFormat(new ImageFigure()));
-        inputFormats.add(new ImageInputFormat(new ImageFigure(), "JPG","Joint Photographics Experts Group (JPEG)", "jpg", BufferedImage.TYPE_INT_RGB));
-        inputFormats.add(new ImageInputFormat(new ImageFigure(), "GIF","Graphics Interchange Format (GIF)", "gif", BufferedImage.TYPE_INT_ARGB));
+        //inputFormats.add(new ImageInputFormat(new ImageFigure(), "JPG","JPEG files (*.jpg)", "jpg", BufferedImage.TYPE_INT_RGB));
+        inputFormats.add(new ImageInputFormat(new ImageFigure(), "PNG","PNG files (*.png)", "jpg", BufferedImage.TYPE_INT_ARGB));
+        inputFormats.add(new ImageInputFormat(new ImageFigure(), "GIF","GIF files (*.gif)", "gif", BufferedImage.TYPE_INT_ARGB));
+        //inputFormats.add(new ImageInputFormat(new ImageFigure(), "JPG","Joint Photographics Experts Group (JPEG)", "jpg", BufferedImage.TYPE_INT_RGB));      
+        //inputFormats.add(new ImageInputFormat(new ImageFigure(), "GIF","Graphics Interchange Format (GIF)", "gif", BufferedImage.TYPE_INT_ARGB));
+        
         inputFormats.add(new ImageInputFormat(new ImageFigure()));
         inputFormats.add(new TextInputFormat(new TextFigure()));
         TextAreaFigure taf = new TextAreaFigure();
@@ -150,8 +154,11 @@ public class DrawProject extends AbstractProject {
         drawing.setInputFormats(inputFormats);
         LinkedList<OutputFormat> outputFormats = new LinkedList<OutputFormat>();
         outputFormats.add(ioFormat);
-        outputFormats.add(new ImageOutputFormat("JPG","Joint Photographics Experts Group (JPEG)", "jpg", BufferedImage.TYPE_INT_RGB));
-        outputFormats.add(new ImageOutputFormat("GIF","Graphics Interchange Format (GIF)", "gif", BufferedImage.TYPE_INT_ARGB));
+        //outputFormats.add(new ImageOutputFormat("JPG","Joint Photographics Experts Group (JPEG)", "jpg", BufferedImage.TYPE_INT_RGB));
+        //outputFormats.add(new ImageOutputFormat("GIF","Graphics Interchange Format (GIF)", "gif", BufferedImage.TYPE_INT_ARGB));
+        outputFormats.add(new ImageOutputFormat("PNG", "PNG files (*.png)", "png", BufferedImage.TYPE_INT_ARGB));
+        //outputFormats.add(new ImageOutputFormat("JPG","JPEG files (*.jpg)", "jpg", BufferedImage.TYPE_INT_RGB));
+        outputFormats.add(new ImageOutputFormat("GIF","GIF files (*.gif)", "gif", BufferedImage.TYPE_INT_ARGB));
         drawing.setOutputFormats(outputFormats);
         return drawing;
     }
@@ -220,7 +227,12 @@ public class DrawProject extends AbstractProject {
     public JFileChooser createSaveImageChooser() {
     	ExtensionFileFilter ff = (ExtensionFileFilter) view.getDrawing().getOutputFormats().get(1).getFileFilter();
         JFileChooser c = super.createSaveChooser();
+        
+        /*Set it as selected*/
+        c.resetChoosableFileFilters();
         c.addChoosableFileFilter(ff);
+        c.setFileFilter(ff);
+        
         return c;
     }
     
@@ -290,7 +302,9 @@ public class DrawProject extends AbstractProject {
     }
     @Override protected JFileChooser createSaveChooser() {
         JFileChooser c = super.createSaveChooser();
-        c.addChoosableFileFilter(new ExtensionFileFilter("Drawing (xml)","xml"));
+        FileFilter ff = new ExtensionFileFilter("Drawing (xml)","xml");
+        c.addChoosableFileFilter(ff);
+        c.setFileFilter(ff);
         return c;
     }
     
@@ -320,4 +334,10 @@ public class DrawProject extends AbstractProject {
     private org.jhotdraw.draw.DefaultDrawingView view;
     // End of variables declaration//GEN-END:variables
     
+    public String getSimpleName() {
+    	if (this.getFile()!=null && this.getFile().getName().endsWith(".xml")){
+    		return this.getFile().getName().replaceFirst("[.][^.]+$", "");
+    	}
+    	return super.getName();
+    }
 }
