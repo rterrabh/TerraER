@@ -7,6 +7,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -112,10 +113,10 @@ public class TerraFigureTree extends JTree {
 
 	public void remove(Figure f) {
 		DefaultMutableTreeNode Node = chooseApropriateNode(f);
-		java.util.Enumeration<DefaultMutableTreeNode> NodeChildren = Node.children();
+		java.util.Enumeration<TreeNode> NodeChildren = Node.children();
 		
 		while(NodeChildren.hasMoreElements()){
-			DefaultMutableTreeNode Child=NodeChildren.nextElement();
+			DefaultMutableTreeNode Child= (DefaultMutableTreeNode)NodeChildren.nextElement();
 			if(Child.getUserObject()==f){
 				Node.remove(Child);
 				break;
@@ -127,10 +128,10 @@ public class TerraFigureTree extends JTree {
 	protected DefaultMutableTreeNode find(Figure f){
 		DefaultMutableTreeNode Ret = null;
 		DefaultMutableTreeNode Node = chooseApropriateNode(f);
-		java.util.Enumeration<DefaultMutableTreeNode> NodeChildren = Node.children();
+		java.util.Enumeration<TreeNode> NodeChildren = Node.children();
 		
 		while(NodeChildren.hasMoreElements()){
-			DefaultMutableTreeNode Child=NodeChildren.nextElement();
+			DefaultMutableTreeNode Child= (DefaultMutableTreeNode) NodeChildren.nextElement();
 			if(Child.getUserObject()==f){
 				Ret=Child;
 				break;

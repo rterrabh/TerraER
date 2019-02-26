@@ -52,6 +52,7 @@ import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.ExitAction;
 import org.jhotdraw.app.action.ExportAction;
 import org.jhotdraw.app.action.ExportImageAction;
+import org.jhotdraw.app.action.FastEditingModeAction;
 import org.jhotdraw.app.action.FocusAction;
 import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.MaximizeAction;
@@ -212,6 +213,7 @@ public class DefaultOSXApplication extends AbstractApplication {
         mo.putAction(PrintAction.ID, new PrintAction(this));
         mo.putAction(CloseAction.ID, new CloseAction(this));
         mo.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
+        mo.putAction(FastEditingModeAction.ID, new FastEditingModeAction(this));
         mo.putAction(GenerateDDLAction.ID, new GenerateDDLAction(this));
         
         mo.putAction(UndoAction.ID, new UndoAction(this));

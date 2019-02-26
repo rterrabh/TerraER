@@ -38,7 +38,6 @@ import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DeleteAction;
 import org.jhotdraw.app.action.PasteAction;
 import org.jhotdraw.app.action.SelectAllAction;
-import org.jhotdraw.app.action.ValidateModelAction;
 import org.jhotdraw.draw.action.DrawingEditorProxy;
 import org.jhotdraw.draw.action.MoveAction;
 import org.jhotdraw.draw.action.MoveConstrainedAction;

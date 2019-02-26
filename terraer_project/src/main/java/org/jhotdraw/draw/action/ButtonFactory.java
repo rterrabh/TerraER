@@ -72,6 +72,7 @@ import org.jhotdraw.app.action.ConnectionRecommendationAction;
 import org.jhotdraw.app.action.CopyAction;
 import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DuplicateAction;
+import org.jhotdraw.app.action.FastEditingModeAction;
 import org.jhotdraw.app.action.PasteAction;
 import org.jhotdraw.app.action.SelectAllAction;
 //import org.jhotdraw.draw.ArrowTip; @beforeCleanUp:removed_Obede
@@ -253,10 +254,13 @@ public class ButtonFactory {
 		} else {
 			toolHandler = new ToolListener() {
 				public void toolStarted(ToolEvent event) {
+					FastEditingModeAction.defaultToolButton = defaultToolButton; 
 				}
 
 				public void toolDone(ToolEvent event) {
+					//se nao for fast editing mode 
 					//defaultToolButton.setSelected(true);
+					defaultToolButton.setSelected(!FastEditingModeAction.ACTIVE);
 				}
 
 				public void areaInvalidated(ToolEvent e) {

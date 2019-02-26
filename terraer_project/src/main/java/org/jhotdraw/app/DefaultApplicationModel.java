@@ -31,6 +31,7 @@ import org.jhotdraw.app.action.CopyAllToClipboard;
 import org.jhotdraw.app.action.CutAction;
 import org.jhotdraw.app.action.DeleteAction;
 import org.jhotdraw.app.action.DuplicateAction;
+import org.jhotdraw.app.action.FastEditingModeAction;
 import org.jhotdraw.app.action.FindAction;
 import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.LoadAction;
@@ -224,6 +225,8 @@ public class DefaultApplicationModel
         //mi = m.add(getAction(ValidateModelAction.ID));
         JCheckBoxMenuItem cb = new JCheckBoxMenuItem(getAction(ValidateModelAction.ID));
         mi = m.add(cb);
+        JCheckBoxMenuItem cb2 = new JCheckBoxMenuItem(getAction(FastEditingModeAction.ID));
+        mi = m.add(cb2);
         //mi.setIcon(new ImageIcon(this.getClass().getResource("/org/jhotdraw/draw/action/images/checkModel.png")));
         mi.setIcon(null);
         m.addSeparator();

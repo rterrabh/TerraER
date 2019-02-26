@@ -53,6 +53,7 @@ import org.jhotdraw.app.action.DuplicateAction;
 import org.jhotdraw.app.action.ExitAction;
 import org.jhotdraw.app.action.ExportAction;
 import org.jhotdraw.app.action.ExportImageAction;
+import org.jhotdraw.app.action.FastEditingModeAction;
 import org.jhotdraw.app.action.GenerateDDLAction;
 import org.jhotdraw.app.action.LoadAction;
 import org.jhotdraw.app.action.LoadRecentAction;
@@ -154,6 +155,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(CloseAction.ID, new CloseAction(this));
         m.putAction(PrintAction.ID, new PrintAction(this));
         m.putAction(ValidateModelAction.ID, new ValidateModelAction(this));
+        m.putAction(FastEditingModeAction.ID, new FastEditingModeAction(this));
         m.putAction(GenerateDDLAction.ID, new GenerateDDLAction(this));        
         
         m.putAction(UndoAction.ID, new UndoAction(this));

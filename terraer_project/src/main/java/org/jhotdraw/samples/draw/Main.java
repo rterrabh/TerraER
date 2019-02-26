@@ -31,7 +31,14 @@ public class Main {
         Application app;
         String os = System.getProperty("os.name").toLowerCase();
         if (os.startsWith("mac")) {
-            app = new DefaultOSXApplication();
+        	String version = System.getProperty("java.version");
+        	//System.out.println(version);
+        	if (version.compareTo("1.8")>=0){
+        		//app = new DefaultSDIApplication();
+        		app = new DefaultOSXApplication();
+        	}else {
+        		app = new DefaultOSXApplication();
+        	}
         } else if (os.startsWith("win")) {
             app = new DefaultSDIApplication();
         } else {

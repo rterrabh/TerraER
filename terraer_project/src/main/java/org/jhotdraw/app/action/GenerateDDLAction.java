@@ -15,30 +15,40 @@
 package org.jhotdraw.app.action;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import org.jhotdraw.app.Application;
-import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.AtributoChaveFigure;
+import org.jhotdraw.draw.AtributoChaveParcialFigure;
+import org.jhotdraw.draw.AtributoDerivadoFigure;
+import org.jhotdraw.draw.AtributoFigure;
+import org.jhotdraw.draw.AtributoMultivaloradoFigure;
+import org.jhotdraw.draw.ConnectionAttribute;
+import org.jhotdraw.draw.ConnectionFigure;
+import org.jhotdraw.draw.DisjuncaoFigure;
+import org.jhotdraw.draw.DoubleLineConnectionGeneralizacaoFigure;
+import org.jhotdraw.draw.EntidadeFigure;
+import org.jhotdraw.draw.EntidadeFracaFigure;
+import org.jhotdraw.draw.EntidadeRelacionamentoFigure;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.GeneralizacaoLineConnectionFigure;
+import org.jhotdraw.draw.LabeledDoubleLineConnectionMuitosFigure;
+import org.jhotdraw.draw.LabeledDoubleLineConnectionUmFigure;
+import org.jhotdraw.draw.LabeledLineConnectionMuitosFigure;
+import org.jhotdraw.draw.LabeledLineConnectionUmFigure;
+import org.jhotdraw.draw.LineConnectionGeneralizacaoFigure;
+import org.jhotdraw.draw.RelacionamentoFigure;
+import org.jhotdraw.draw.RelacionamentoFracoFigure;
+import org.jhotdraw.draw.SobreposicaoFigure;
 import org.jhotdraw.samples.draw.DrawProject;
 import org.jhotdraw.util.ResourceBundleUtil;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
-import jdk.nashorn.internal.scripts.JO;
 /**
  * Cuts the selected region and places its contents into the system clipboard.
  * Acts on the EditableComponent or JTextComponent which had the focus when
