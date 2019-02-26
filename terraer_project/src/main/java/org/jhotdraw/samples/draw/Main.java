@@ -51,7 +51,7 @@ public class Main {
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
         DrawApplicationModel model = new DrawApplicationModel();
         model.setName("TerraER");
-        model.setVersion("3.12");
+        model.setVersion("3.13");
         model.setCopyright(labels.getString("copyright"));
         model.setProjectClassName("org.jhotdraw.samples.draw.TerraProject");
         app.setModel(model);

@@ -1,0 +1,23 @@
+Caros alunos, duas informações importantes.
+
+1. O TerraER depende de vocês para melhorar.
+   https://www.softpedia.com/get/Internet/Servers/Database-Utils/TerraER.shtml
+
+   Alunos que acharem problemas (muito obrigado), peço que os reporte pela plataforma
+   de melhorias do próprio GitHub:
+   https://github.com/rterrabh/TerraER/issues
+
+   O TerraER é um aplicativo gratuito e também de código aberto. 
+   Está no GitHub: https://github.com/rterrabh/TerraER
+   Se quiserem colaborar (com o desenvolvimento), eu ficaria muito feliz. 
+   Façam isso por meio de Pull Requests, ok?
+
+
+2. Incompatibilidade com OpenJDK: O TerraER não funciona na OpenJDK. Logo, vocês devem
+   executá-lo através da JDK oficial da Oracle.
+
+   No Ubuntu, por exemplo, é fácil:   
+   https://websiteforstudents.com/install-oracle-java-jdk-10-on-ubuntu-16-04-17-10-18-04-via-ppa/   
+
+
+Obrigado, R. Terra
