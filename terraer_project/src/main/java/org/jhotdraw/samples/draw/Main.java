@@ -34,10 +34,11 @@ public class Main {
         	String version = System.getProperty("java.version");
         	//System.out.println(version);
         	if (version.compareTo("1.8")>=0){
-        		//app = new DefaultSDIApplication();
-        		app = new DefaultOSXApplication();
+        	    app = new DefaultSDIApplication();
+        		//app = new DefaultOSXApplication();
         	}else {
-        		app = new DefaultOSXApplication();
+        	    app = new DefaultSDIApplication();
+        		//app = new DefaultOSXApplication();
         	}
         } else if (os.startsWith("win")) {
             app = new DefaultSDIApplication();
@@ -51,7 +52,7 @@ public class Main {
         ResourceBundleUtil labels = ResourceBundleUtil.getLAFBundle("org.jhotdraw.app.Labels");
         DrawApplicationModel model = new DrawApplicationModel();
         model.setName("TerraER");
-        model.setVersion("3.13");
+        model.setVersion("3.14");
         model.setCopyright(labels.getString("copyright"));
         model.setProjectClassName("org.jhotdraw.samples.draw.TerraProject");
         app.setModel(model);
